@@ -2,11 +2,13 @@ import { localizePath, t, type Locale } from '../i18n';
 import { pillarOf, sephirot, type Pillar, type Sephirah } from '../data/sephirot';
 import { labelSide, nodePosition, paths, type LabelSide } from '../data/tree';
 import { getTree, type Project } from './projects';
+import { getPages } from './pages';
 
 export interface SatelliteView {
   slug: string;
   name: string;
   summary: string;
+  tagline: string;
   href: string;
   x: number;
   y: number;
@@ -25,6 +27,8 @@ export interface NodeView {
   href?: string;
   title?: string;
   summary?: string;
+  /** One full sentence: the project tagline or the section lead. */
+  tagline?: string;
   project?: Project;
   satellites: SatelliteView[];
   exodiaPart: boolean;
@@ -39,18 +43,12 @@ export interface PathView {
   y2: number;
 }
 
-/** Non-project nodes: sections of the site rather than projects. */
-const sectionHref: Partial<Record<Sephirah, string>> = {
-  keter: '/about/',
-  tiferet: '/work/',
-  daat: '/contact/',
-};
-
 const EXODIA = 'exodia';
 
 export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; paths: PathView[] }> {
   const ui = t(locale);
   const projectNodes = await getTree(locale);
+  const pages = await getPages(locale);
 
   const exodia = projectNodes
     .flatMap((n) => [n.primary, ...n.satellites])
@@ -81,12 +79,14 @@ export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; pa
         href: localizePath(`/projects/${primary.slug}/`, locale),
         title: primary.entry.data.name,
         summary: primary.entry.data.summary,
+        tagline: primary.entry.data.tagline,
         project: primary,
         exodiaPart: exodiaParts.has(primary.slug),
         satellites: satellites.map((s, i) => ({
           slug: s.slug,
           name: s.entry.data.name,
           summary: s.entry.data.summary,
+          tagline: s.entry.data.tagline,
           href: localizePath(`/projects/${s.slug}/`, locale),
           x: x + dir * 34,
           y: y + 66 + i * 34,
@@ -95,16 +95,15 @@ export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; pa
       };
     }
 
-    const section = sectionHref[sephirah];
-    const copy = (ui.tree.nodes as Partial<Record<Sephirah, { title: string; summary: string }>>)[
-      sephirah
-    ];
-    if (section && copy) {
+    // Non-project nodes are sections of the site (about, work, contact).
+    const page = pages.find((p) => p.entry.data.sephirah === sephirah);
+    if (page) {
       return {
         ...base,
-        href: localizePath(section, locale),
-        title: copy.title,
-        summary: copy.summary,
+        href: page.href,
+        title: page.entry.data.title,
+        summary: page.entry.data.summary,
+        tagline: page.entry.data.lead,
         satellites: [],
         exodiaPart: false,
       };

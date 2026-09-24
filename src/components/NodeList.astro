@@ -1,58 +1,61 @@
 ---
 import StatusBadge from './StatusBadge.astro';
 import Text from './Text.astro';
-import { localizePath, t, type Locale } from '../i18n';
-import { pillarOf } from '../data/sephirot';
-import { getTree, type Project } from '../lib/projects';
+import { t, type Locale } from '../i18n';
+import { buildTree } from '../lib/tree';
 
 interface Props {
   locale: Locale;
 }
 
+// The list view of the tree: every lit node in tree order (Keter → Malkuth),
+// projects and site sections alike. It is also the mobile guided scroll.
 const { locale } = Astro.props;
 const ui = t(locale);
-const tree = await getTree(locale);
-const href = (p: Project) => localizePath(`/projects/${p.slug}/`, locale);
+const { nodes } = await buildTree(locale);
+const lit = nodes.filter((n) => n.href && n.title);
 ---
 
 <ol class="nodes">
-  {tree.map(({ sephirah, primary, satellites }) => (
+  {lit.map((n) => (
     <li
       class="node"
-      data-pillar={pillarOf[sephirah]}
-      data-sephirah={sephirah}
-      data-seph-name={ui.sephirot[sephirah].name}
-      data-project={primary.entry.data.name}
+      data-pillar={n.pillar}
+      data-sephirah={n.sephirah}
+      data-seph-name={n.sephirahName}
+      data-project={n.title}
     >
       <p class="sephirah mono">
         <span class="dot" aria-hidden="true" />
-        {ui.sephirot[sephirah].name}
-        <span class="meaning">· {ui.sephirot[sephirah].meaning}</span>
+        {n.sephirahName}
+        <span class="meaning">· {n.meaning}</span>
       </p>
-      <article class="card">
+      <article class:list={['card', { section: !n.project }]}>
         <h3>
-          <a href={href(primary)}>{primary.entry.data.name}</a>
+          <a href={n.href}>{n.title}</a>
         </h3>
-        <p class="tagline">{primary.entry.data.tagline}</p>
-        <div class="meta">
-          <StatusBadge status={primary.entry.data.status} locale={locale} />
-          <span class="mono stack">
-            {primary.entry.data.stack.map((s, i) => (
-              <>
-                {i > 0 && ' · '}
-                <Text value={s} locale={locale} />
-              </>
-            ))}
-          </span>
-        </div>
-        {satellites.length > 0 && (
+        <p class="tagline">{n.tagline}</p>
+        {n.project && (
+          <div class="meta">
+            <StatusBadge status={n.project.entry.data.status} locale={locale} />
+            <span class="mono stack">
+              {n.project.entry.data.stack.map((s, i) => (
+                <>
+                  {i > 0 && ' · '}
+                  <Text value={s} locale={locale} />
+                </>
+              ))}
+            </span>
+          </div>
+        )}
+        {n.satellites.length > 0 && (
           <div class="satellites">
             <p class="mono orbits">{ui.project.orbits}</p>
             <ul>
-              {satellites.map((s) => (
+              {n.satellites.map((s) => (
                 <li>
-                  <a href={href(s)}>{s.entry.data.name}</a>
-                  <span class="sat-tagline">{s.entry.data.tagline}</span>
+                  <a href={s.href}>{s.name}</a>
+                  <span class="sat-tagline">{s.tagline}</span>
                 </li>
               ))}
             </ul>
@@ -105,6 +108,9 @@ const href = (p: Project) => localizePath(`/projects/${p.slug}/`, locale);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     transition: border-color 0.2s;
+  }
+  .card.section {
+    border-style: dashed;
   }
   .card:hover,
   .card:focus-within {

@@ -116,7 +116,7 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
   });
 }
 
-function setupIgnition(root: HTMLElement, stage: HTMLElement): void {
+function setupIgnition(stage: HTMLElement): void {
   if (reducedMotion()) return;
   const nodes = [...stage.querySelectorAll<SVGGElement>('.node')];
   const paths = [...stage.querySelectorAll<SVGGElement>('.path')];
@@ -148,12 +148,6 @@ function setupIgnition(root: HTMLElement, stage: HTMLElement): void {
       );
     });
   };
-
-  // Lab only: replay the sequence on demand.
-  root.addEventListener('tree:replay', () => {
-    turnOff();
-    requestAnimationFrame(() => requestAnimationFrame(ignite));
-  });
 
   // Already on screen at load: leave it lit rather than flashing it off.
   if (stage.getBoundingClientRect().top < innerHeight * 0.6) return;
@@ -245,7 +239,7 @@ export function initTree(root: HTMLElement): void {
   setupGuidedScroll(root);
 
   if (isDesktop()) {
-    setupIgnition(root, stage);
+    setupIgnition(stage);
     setupParallax(stage);
     setupParticles(stage);
   }

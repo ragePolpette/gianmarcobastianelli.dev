@@ -1,5 +1,5 @@
 ---
-import ProjectList from '../ProjectList.astro';
+import NodeList from '../NodeList.astro';
 import StatusBadge from '../StatusBadge.astro';
 import { t, type Locale } from '../../i18n';
 import { viewBox } from '../../data/tree';
@@ -192,7 +192,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
               {n.sephirahName} · {n.meaning}
             </p>
             <p class="pv-title">{n.title}</p>
-            <p class="pv-text">{n.project ? n.project.entry.data.tagline : n.summary}</p>
+            <p class="pv-text">{n.tagline}</p>
             {n.project && (
               <p class="pv-meta">
                 <StatusBadge status={n.project.entry.data.status} locale={locale} />
@@ -209,7 +209,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
               {n.sephirahName} · {ui.project.orbits}
             </p>
             <p class="pv-title">{s.name}</p>
-            <p class="pv-text">{s.summary}</p>
+            <p class="pv-text">{s.tagline}</p>
           </div>
         )),
       )}
@@ -231,7 +231,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   </div>
 
   <div class="list" data-panel="list">
-    <ProjectList locale={locale} />
+    <NodeList locale={locale} />
   </div>
 </section>
 
