@@ -1,0 +1,57 @@
+---
+import { locales, localizePath, t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const ui = t(locale);
+---
+
+<nav aria-label={ui.a11y.langNav} class="lang mono">
+  <ul>
+    {locales.map((l) => (
+      <li>
+        {l === locale ? (
+          <span aria-current="true" title={ui.lang[l]}>
+            {l.toUpperCase()}
+          </span>
+        ) : (
+          <a href={localizePath(path, l)} hreflang={l} lang={l} title={t(l).lang[l]}>
+            <span class="visually-hidden">{t(l).lang[l]}</span>
+            <span aria-hidden="true">{l.toUpperCase()}</span>
+          </a>
+        )}
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  span[aria-current],
+  a {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+  }
+  span[aria-current] {
+    color: var(--bg);
+    background: var(--fg);
+  }
+  a {
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--fg);
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  /** Human-readable, non-clickable form shown before (or without) JavaScript. */
+  fallback: string;
+}
+
+const { fallback } = Astro.props;
+---
+
+<a class="email" href="#contact" data-e={site.emailEncoded}>
+  {fallback}
+</a>
+
+<script>
+  // The address is never in the HTML: it is decoded from the reversed base64
+  // in data-e and turned into a real mailto link only once JS runs.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a[data-e]')) {
+    const encoded = link.dataset['e'];
+    if (!encoded) continue;
+    const address = [...atob(encoded)].reverse().join('');
+    link.href = `mailto:${address}`;
+    link.textContent = address;
+    link.removeAttribute('data-e');
+  }
+</script>

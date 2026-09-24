@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectList from '../ProjectList.astro';
+import { t, type Locale } from '../../i18n';
+import { site } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+---
+
+<Base locale={locale} path="/">
+  <section class="hero container" aria-labelledby="hero-title">
+    <p class="role mono">{ui.hero.role}</p>
+    <h1 id="hero-title">{site.name}</h1>
+    <p class="tagline">{ui.hero.tagline}</p>
+    <ul class="glance mono">
+      {ui.hero.glance.map((item) => (
+        <li>{item}</li>
+      ))}
+      <li>
+        <a href={site.github} rel="me noopener">
+          GitHub
+        </a>
+      </li>
+      <li>
+        <a href={site.linkedin} rel="me noopener">
+          LinkedIn
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="projects container" id="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">{ui.home.projectsTitle}</h2>
+    <p class="intro">{ui.home.projectsIntro}</p>
+    <ProjectList locale={locale} />
+    <aside class="names">
+      <h3>{ui.home.namesTitle}</h3>
+      <p>{ui.home.namesBody}</p>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(4rem, 14vh, 9rem) clamp(3rem, 8vh, 5rem);
+  }
+  .role {
+    color: var(--balance);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 9vw, 6rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  .tagline {
+    font-size: clamp(1.125rem, 2.4vw, 1.375rem);
+    color: var(--fg-muted);
+    max-width: 44ch;
+  }
+  .glance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    color: var(--fg-muted);
+  }
+  .glance li + li::before {
+    content: '/';
+    margin-right: 1.25rem;
+    color: var(--line);
+  }
+  .glance a {
+    color: var(--fg);
+  }
+  .projects h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  .intro {
+    color: var(--fg-muted);
+    margin-bottom: 2rem;
+  }
+  .names {
+    margin-top: 3rem;
+    padding: 1.25rem;
+    border-left: 2px solid var(--balance);
+    background: var(--bg-raised);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .names h3 {
+    font-size: 1.0625rem;
+  }
+  .names p {
+    margin: 0;
+    color: var(--fg-muted);
+  }
+</style>

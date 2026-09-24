@@ -1,0 +1,77 @@
+---
+import LangSwitch from './LangSwitch.astro';
+import { localizePath, t, type Locale } from '../i18n';
+import { site } from '../data/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const ui = t(locale);
+const home = localizePath('/', locale);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href={home}>
+      {site.name}
+    </a>
+    <nav aria-label={ui.a11y.primaryNav}>
+      <ul>
+        <li>
+          <a href={`${home}#projects`}>{ui.nav.projects}</a>
+        </li>
+        <li>
+          <a href="#contact">{ui.nav.contact}</a>
+        </li>
+      </ul>
+    </nav>
+    <LangSwitch locale={locale} path={path} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 3.75rem;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  ul {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    font-size: 0.9375rem;
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: var(--fg);
+  }
+  @media (max-width: 30rem) {
+    .brand {
+      font-size: 0.9375rem;
+    }
+    .bar {
+      gap: 1rem;
+    }
+    nav {
+      display: none;
+    }
+  }
+</style>
