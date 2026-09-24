@@ -40,4 +40,17 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const pages = defineCollection({
+  // Site sections that live on the tree without being projects: src/content/pages/<locale>/<slug>.md
+  loader: glob({ base: './src/content/pages', pattern: '*/*.md' }),
+  schema: z.object({
+    title: z.string().min(1),
+    sephirah: z.enum(sephirot),
+    /** Short line shown under the node on the tree. */
+    summary: z.string().min(1).max(44),
+    lead: z.string().min(1),
+    description: z.string().min(1).max(200),
+  }),
+});
+
+export const collections = { projects, pages };
