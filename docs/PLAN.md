@@ -17,8 +17,8 @@ Ho letto i README e la struttura dei repo pubblici. Alcune cose non tornano con 
 6. **Nome esatto del repo Bitbucket:** `llm-bitbucket-mcp` (non `llm_bitbucket`). Il README dice Bitbucket **Cloud**, PR e pipeline, niente merge automatico. Non parla esplicitamente di "N repository", ma i tool sono per repository: scrivo "più repository" solo se me lo confermi.
 7. **latent-refine-lab è privato**, quindi niente link. **Yesod non ha un repo** tra quelli visibili, quindi niente link.
 8. **llm-sql-db-mcp** supporta **solo SQL Server** (lo dice il README) e sostituisce `llm-db-dev-mcp` e `llm-db-prod-mcp` (pubblici, deprecati): non li includo.
-9. **Repo pubblici non citati**: `Persona` e `heretic` (fork). Non li includo. ❓ Persona va in vetrina?
-10. **Le "5 carte" di Exodia**: il README pubblico descrive Triage/Verification/Execution agent più i report, e non parla dei 5 componenti ispirati alle carte. ❓ Mi servono i 5 nomi e cosa fa ciascuno (anche solo a grandi linee).
+9. **Repo pubblici non citati**: `Persona` e `heretic` (fork). **Esclusi entrambi** (confermato).
+10. **Le 5 carte di Exodia** (confermate): **Testa** = Exodia, harness core · **Braccio destro** = Atlassian MCP, intake da Jira · **Braccio sinistro** = Bitbucket MCP (`llm-bitbucket-mcp`), PR e pipeline · **Gamba destra** = `llm_context`, retrieval semantico · **Gamba sinistra** = `llm-memory`, memoria per ticket. L'Atlassian MCP è un componente esterno, non un tuo repo: il sito lo presenta come integrazione, non come progetto tuo. Tre dei cinque MCP in vetrina sono quindi "pezzi" di Exodia: sull'albero questa relazione diventa visibile (vedi §2).
 
 ---
 
@@ -45,7 +45,7 @@ Ho letto i README e la struttura dei repo pubblici. Alcune cose non tornano con 
 **Dipendenze runtime lato client: zero** (salvo GSAP, se lo vogliamo). Build: astro, @astrojs/sitemap, typescript, fontsource, satori, resvg.
 
 ### Tipografia (proposta)
-- **Display: Syne** (700–800, variabile). È quello con più carattere dei tre. Space Grotesk è pulito ma ormai è il font di default di metà dei siti tech: non "resta impresso". Unbounded è molto largo: sul mobile un titolo come "Gianmarco Bastianelli" va a capo male. Syne solo per i titoli, mai per il testo.
+- **Display: Syne** (700–800, variabile) — **confermato**. È quello con più carattere dei tre. Space Grotesk è pulito ma ormai è il font di default di metà dei siti tech: non "resta impresso". Unbounded è molto largo: sul mobile un titolo come "Gianmarco Bastianelli" va a capo male. Syne solo per i titoli, mai per il testo.
 - **Mono: JetBrains Mono** per label, metadati e stato.
 - **Testo corrente**: stack di sistema (`system-ui`), zero byte. Assunzione: se preferisci Inter lo aggiungo.
 - **Lettere ebraiche**: **niente font ebraico**. Le 11 lettere diventano path SVG inline (`aria-hidden`): costo quasi nullo e resa identica ovunque.
@@ -66,13 +66,21 @@ I progetti sono 10 più 3 sezioni, per 11 nodi. Due nodi devono ospitare più di
 | **Da'at** (nascosta) | la conoscenza, il nodo invisibile | Contatti | Easter egg: nodo "velato" che si rivela all'hover. **I contatti restano comunque nell'header e nel footer**: trovarli non può dipendere dall'easter egg |
 | **Chesed** | espansione, il dare senza misura | **llm-memory** + satellite **llm_context** | Open source come dono; espandere ciò che un agente sa e ricorda |
 | **Gevurah** | limite, rigore, giudizio | **llm-sql-db-mcp** | Il più "Gevurah" di tutti: policy per target, SQL guard, recinti non aggirabili in produzione, anonimizzazione |
-| **Tiferet** (centro) | equilibrio, bellezza, il cuore | Lavoro enterprise (.NET, SDI, conservazione, migrazione 7M righe) | Il centro di gravità: il lavoro che tiene insieme tutto |
+| **Tiferet** (centro) | equilibrio, bellezza, il cuore | Lavoro enterprise (.NET/WCF multi-tenant, SDI, conservazione a norma) | Il centro di gravità: il lavoro che tiene insieme tutto |
 | **Netzach** | perseveranza, vittoria, spinta | **Jobbby** | Motore che insiste: run concorrenti, fonti che si allargano; primo caso d'uso la ricerca di lavoro |
 | **Hod** | Mercurio: comunicazione, strumenti, precisione | **mcp-dashboard** + satellite **llm-bitbucket-mcp** | Strumentazione e messaggeri: osservare lo stack, parlare con i repository |
 | **Yesod** | il fondamento | **Yesod** | Stesso nome; poggia su Exodia e la supera |
 | **Malkuth** (base) | il regno manifesto | **Exodia** | Arrivato in produzione e presentato in QBR |
 
-Con questo mapping **nessun nodo resta dormiente**. Se preferisci nodi con un progetto solo, l'alternativa è mettere llm_context in Hod e bitbucket con sql-db in Gevurah (tema "recinti"). In quel caso Chesed resta solo con llm-memory e i satelliti spariscono. ❓
+Con questo mapping **nessun nodo resta dormiente**.
+
+**Satelliti o un progetto per nodo?** ❓ Ci sono 8 progetti (2 di ricerca, 5 MCP e Jobbby) da distribuire su 6 nodi liberi. "Un progetto per nodo", quindi, in senso stretto non ci sta. Le alternative sono:
+- **A. Satelliti** (consigliata): ogni nodo ha un progetto principale, con nome e riga di descrizione. I progetti in più sono piccoli punti in orbita, ognuno con il proprio link, il proprio focus e la propria pagina. Tutti gli 8 progetti stanno sull'albero.
+- **B. Uno per nodo**: 6 progetti sull'albero; gli altri 2 (per esempio mcp-dashboard e llm-bitbucket-mcp) finiscono in una fila "tooling" sotto l'albero e nella vista lista. L'albero è più pulito, ma quei due progetti diventano cittadini di serie B.
+
+*(Correzione rispetto alla prima bozza: l'alternativa che avevo scritto metteva comunque due progetti in Gevurah, quindi non era davvero "uno per nodo".)*
+
+**Overlay "Exodia assemblato".** Hover o focus su Malkuth (Exodia) illumina anche i nodi e i satelliti delle sue carte: llm-memory, llm_context e llm-bitbucket-mcp. È una relazione reale fra i progetti, sovrapposta ai sentieri classici dell'albero. Funziona con entrambe le opzioni.
 
 Nota onesta sul concept: la Kabbalah è una tradizione religiosa viva. L'estetica "circuito, non pergamena" evita l'effetto new age, ma aggiungerei una riga in pagina del tipo "Why these names? I name my projects after the sephirot; the tree is just the map", così nessuno pensa a un sito esoterico.
 
@@ -86,7 +94,7 @@ Inglese su `/`, italiano su `/it/`, con URL speculari. Ogni pagina ha `hreflang`
 /                        Home: hero, albero, vista lista, footer contatti
 /projects/[slug]         Dettaglio progetto (statico, deep-linkabile)
 /about                   Keter: storia (autodidatta), manifesto, stack, moto
-/work                    Tiferet: lavoro enterprise e case study migrazione
+/work                    Tiferet: lavoro enterprise (nessun case study sulla migrazione)
 /contact                 Da'at: contatti (esiste come pagina per il deep link)
 /404
 /og/[slug].png           OG image generate in build
@@ -161,13 +169,13 @@ Sorgente: elenco dei repo di `ragePolpette` con la loro visibilità e lettura de
 | **mcp-dashboard** | https://github.com/ragePolpette/mcp-dashboard | active | Python (FastAPI) + frontend | **[da validare]** Local control plane for a workstation MCP stack: start/stop services, unified logs, vault-backed secrets, llm-memory admin. | ⚠️ Nessuna licenza |
 | **memval-lab** | https://github.com/ragePolpette/intra-model-memval-lab | research · active | Python, transformers + peft, Gemma 3 270M IT | In-model memory consolidation: real LoRA training, before/after evals and a working promote/rollback gate. Next: SAE-based feature drift (Gemma Scope 2) and activation-direction probes. | Il README conferma che il drift SAE **non** c'è ancora: lo presento come "next step". ⚠️ Nessuna licenza |
 | **latent-refine-lab** | — (privato) | early research | `TODO` | Hybrid architecture POC: diffusion in training and ingest, autoregressive output; starts from a frozen decoder on a single GPU. | Niente link |
-| **Exodia** | https://github.com/ragePolpette/Exodia ❓ | active (in produzione) | Node.js, MCP, provider-agnostic | Autonomous agent that takes a Jira ticket to a pull request, with multi-agent verification and an async clarification loop via ticket comments. | ⚠️ Pubblico, al contrario di quanto dice il brief (§0.1). `TODO` le 5 carte |
+| **Exodia** | https://github.com/ragePolpette/Exodia ❓ | active (in produzione) | Node.js, MCP, provider-agnostic | Autonomous agent that takes a Jira ticket to a pull request, with multi-agent verification and an async clarification loop via ticket comments. | ⚠️ Pubblico, al contrario di quanto dice il brief (§0.1). Le 5 carte sono in §0.10 |
 | **Yesod** | — (nessun repo) | active | NousResearch Hermes Agent, `TODO` | Personal meta-orchestrator on Hermes Agent: runs tasks autonomously, refines or expands my inputs, supports mid-run steering (validated with spike tests). | Niente link |
 | **Jobbby** | https://github.com/ragePolpette/Jobbby | active | C# / .NET | Task-agnostic agent-graph engine with concurrent runs, human-approved source discovery and two-way steering via Telegram. First use case: job search. | ⚠️ README da aggiornare (§0.5). ⚠️ Nessuna licenza |
 
 Altri `TODO` che non posso ricavare dai repo:
 - link alla serie "build in public" su LinkedIn (post o hashtag);
-- case study della migrazione di 7M righe: tecnica ad alto livello (backfill a batch? dual write? tabella shadow?), motore DB, durata, cosa è andato storto. Senza questi dettagli scrivo solo il titolo;
+- ~~case study della migrazione di 7M righe~~: **escluso** su tua indicazione. Resta al massimo una riga nei punti salienti di /work (vedi assunzioni);
 - Exodia: i 5 componenti e un'immagine o diagramma presentabile (senza dettagli aziendali).
 
 ---
@@ -176,7 +184,8 @@ Altri `TODO` che non posso ricavare dai repo:
 
 1. Il dominio `gianmarcobastianelli.dev` è già tuo e lo punteremo su Cloudflare Pages.
 2. Niente analytics e niente cookie.
-3. Il testo corrente usa font di sistema; Syne solo per i titoli (se non indichi altro).
+3. Il testo corrente usa font di sistema; Syne solo per i titoli.
+8. La migrazione di 7M righe resta come **una sola riga** fattuale in /work ("zero-downtime migration of 7M rows on a production ERP"), senza un case study. Se vuoi eliminarla del tutto, la tolgo.
 4. Moto: una riga in /about, niente di più.
 5. Il copy lo scrivo io partendo dal brief e dai README, poi lo rivedi tu. Nessuna metrica, stella o feature inventata; dove manca un'informazione compare un `TODO` visibile anche in pagina, in dev.
 6. Firme dei commit: autore `Claudio⚡`, senza trailer (ho interpretato "Cluadio" come un refuso).
