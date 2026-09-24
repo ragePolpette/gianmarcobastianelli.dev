@@ -180,9 +180,11 @@ Altri `TODO` che non posso ricavare dai repo:
 4. Moto: una riga in /about, niente di più.
 5. Il copy lo scrivo io partendo dal brief e dai README, poi lo rivedi tu. Nessuna metrica, stella o feature inventata; dove manca un'informazione compare un `TODO` visibile anche in pagina, in dev.
 6. Firme dei commit: autore `Claudio⚡`, senza trailer (ho interpretato "Cluadio" come un refuso).
-7. `main` è il branch predefinito; si sviluppa su `claude/personal-dev-site-sephirot-x32dvp`.
+7. `main` è il branch predefinito. Ogni macro step ha un proprio branch e una propria PR, che viene unita a `main`.
 
 ## 7. Fasi
+
+Ogni macro step ha un proprio branch e una propria PR verso `main`, e viene unito a `main` quando è completo e validato.
 
 1. **Scaffold**: Astro, TS strict, lint, i18n, content collections con schema, layout base, vista lista funzionante, header e footer con i contatti, `_headers`, sitemap. A questo punto il sito è già pubblicabile.
 2. **Prototipo albero** isolato su `/lab/tree` (non linkato, `noindex`): SVG, accensione, hover/focus, sentieri, View Transition, reduced-motion, versione mobile. **Validazione con te.**
