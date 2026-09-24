@@ -1,0 +1,8 @@
+---
+import ContactPage from '../components/pages/ContactPage.astro';
+import { getPage } from '../lib/pages';
+
+const page = await getPage('en', 'contact');
+---
+
+<ContactPage locale="en" page={page} />

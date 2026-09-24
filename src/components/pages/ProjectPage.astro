@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import SephirahLabel from '../SephirahLabel.astro';
 import StatusBadge from '../StatusBadge.astro';
 import Text from '../Text.astro';
 import { localizePath, t, type Locale } from '../../i18n';
@@ -16,7 +17,6 @@ const { locale, project } = Astro.props;
 const ui = t(locale);
 const data = project.entry.data;
 const { Content } = await render(project.entry);
-const sephirah = ui.sephirot[data.sephirah];
 ---
 
 <Base
@@ -24,16 +24,14 @@ const sephirah = ui.sephirot[data.sephirah];
   path={`/projects/${project.slug}/`}
   title={data.name}
   description={data.tagline}
+  ogImage={`/og/${locale}/projects/${project.slug}.png`}
 >
   <article class="container project" data-pillar={pillarOf[data.sephirah]}>
     <p class="back mono">
-      <a href={localizePath('/#projects', locale)}>← {ui.project.back}</a>
+      <a href={localizePath('/#projects', locale)}>← {ui.nav.tree}</a>
     </p>
     <header>
-      <p class="sephirah mono">
-        <span class="dot" aria-hidden="true"></span>
-        {sephirah.name} <span class="meaning">· {sephirah.meaning}</span>
-      </p>
+      <SephirahLabel sephirah={data.sephirah} locale={locale} />
       <h1>{data.name}</h1>
       <p class="tagline">{data.tagline}</p>
       <div class="meta">
@@ -69,7 +67,7 @@ const sephirah = ui.sephirot[data.sephirah];
       </div>
     </dl>
 
-    <div class="body">
+    <div class="prose">
       <Content />
     </div>
 
@@ -111,26 +109,6 @@ const sephirah = ui.sephirot[data.sephirah];
   }
   header {
     margin-block: 3rem 2.5rem;
-  }
-  .sephirah {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .meaning {
-    color: var(--fg-muted);
-    text-transform: none;
-    letter-spacing: 0.02em;
-  }
-  .dot {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
   }
   h1 {
     view-transition-name: project-title;
@@ -181,9 +159,6 @@ const sephirah = ui.sephirot[data.sephirah];
     padding: 0.15rem 0.6rem;
     border: 1px solid var(--line);
     border-radius: 6px;
-  }
-  .body :global(strong) {
-    color: var(--fg);
   }
   .cards {
     margin-top: 3rem;
