@@ -55,21 +55,77 @@
     "note": "Static site, no cookies, no tracking."
   },
   "sephirot": {
-    "keter": { "name": "Keter", "meaning": "the crown" },
-    "chokhmah": { "name": "Chokhmah", "meaning": "the flash of insight" },
-    "binah": { "name": "Binah", "meaning": "understanding that gives form" },
-    "daat": { "name": "Da'at", "meaning": "the hidden knowledge" },
-    "chesed": { "name": "Chesed", "meaning": "expansion, giving" },
-    "gevurah": { "name": "Gevurah", "meaning": "limits, rigour" },
-    "tiferet": { "name": "Tiferet", "meaning": "balance, the heart" },
-    "netzach": { "name": "Netzach", "meaning": "endurance" },
-    "hod": { "name": "Hod", "meaning": "instruments, communication" },
-    "yesod": { "name": "Yesod", "meaning": "the foundation" },
-    "malkuth": { "name": "Malkuth", "meaning": "the manifest kingdom" }
+    "keter": {
+      "name": "Keter",
+      "meaning": "the crown"
+    },
+    "chokhmah": {
+      "name": "Chokhmah",
+      "meaning": "the flash of insight"
+    },
+    "binah": {
+      "name": "Binah",
+      "meaning": "understanding that gives form"
+    },
+    "daat": {
+      "name": "Da'at",
+      "meaning": "the hidden knowledge"
+    },
+    "chesed": {
+      "name": "Chesed",
+      "meaning": "expansion, giving"
+    },
+    "gevurah": {
+      "name": "Gevurah",
+      "meaning": "limits, rigour"
+    },
+    "tiferet": {
+      "name": "Tiferet",
+      "meaning": "balance, the heart"
+    },
+    "netzach": {
+      "name": "Netzach",
+      "meaning": "endurance"
+    },
+    "hod": {
+      "name": "Hod",
+      "meaning": "instruments, communication"
+    },
+    "yesod": {
+      "name": "Yesod",
+      "meaning": "the foundation"
+    },
+    "malkuth": {
+      "name": "Malkuth",
+      "meaning": "the manifest kingdom"
+    }
   },
   "notFound": {
     "title": "Page not found",
     "body": "This path doesn't lead anywhere on the tree.",
     "home": "Back to the homepage"
+  },
+  "tree": {
+    "label": "Project tree",
+    "viewLabel": "View",
+    "viewTree": "Tree",
+    "viewList": "List",
+    "hint": "Hover or focus a node to preview it. Every node is a link.",
+    "mobileHint": "Scroll: the tree follows you.",
+    "exodiaHint": "Exodia's cards light up across the tree.",
+    "nodes": {
+      "keter": {
+        "title": "About",
+        "summary": "who I am · manifesto"
+      },
+      "tiferet": {
+        "title": "Enterprise .NET",
+        "summary": "multi-tenant ERP · SDI e-invoicing"
+      },
+      "daat": {
+        "title": "Contact",
+        "summary": "GitHub · LinkedIn · email"
+      }
+    }
   }
 }
