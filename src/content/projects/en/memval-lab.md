@@ -3,6 +3,7 @@ name: memval-lab
 sephirah: binah
 role: primary
 tagline: Consolidating memory inside the model, with real LoRA training, before/after evals and a promote-or-rollback gate.
+summary: memory consolidated into the weights
 problem: Can a small model learn from its own episodes without silently breaking what it already knew? And how would we find out if it did?
 stack: [Python, PyTorch, Transformers, PEFT/LoRA, Gemma 3 270M IT]
 status: research

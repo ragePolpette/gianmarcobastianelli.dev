@@ -3,6 +3,7 @@ name: Yesod
 sephirah: yesod
 role: primary
 tagline: Meta-orchestratore personale costruito su NousResearch Hermes Agent.
+summary: meta-orchestratore personale
 problem: Volevo un assistente cucito sul mio modo di lavorare, che porti avanti i task da solo e corregga o espanda gli input che gli do.
 stack: [Hermes Agent (NousResearch)]
 status: active

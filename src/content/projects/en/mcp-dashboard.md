@@ -3,6 +3,7 @@ name: mcp-dashboard
 sephirah: hod
 role: primary
 tagline: A local control plane to run and observe a workstation MCP stack.
+summary: control plane for a local MCP stack
 problem: Running several MCP servers locally means juggling processes, logs and secrets across a pile of terminals.
 stack: [Python, FastAPI, JavaScript]
 status: active

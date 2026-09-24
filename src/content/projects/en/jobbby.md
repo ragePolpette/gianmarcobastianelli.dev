@@ -3,6 +3,7 @@ name: Jobbby
 sephirah: netzach
 role: primary
 tagline: Task-agnostic agent-graph engine. First use case, job search.
+summary: agent graph, steered via Telegram
 problem: Long-running agent workflows need concurrency, human approval at the right points, and a way to steer them from anywhere.
 stack: [C#, .NET, LLM, Telegram]
 status: active

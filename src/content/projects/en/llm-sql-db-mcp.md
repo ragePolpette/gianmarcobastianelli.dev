@@ -3,6 +3,7 @@ name: llm-sql-db-mcp
 sephirah: gevurah
 role: primary
 tagline: Policy-driven MCP server for SQL Server, with guard rails and anonymization.
+summary: SQL for agents, behind guard rails
 problem: Letting an agent "just run SQL" is an accident waiting to happen, especially anywhere near production.
 stack: [Node.js, SQL Server, MCP]
 status: active

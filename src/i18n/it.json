@@ -55,21 +55,77 @@
     "note": "Sito statico, niente cookie, niente tracciamento."
   },
   "sephirot": {
-    "keter": { "name": "Keter", "meaning": "la corona" },
-    "chokhmah": { "name": "Chokhmah", "meaning": "il lampo dell'intuizione" },
-    "binah": { "name": "Binah", "meaning": "la comprensione che dà forma" },
-    "daat": { "name": "Da'at", "meaning": "la conoscenza nascosta" },
-    "chesed": { "name": "Chesed", "meaning": "espansione, il dare" },
-    "gevurah": { "name": "Gevurah", "meaning": "limite, rigore" },
-    "tiferet": { "name": "Tiferet", "meaning": "equilibrio, il cuore" },
-    "netzach": { "name": "Netzach", "meaning": "perseveranza" },
-    "hod": { "name": "Hod", "meaning": "strumenti, comunicazione" },
-    "yesod": { "name": "Yesod", "meaning": "il fondamento" },
-    "malkuth": { "name": "Malkuth", "meaning": "il regno manifesto" }
+    "keter": {
+      "name": "Keter",
+      "meaning": "la corona"
+    },
+    "chokhmah": {
+      "name": "Chokhmah",
+      "meaning": "il lampo dell'intuizione"
+    },
+    "binah": {
+      "name": "Binah",
+      "meaning": "la comprensione che dà forma"
+    },
+    "daat": {
+      "name": "Da'at",
+      "meaning": "la conoscenza nascosta"
+    },
+    "chesed": {
+      "name": "Chesed",
+      "meaning": "espansione, il dare"
+    },
+    "gevurah": {
+      "name": "Gevurah",
+      "meaning": "limite, rigore"
+    },
+    "tiferet": {
+      "name": "Tiferet",
+      "meaning": "equilibrio, il cuore"
+    },
+    "netzach": {
+      "name": "Netzach",
+      "meaning": "perseveranza"
+    },
+    "hod": {
+      "name": "Hod",
+      "meaning": "strumenti, comunicazione"
+    },
+    "yesod": {
+      "name": "Yesod",
+      "meaning": "il fondamento"
+    },
+    "malkuth": {
+      "name": "Malkuth",
+      "meaning": "il regno manifesto"
+    }
   },
   "notFound": {
     "title": "Pagina non trovata",
     "body": "Questo sentiero non porta da nessuna parte sull'albero.",
     "home": "Torna alla home"
+  },
+  "tree": {
+    "label": "Albero dei progetti",
+    "viewLabel": "Vista",
+    "viewTree": "Albero",
+    "viewList": "Lista",
+    "hint": "Passa sopra un nodo o selezionalo per l'anteprima. Ogni nodo è un link.",
+    "mobileHint": "Scorri: l'albero ti segue.",
+    "exodiaHint": "Le carte di Exodia si accendono sull'albero.",
+    "nodes": {
+      "keter": {
+        "title": "Chi sono",
+        "summary": "chi sono · manifesto"
+      },
+      "tiferet": {
+        "title": "Enterprise .NET",
+        "summary": "gestionale multi-tenant · fatturazione SDI"
+      },
+      "daat": {
+        "title": "Contatti",
+        "summary": "GitHub · LinkedIn · email"
+      }
+    }
   }
 }

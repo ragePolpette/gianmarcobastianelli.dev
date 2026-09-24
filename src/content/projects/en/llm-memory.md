@@ -3,6 +3,7 @@ name: llm-memory
 sephirah: chesed
 role: primary
 tagline: Persistent memory for agents over MCP, with two tiers, three scopes and a full audit trail.
+summary: persistent memory for agents
 problem: Agents are good with short-term context and bad at remembering anything across sessions. llm-memory gives them durable, governed memory they can search, promote and invalidate.
 stack: [Python, SQLite, vector search, MCP]
 status: active

@@ -17,7 +17,13 @@ const href = (p: Project) => localizePath(`/projects/${p.slug}/`, locale);
 
 <ol class="nodes">
   {tree.map(({ sephirah, primary, satellites }) => (
-    <li class="node" data-pillar={pillarOf[sephirah]}>
+    <li
+      class="node"
+      data-pillar={pillarOf[sephirah]}
+      data-sephirah={sephirah}
+      data-seph-name={ui.sephirot[sephirah].name}
+      data-project={primary.entry.data.name}
+    >
       <p class="sephirah mono">
         <span class="dot" aria-hidden="true" />
         {ui.sephirot[sephirah].name}

@@ -160,3 +160,10 @@ mark.todo {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Cross-document view transitions: a clicked tree node morphs into the project heading. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}

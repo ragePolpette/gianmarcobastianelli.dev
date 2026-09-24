@@ -3,6 +3,7 @@ name: latent-refine-lab
 sephirah: chokhmah
 role: primary
 tagline: Un proof of concept di architettura ibrida, con diffusion in training e in ingest e output autoregressivo.
+summary: ibrido diffusion + autoregressivo
 problem: 'TODO: a quale domanda risponde questo POC?'
 stack: ['TODO']
 status: research

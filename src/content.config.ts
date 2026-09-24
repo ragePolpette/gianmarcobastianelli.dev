@@ -14,6 +14,8 @@ const projects = defineCollection({
     /** Sort order among satellites of the same sephirah. */
     order: z.number().int().default(0),
     tagline: z.string().min(1),
+    /** Short line shown under the node on the tree. */
+    summary: z.string().min(1).max(40),
     problem: z.string().min(1),
     stack: z.array(z.string().min(1)),
     status: z.enum(['active', 'research', 'paused']),

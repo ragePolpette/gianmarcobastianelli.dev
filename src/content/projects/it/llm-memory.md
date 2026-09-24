@@ -3,6 +3,7 @@ name: llm-memory
 sephirah: chesed
 role: primary
 tagline: Memoria persistente per agenti via MCP, con due livelli, tre scope e un audit trail completo.
+summary: memoria persistente per agenti
 problem: Gli agenti gestiscono bene il contesto a breve termine e male tutto quello che va ricordato tra una sessione e l'altra. llm-memory dà loro una memoria duratura e governata, da cercare, promuovere e invalidare.
 stack: [Python, SQLite, ricerca vettoriale, MCP]
 status: active

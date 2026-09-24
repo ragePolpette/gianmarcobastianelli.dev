@@ -3,6 +3,7 @@ name: llm-sql-db-mcp
 sephirah: gevurah
 role: primary
 tagline: Server MCP per SQL Server governato da policy, con guard rail e anonimizzazione.
+summary: SQL per agenti, dietro guard rail
 problem: Lasciare che un agente "esegua SQL e basta" è un incidente annunciato, soprattutto vicino alla produzione.
 stack: [Node.js, SQL Server, MCP]
 status: active
