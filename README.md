@@ -43,6 +43,15 @@ from this runs in the browser.
 Security headers are in `public/_headers`. Script and style hashes are emitted per
 page by Astro's CSP support.
 
+## Preview (GitHub Pages)
+
+`.github/workflows/preview-pages.yml` builds every push to `main` and `step/**` and
+publishes it to the `gh-pages` branch, served at
+<https://ragepolpette.github.io/gianmarcobastianelli.dev/>. Preview builds set
+`SITE_URL`, `BASE_PATH` and `PREVIEW=true`: pages are `noindex` and `robots.txt`
+disallows everything. One-time setup: Settings → Pages → Deploy from a branch →
+`gh-pages` / root.
+
 ## Plan
 
 See [`docs/PLAN.md`](docs/PLAN.md).

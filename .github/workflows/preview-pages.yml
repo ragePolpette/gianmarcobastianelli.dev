@@ -1,0 +1,54 @@
+# Preview deployment on GitHub Pages (project site, served under /gianmarcobastianelli.dev/).
+# The build is marked PREVIEW: every page is noindex and robots.txt disallows all.
+# It publishes to the gh-pages branch with plain git, without third-party actions.
+name: Preview on GitHub Pages
+
+on:
+  push:
+    branches: [main, 'step/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-preview
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run check
+
+      - name: Build preview
+        run: npm run build
+        env:
+          SITE_URL: https://ragepolpette.github.io
+          BASE_PATH: /gianmarcobastianelli.dev
+          PREVIEW: 'true'
+
+      - name: Publish to gh-pages
+        working-directory: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_REF: ${{ github.ref_name }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          # _astro/ starts with an underscore: without .nojekyll, Jekyll would drop it.
+          touch .nojekyll
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898319+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Preview of ${SOURCE_REF} at ${SOURCE_SHA}"
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
