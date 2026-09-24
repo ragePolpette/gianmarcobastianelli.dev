@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { t } from '../i18n';
+import { localizePath, t } from '../i18n';
 
 const ui = t('en');
 const it = t('it');
@@ -12,10 +12,10 @@ const it = t('it');
     <h1>{ui.notFound.title}</h1>
     <p>{ui.notFound.body}</p>
     <p>
-      <a href="/">{ui.notFound.home}</a>
+      <a href={localizePath('/', 'en')}>{ui.notFound.home}</a>
     </p>
     <p lang="it" class="alt">
-      {it.notFound.body} <a href="/it/">{it.notFound.home}</a>
+      {it.notFound.body} <a href={localizePath('/', 'it')}>{it.notFound.home}</a>
     </p>
   </section>
 </Base>
