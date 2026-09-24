@@ -1,0 +1,20 @@
+---
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  value: string;
+  locale: Locale;
+}
+
+// Content placeholders ("TODO: …") are rendered as a visible marker, never as plain copy.
+const { value, locale } = Astro.props;
+const isTodo = value.trim().startsWith('TODO');
+---
+
+{isTodo ? (
+  <mark class="todo" title={t(locale).project.todo}>
+    {value}
+  </mark>
+) : (
+  value
+)}

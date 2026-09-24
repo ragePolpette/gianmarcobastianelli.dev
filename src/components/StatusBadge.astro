@@ -1,0 +1,39 @@
+---
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  status: 'active' | 'research' | 'paused';
+  locale: Locale;
+}
+
+const { status, locale } = Astro.props;
+---
+
+<span class:list={['badge', 'mono', status]}>{t(locale).project.status[status]}</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .badge::before {
+    content: '';
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .active::before {
+    background: #5ee89a;
+  }
+  .research::before {
+    background: var(--mercy);
+  }
+</style>

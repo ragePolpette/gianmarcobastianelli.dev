@@ -1,0 +1,224 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import StatusBadge from '../StatusBadge.astro';
+import Text from '../Text.astro';
+import { localizePath, t, type Locale } from '../../i18n';
+import { pillarOf } from '../../data/sephirot';
+import type { Project } from '../../lib/projects';
+
+interface Props {
+  locale: Locale;
+  project: Project;
+}
+
+const { locale, project } = Astro.props;
+const ui = t(locale);
+const data = project.entry.data;
+const { Content } = await render(project.entry);
+const sephirah = ui.sephirot[data.sephirah];
+---
+
+<Base
+  locale={locale}
+  path={`/projects/${project.slug}/`}
+  title={data.name}
+  description={data.tagline}
+>
+  <article class="container project" data-pillar={pillarOf[data.sephirah]}>
+    <p class="back mono">
+      <a href={localizePath('/#projects', locale)}>← {ui.project.back}</a>
+    </p>
+    <header>
+      <p class="sephirah mono">
+        <span class="dot" aria-hidden="true"></span>
+        {sephirah.name} <span class="meaning">· {sephirah.meaning}</span>
+      </p>
+      <h1>{data.name}</h1>
+      <p class="tagline">{data.tagline}</p>
+      <div class="meta">
+        <StatusBadge status={data.status} locale={locale} />
+        {data.repo ? (
+          <a class="mono" href={data.repo} rel="noopener">
+            {ui.project.repo} ↗
+          </a>
+        ) : (
+          <span class="mono muted">{ui.project.noRepo}</span>
+        )}
+      </div>
+    </header>
+
+    <dl class="facts">
+      <div>
+        <dt class="mono">{ui.project.problem}</dt>
+        <dd>
+          <Text value={data.problem} locale={locale} />
+        </dd>
+      </div>
+      <div>
+        <dt class="mono">{ui.project.stack}</dt>
+        <dd>
+          <ul class="stack mono">
+            {data.stack.map((s) => (
+              <li>
+                <Text value={s} locale={locale} />
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="body">
+      <Content />
+    </div>
+
+    {data.components && (
+      <section class="cards" aria-labelledby="cards-title">
+        <h2 id="cards-title">{ui.project.cardsTitle}</h2>
+        <ol>
+          {data.components.map((c) => (
+            <li>
+              <span class="mono card-name">{c.card}</span>
+              <span class="card-label">
+                {c.project ? (
+                  <a href={localizePath(`/projects/${c.project}/`, locale)}>{c.label}</a>
+                ) : (
+                  c.label
+                )}
+                {c.external && <span class="mono muted"> ({ui.project.external})</span>}
+              </span>
+              <span class="muted">{c.role}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+  </article>
+</Base>
+
+<style>
+  .project {
+    padding-top: 2.5rem;
+    max-width: 52rem;
+  }
+  .back a {
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+  .back a:hover {
+    color: var(--fg);
+  }
+  header {
+    margin-block: 3rem 2.5rem;
+  }
+  .sephirah {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .meaning {
+    color: var(--fg-muted);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  .dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  h1 {
+    font-size: clamp(2.25rem, 7vw, 4rem);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+  .tagline {
+    font-size: 1.25rem;
+    color: var(--fg-muted);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+  .muted {
+    color: var(--fg-muted);
+  }
+  .facts {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0 0 2.5rem;
+    padding: 1.5rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  dt {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+  }
+  dd {
+    margin: 0;
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .stack li {
+    padding: 0.15rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .body :global(strong) {
+    color: var(--fg);
+  }
+  .cards {
+    margin-top: 3rem;
+  }
+  .cards h2 {
+    font-size: 1.5rem;
+  }
+  .cards ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .cards li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .card-name {
+    grid-row: span 2;
+    color: var(--balance);
+    align-self: center;
+  }
+  .card-label {
+    font-weight: 600;
+  }
+  @media (max-width: 30rem) {
+    .cards li {
+      grid-template-columns: 1fr;
+    }
+    .card-name {
+      grid-row: auto;
+    }
+  }
+</style>

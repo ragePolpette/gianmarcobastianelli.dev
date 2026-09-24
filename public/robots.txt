@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gianmarcobastianelli.dev/sitemap-index.xml
