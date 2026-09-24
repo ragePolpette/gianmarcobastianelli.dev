@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "Gianmarco Bastianelli — Backend developer .NET e AI engineer",
+    "description": "Backend developer .NET con più di 6 anni su software enterprise multi-tenant, oggi concentrato sull'AI engineering: agenti autonomi, server MCP, memoria per LLM e ricerca di interpretability."
+  },
+  "a11y": {
+    "skip": "Vai al contenuto",
+    "primaryNav": "Principale",
+    "langNav": "Lingua",
+    "externalLink": "si apre in una nuova scheda"
+  },
+  "nav": {
+    "projects": "Progetti",
+    "contact": "Contatti"
+  },
+  "lang": {
+    "en": "English",
+    "it": "Italiano"
+  },
+  "hero": {
+    "role": "Backend developer .NET · AI engineer",
+    "tagline": "Sistemi .NET enterprise per mestiere. Agenti autonomi, server MCP e memoria per LLM per scelta.",
+    "glance": ["6+ anni in .NET", "Bologna", "Autodidatta"]
+  },
+  "home": {
+    "projectsTitle": "Progetti",
+    "projectsIntro": "Agenti, server MCP e ricerca sull'AI. Ognuno porta il nome di una sephirah dell'Albero della Vita.",
+    "namesTitle": "Perché questi nomi?",
+    "namesBody": "Chiamo i miei progetti con i nomi delle sephirot dell'Albero della Vita cabalistico. Qui l'albero è solo una mappa del lavoro: non serve sapere nulla di Kabbalah per leggerla."
+  },
+  "project": {
+    "status": {
+      "active": "attivo",
+      "research": "ricerca",
+      "paused": "in pausa"
+    },
+    "repo": "Codice su GitHub",
+    "noRepo": "Nessun repository pubblico",
+    "problem": "Problema",
+    "stack": "Stack",
+    "back": "Tutti i progetti",
+    "orbits": "In orbita",
+    "cardsTitle": "Le cinque carte",
+    "external": "esterno",
+    "todo": "Da completare"
+  },
+  "contact": {
+    "title": "Contatti",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "Email",
+    "emailFallback": "gianmarco.bastianelli [at] gmail [dot] com"
+  },
+  "footer": {
+    "note": "Sito statico, niente cookie, niente tracciamento."
+  },
+  "sephirot": {
+    "keter": { "name": "Keter", "meaning": "la corona" },
+    "chokhmah": { "name": "Chokhmah", "meaning": "il lampo dell'intuizione" },
+    "binah": { "name": "Binah", "meaning": "la comprensione che dà forma" },
+    "daat": { "name": "Da'at", "meaning": "la conoscenza nascosta" },
+    "chesed": { "name": "Chesed", "meaning": "espansione, il dare" },
+    "gevurah": { "name": "Gevurah", "meaning": "limite, rigore" },
+    "tiferet": { "name": "Tiferet", "meaning": "equilibrio, il cuore" },
+    "netzach": { "name": "Netzach", "meaning": "perseveranza" },
+    "hod": { "name": "Hod", "meaning": "strumenti, comunicazione" },
+    "yesod": { "name": "Yesod", "meaning": "il fondamento" },
+    "malkuth": { "name": "Malkuth", "meaning": "il regno manifesto" }
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "body": "Questo sentiero non porta da nessuna parte sull'albero.",
+    "home": "Torna alla home"
+  }
+}

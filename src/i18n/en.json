@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "Gianmarco Bastianelli — Backend .NET developer & AI engineer",
+    "description": "Backend .NET developer with 6+ years on enterprise multi-tenant software, now focused on AI engineering: autonomous agents, MCP servers, LLM memory and interpretability research."
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "primaryNav": "Primary",
+    "langNav": "Language",
+    "externalLink": "opens in a new tab"
+  },
+  "nav": {
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "lang": {
+    "en": "English",
+    "it": "Italiano"
+  },
+  "hero": {
+    "role": "Backend .NET developer · AI engineer",
+    "tagline": "Enterprise .NET systems by trade. Autonomous agents, MCP servers and memory for LLMs by choice.",
+    "glance": ["6+ years in .NET", "Bologna, Italy", "Self-taught"]
+  },
+  "home": {
+    "projectsTitle": "Projects",
+    "projectsIntro": "Agents, MCP servers and AI research. Each one is named after a sephirah of the Tree of Life.",
+    "namesTitle": "Why these names?",
+    "namesBody": "I name my projects after the sephirot of the Kabbalistic Tree of Life. On this site the tree is just a map of the work: you don't need to know any Kabbalah to read it."
+  },
+  "project": {
+    "status": {
+      "active": "active",
+      "research": "research",
+      "paused": "paused"
+    },
+    "repo": "Source on GitHub",
+    "noRepo": "No public repository",
+    "problem": "Problem",
+    "stack": "Stack",
+    "back": "All projects",
+    "orbits": "Orbits",
+    "cardsTitle": "The five cards",
+    "external": "external",
+    "todo": "To be completed"
+  },
+  "contact": {
+    "title": "Contact",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "Email",
+    "emailFallback": "gianmarco.bastianelli [at] gmail [dot] com"
+  },
+  "footer": {
+    "note": "Static site, no cookies, no tracking."
+  },
+  "sephirot": {
+    "keter": { "name": "Keter", "meaning": "the crown" },
+    "chokhmah": { "name": "Chokhmah", "meaning": "the flash of insight" },
+    "binah": { "name": "Binah", "meaning": "understanding that gives form" },
+    "daat": { "name": "Da'at", "meaning": "the hidden knowledge" },
+    "chesed": { "name": "Chesed", "meaning": "expansion, giving" },
+    "gevurah": { "name": "Gevurah", "meaning": "limits, rigour" },
+    "tiferet": { "name": "Tiferet", "meaning": "balance, the heart" },
+    "netzach": { "name": "Netzach", "meaning": "endurance" },
+    "hod": { "name": "Hod", "meaning": "instruments, communication" },
+    "yesod": { "name": "Yesod", "meaning": "the foundation" },
+    "malkuth": { "name": "Malkuth", "meaning": "the manifest kingdom" }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This path doesn't lead anywhere on the tree.",
+    "home": "Back to the homepage"
+  }
+}
