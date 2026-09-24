@@ -19,12 +19,20 @@ npm run verify   # astro check + eslint + prettier + build
   The frontmatter schema lives in `src/content.config.ts`. The build fails if a
   translation is missing, if two primary projects share a sephirah, or if a repo is
   not a public `github.com/ragePolpette/*` URL.
+- **Sections** (about, work, contact): `src/content/pages/<locale>/<slug>.md`. Each
+  one sits on a sephirah of the tree, next to the projects.
 - **UI strings**: `src/i18n/en.json` and `src/i18n/it.json`. Both must have the same
   keys; a missing key is a type error.
 - Placeholders written as `TODO: …` render as a visible marker.
 
 To add a project, create `en/<slug>.md` and `it/<slug>.md` with a `sephirah` and a
 `role` (`primary` or `satellite`). No component changes are needed.
+
+## Open Graph images
+
+`src/pages/og/[...route].png.ts` renders one 1200×630 PNG per page and locale at build
+time (satori + resvg), with the tree drawn and the page's node highlighted. Nothing
+from this runs in the browser.
 
 ## Deploy (Cloudflare Pages)
 
