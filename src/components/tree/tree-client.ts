@@ -116,33 +116,49 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
   });
 }
 
-function setupIgnition(stage: HTMLElement): void {
+function setupIgnition(root: HTMLElement, stage: HTMLElement): void {
   if (reducedMotion()) return;
-  const rect = stage.getBoundingClientRect();
-  // Already on screen at load: light it immediately rather than flashing it off.
-  if (rect.top < innerHeight * 0.6) return;
-
-  stage.dataset['state'] = 'off';
   const nodes = [...stage.querySelectorAll<SVGGElement>('.node')];
   const paths = [...stage.querySelectorAll<SVGGElement>('.path')];
-  const lit = new Set<string>();
+  let timers: number[] = [];
+
+  const turnOff = () => {
+    for (const id of timers) clearTimeout(id);
+    timers = [];
+    for (const el of [...nodes, ...paths]) el.classList.remove('lit');
+    stage.dataset['state'] = 'off';
+  };
 
   const ignite = () => {
+    const lit = new Set<string>();
     nodes.forEach((node, i) => {
-      setTimeout(() => {
-        node.classList.add('lit');
-        lit.add(node.dataset['node'] ?? '');
-        for (const p of paths) {
-          if (lit.has(p.dataset['a'] ?? '') && lit.has(p.dataset['b'] ?? ''))
-            p.classList.add('lit');
-        }
-        if (i === nodes.length - 1) {
-          setTimeout(() => (stage.dataset['state'] = 'on'), 700);
-        }
-      }, i * IGNITE_STEP_MS);
+      timers.push(
+        window.setTimeout(() => {
+          node.classList.add('lit');
+          lit.add(node.dataset['node'] ?? '');
+          for (const p of paths) {
+            if (lit.has(p.dataset['a'] ?? '') && lit.has(p.dataset['b'] ?? '')) {
+              p.classList.add('lit');
+            }
+          }
+          if (i === nodes.length - 1) {
+            timers.push(window.setTimeout(() => (stage.dataset['state'] = 'on'), 700));
+          }
+        }, i * IGNITE_STEP_MS),
+      );
     });
   };
 
+  // Lab only: replay the sequence on demand.
+  root.addEventListener('tree:replay', () => {
+    turnOff();
+    requestAnimationFrame(() => requestAnimationFrame(ignite));
+  });
+
+  // Already on screen at load: leave it lit rather than flashing it off.
+  if (stage.getBoundingClientRect().top < innerHeight * 0.6) return;
+
+  turnOff();
   const observer = new IntersectionObserver(
     (entries) => {
       if (entries.some((e) => e.isIntersecting)) {
@@ -229,7 +245,7 @@ export function initTree(root: HTMLElement): void {
   setupGuidedScroll(root);
 
   if (isDesktop()) {
-    setupIgnition(stage);
+    setupIgnition(root, stage);
     setupParallax(stage);
     setupParticles(stage);
   }

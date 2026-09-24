@@ -13,17 +13,40 @@ const { locale } = Astro.props;
 
 <Base locale={locale} path="/lab/tree/" title="Tree prototype" noindex>
   <div class="container lab">
-    <p class="mono tag">lab / tree — prototype</p>
+    <p class="mono tag">
+      lab / tree — prototype
+      <button type="button" class="mono replay" data-replay>
+        replay ignition
+      </button>
+    </p>
     <Tree locale={locale} />
   </div>
 </Base>
+
+<script>
+  document.querySelector('[data-replay]')?.addEventListener('click', () => {
+    document.querySelector('[data-tree]')?.dispatchEvent(new CustomEvent('tree:replay'));
+  });
+</script>
 
 <style>
   .lab {
     padding-top: 2rem;
   }
   .tag {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
     color: var(--severity);
     margin-bottom: 2rem;
+  }
+  .replay {
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-raised);
+    color: var(--fg);
+    cursor: pointer;
   }
 </style>
