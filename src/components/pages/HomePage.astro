@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ProjectList from '../ProjectList.astro';
+import Tree from '../tree/Tree.astro';
 import { t, type Locale } from '../../i18n';
 import { site } from '../../data/site';
 
@@ -37,7 +37,7 @@ const ui = t(locale);
   <section class="projects container" id="projects" aria-labelledby="projects-title">
     <h2 id="projects-title">{ui.home.projectsTitle}</h2>
     <p class="intro">{ui.home.projectsIntro}</p>
-    <ProjectList locale={locale} />
+    <Tree locale={locale} />
     <aside class="names">
       <h3>{ui.home.namesTitle}</h3>
       <p>{ui.home.namesBody}</p>
