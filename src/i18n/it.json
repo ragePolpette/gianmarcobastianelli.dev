@@ -11,7 +11,10 @@
   },
   "nav": {
     "projects": "Progetti",
-    "contact": "Contatti"
+    "contact": "Contatti",
+    "tree": "L'albero",
+    "work": "Lavoro",
+    "about": "Chi sono"
   },
   "lang": {
     "en": "English",
@@ -38,7 +41,6 @@
     "noRepo": "Nessun repository pubblico",
     "problem": "Problema",
     "stack": "Stack",
-    "back": "Tutti i progetti",
     "orbits": "In orbita",
     "cardsTitle": "Le cinque carte",
     "external": "esterno",
@@ -112,20 +114,9 @@
     "viewList": "Lista",
     "hint": "Passa sopra un nodo o selezionalo per l'anteprima. Ogni nodo è un link.",
     "mobileHint": "Scorri: l'albero ti segue.",
-    "exodiaHint": "Le carte di Exodia si accendono sull'albero.",
-    "nodes": {
-      "keter": {
-        "title": "Chi sono",
-        "summary": "chi sono · manifesto"
-      },
-      "tiferet": {
-        "title": "Enterprise .NET",
-        "summary": "gestionale multi-tenant · fatturazione SDI"
-      },
-      "daat": {
-        "title": "Contatti",
-        "summary": "GitHub · LinkedIn · email"
-      }
-    }
+    "exodiaHint": "Le carte di Exodia si accendono sull'albero."
+  },
+  "og": {
+    "alt": "La mappa dei progetti di Gianmarco Bastianelli come Albero della Vita"
   }
 }

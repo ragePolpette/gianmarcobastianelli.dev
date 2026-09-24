@@ -11,7 +11,10 @@
   },
   "nav": {
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact",
+    "tree": "The tree",
+    "work": "Work",
+    "about": "About"
   },
   "lang": {
     "en": "English",
@@ -38,7 +41,6 @@
     "noRepo": "No public repository",
     "problem": "Problem",
     "stack": "Stack",
-    "back": "All projects",
     "orbits": "Orbits",
     "cardsTitle": "The five cards",
     "external": "external",
@@ -112,20 +114,9 @@
     "viewList": "List",
     "hint": "Hover or focus a node to preview it. Every node is a link.",
     "mobileHint": "Scroll: the tree follows you.",
-    "exodiaHint": "Exodia's cards light up across the tree.",
-    "nodes": {
-      "keter": {
-        "title": "About",
-        "summary": "who I am · manifesto"
-      },
-      "tiferet": {
-        "title": "Enterprise .NET",
-        "summary": "multi-tenant ERP · SDI e-invoicing"
-      },
-      "daat": {
-        "title": "Contact",
-        "summary": "GitHub · LinkedIn · email"
-      }
-    }
+    "exodiaHint": "Exodia's cards light up across the tree."
+  },
+  "og": {
+    "alt": "The Tree of Life map of Gianmarco Bastianelli's projects"
   }
 }
