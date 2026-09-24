@@ -1,6 +1,6 @@
 # Piano — gianmarcobastianelli.dev
 
-> Stato: **bozza da approvare**. Niente codice finché non dai l'ok.
+> Stato: **approvato** (24/09/2026). Le decisioni prese sono segnate con ✅.
 > Legenda: ⚠️ = problema reale trovato durante la verifica · ❓ = decisione tua · `TODO` = informazione mancante, non la invento.
 
 ---
@@ -9,8 +9,8 @@
 
 Ho letto i README e la struttura dei repo pubblici. Alcune cose non tornano con il brief:
 
-1. ⚠️ **Exodia è pubblico, con codice** (`ragePolpette/Exodia`, licenza MIT, CI attiva). Il brief dice "case study senza codice". Il repo sembra già ripulito (README "public-safe", hygiene scan, niente nomi cliente), ma solo tu sai se pubblicarlo va bene rispetto all'azienda. ❓ Linkiamo il repo o no? Io lo linkerei: un repo funzionante vale molto più di un case study a parole. Il rovescio della medaglia è che chiunque lo associ al tuo datore di lavoro.
-2. ⚠️ **llm_context non usa nomic-embed-code nel codice pubblico.** Il default è `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (384 dimensioni, in `cli.py` e `config.yaml`); "nomic" non compare da nessuna parte. Se localmente usi nomic-embed-code tramite config, il sito può dirlo solo se il repo lo supporta davvero. Finché non me lo confermi scrivo "embedding locali".
+1. ⚠️ **Exodia è pubblico, con codice** (`ragePolpette/Exodia`, licenza MIT, CI attiva). Il brief dice "case study senza codice". Il repo sembra già ripulito (README "public-safe", hygiene scan, niente nomi cliente), ma solo tu sai se pubblicarlo va bene rispetto all'azienda. ✅ Si linka.
+2. ⚠️ **llm_context non usa nomic-embed-code nel codice pubblico.** Il default è `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (384 dimensioni, in `cli.py` e `config.yaml`); "nomic" non compare da nessuna parte. Se localmente usi nomic-embed-code tramite config, il sito può dirlo solo se il repo lo supporta davvero. ✅ Confermato: il repo non supporta nomic. Il sito scrive "local embeddings".
 3. ⚠️ **Licenze mancanti.** `llm_context`, `llm-bitbucket-mcp`, `mcp-dashboard`, `intra-model-memval-lab` e `Jobbby` non hanno un file LICENSE. Senza licenza un repo è "source-available", non open source: per legge nessuno può riusarlo. Se la serie si chiama "MCP open-source", conviene aggiungere una licenza (MIT, come Exodia/llm-memory/llm-sql-db-mcp) prima di pubblicare il sito.
 4. ⚠️ **Igiene di llm_context.** Nella root c'è `start_mcp_server_non serve pi ui a un caszoo.bat`, oltre a `config.rework.yaml` e `reingest_completo.bat`. Un recruiter che clicca dal sito vede quel nome. Ti consiglio una pulizia prima del lancio.
 5. ⚠️ **Il README di Jobbby** è solo una guida alla dry run, in italiano. Non spiega il motore a grafo, i run concorrenti o lo steering via Telegram, che però esistono nel codice (`src/GraphEngine`, `src/Discovery`, `src/Notifications/TelegramGateway.cs`, `HumanInputNode.cs`). Chi arriva dal sito si aspetta di trovare quello che ha appena letto.
@@ -74,7 +74,7 @@ I progetti sono 10 più 3 sezioni, per 11 nodi. Due nodi devono ospitare più di
 
 Con questo mapping **nessun nodo resta dormiente**.
 
-**Satelliti o un progetto per nodo?** ❓ Ci sono 8 progetti (2 di ricerca, 5 MCP e Jobbby) da distribuire su 6 nodi liberi. "Un progetto per nodo", quindi, in senso stretto non ci sta. Le alternative sono:
+**Satelliti o un progetto per nodo?** ✅ **Scelta A (satelliti).** Ci sono 8 progetti (2 di ricerca, 5 MCP e Jobbby) da distribuire su 6 nodi liberi. "Un progetto per nodo", quindi, in senso stretto non ci sta. Le alternative sono:
 - **A. Satelliti** (consigliata): ogni nodo ha un progetto principale, con nome e riga di descrizione. I progetti in più sono piccoli punti in orbita, ognuno con il proprio link, il proprio focus e la propria pagina. Tutti gli 8 progetti stanno sull'albero.
 - **B. Uno per nodo**: 6 progetti sull'albero; gli altri 2 (per esempio mcp-dashboard e llm-bitbucket-mcp) finiscono in una fila "tooling" sotto l'albero e nella vista lista. L'albero è più pulito, ma quei due progetti diventano cittadini di serie B.
 
@@ -163,19 +163,19 @@ Sorgente: elenco dei repo di `ragePolpette` con la loro visibilità e lettura de
 | Progetto | Repo pubblico | Stato | Stack (da repo) | Descrizione (1 riga) | Note |
 |---|---|---|---|---|---|
 | **llm-memory** | https://github.com/ragePolpette/llm-memory | active | Python, SQLite + vettori, MCP | Local-first MCP memory: two tiers (strong + fast) across three scopes (project / workspace / global), with governance and audit trail. | ❓ "3 livelli" = i 3 scope? Confermami. Aggiungo "used daily in real work" come da brief |
-| **llm_context** | https://github.com/ragePolpette/llm_context | active | Python, PostgreSQL + pgvector, MCP | Local-first MCP retrieval over code and docs: project-scoped, incremental ingest, pgvector-backed. | ⚠️ nomic-embed-code non presente (vedi §0.2). ⚠️ Pulizia file (§0.4). ⚠️ Nessuna licenza |
+| **llm_context** | https://github.com/ragePolpette/llm_context | active | Python, PostgreSQL + pgvector, MCP | Local-first MCP retrieval over code and docs: project-scoped, incremental ingest, pgvector-backed. | Embedding locali (nomic non supportato). ⚠️ Pulizia file (§0.4). ⚠️ Nessuna licenza |
 | **llm-bitbucket-mcp** | https://github.com/ragePolpette/llm-bitbucket-mcp | active | Node.js, MCP HTTP | Constrained MCP surface for Bitbucket Cloud pull requests and pipelines, including failed-step log extraction. | Nome corretto rispetto al brief. ⚠️ Nessuna licenza |
 | **llm-sql-db-mcp** | https://github.com/ragePolpette/llm-sql-db-mcp | active | Node.js, SQL Server (`mssql`), MCP | **[da validare]** Policy-driven MCP server for SQL Server: per-target read/write rules, SQL guard rails and anonymization before results leave the server. | Sostituisce llm-db-dev/prod-mcp |
 | **mcp-dashboard** | https://github.com/ragePolpette/mcp-dashboard | active | Python (FastAPI) + frontend | **[da validare]** Local control plane for a workstation MCP stack: start/stop services, unified logs, vault-backed secrets, llm-memory admin. | ⚠️ Nessuna licenza |
 | **memval-lab** | https://github.com/ragePolpette/intra-model-memval-lab | research · active | Python, transformers + peft, Gemma 3 270M IT | In-model memory consolidation: real LoRA training, before/after evals and a working promote/rollback gate. Next: SAE-based feature drift (Gemma Scope 2) and activation-direction probes. | Il README conferma che il drift SAE **non** c'è ancora: lo presento come "next step". ⚠️ Nessuna licenza |
 | **latent-refine-lab** | — (privato) | early research | `TODO` | Hybrid architecture POC: diffusion in training and ingest, autoregressive output; starts from a frozen decoder on a single GPU. | Niente link |
-| **Exodia** | https://github.com/ragePolpette/Exodia ❓ | active (in produzione) | Node.js, MCP, provider-agnostic | Autonomous agent that takes a Jira ticket to a pull request, with multi-agent verification and an async clarification loop via ticket comments. | ⚠️ Pubblico, al contrario di quanto dice il brief (§0.1). Le 5 carte sono in §0.10 |
+| **Exodia** | https://github.com/ragePolpette/Exodia | active (in produzione) | Node.js, MCP, provider-agnostic | Autonomous agent that takes a Jira ticket to a pull request, with multi-agent verification and an async clarification loop via ticket comments. | ⚠️ Pubblico, al contrario di quanto dice il brief (§0.1). Le 5 carte sono in §0.10 |
 | **Yesod** | — (nessun repo) | active | NousResearch Hermes Agent, `TODO` | Personal meta-orchestrator on Hermes Agent: runs tasks autonomously, refines or expands my inputs, supports mid-run steering (validated with spike tests). | Niente link |
 | **Jobbby** | https://github.com/ragePolpette/Jobbby | active | C# / .NET | Task-agnostic agent-graph engine with concurrent runs, human-approved source discovery and two-way steering via Telegram. First use case: job search. | ⚠️ README da aggiornare (§0.5). ⚠️ Nessuna licenza |
 
 Altri `TODO` che non posso ricavare dai repo:
 - link alla serie "build in public" su LinkedIn (post o hashtag);
-- ~~case study della migrazione di 7M righe~~: **escluso** su tua indicazione. Resta al massimo una riga nei punti salienti di /work (vedi assunzioni);
+- ~~case study della migrazione di 7M righe~~: ✅ **escluso per ora**, sia come case study sia come riga;
 - Exodia: i 5 componenti e un'immagine o diagramma presentabile (senza dettagli aziendali).
 
 ---
@@ -185,7 +185,7 @@ Altri `TODO` che non posso ricavare dai repo:
 1. Il dominio `gianmarcobastianelli.dev` è già tuo e lo punteremo su Cloudflare Pages.
 2. Niente analytics e niente cookie.
 3. Il testo corrente usa font di sistema; Syne solo per i titoli.
-8. La migrazione di 7M righe resta come **una sola riga** fattuale in /work ("zero-downtime migration of 7M rows on a production ERP"), senza un case study. Se vuoi eliminarla del tutto, la tolgo.
+8. La migrazione di 7M righe per ora non compare sul sito.
 4. Moto: una riga in /about, niente di più.
 5. Il copy lo scrivo io partendo dal brief e dai README, poi lo rivedi tu. Nessuna metrica, stella o feature inventata; dove manca un'informazione compare un `TODO` visibile anche in pagina, in dev.
 6. Firme dei commit: autore `Claudio⚡`, senza trailer (ho interpretato "Cluadio" come un refuso).
