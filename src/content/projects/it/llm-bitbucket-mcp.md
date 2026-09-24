@@ -3,6 +3,7 @@ name: llm-bitbucket-mcp
 sephirah: hod
 role: satellite
 tagline: Una superficie MCP ristretta per pull request e pipeline su Bitbucket Cloud.
+summary: PR e pipeline per agenti
 problem: Gli agenti devono poter aprire, esaminare e commentare pull request e capire perché una pipeline è fallita, senza ricevere una workstation git generica e senza limiti.
 stack: [Node.js, MCP (HTTP), Bitbucket Cloud API]
 status: active

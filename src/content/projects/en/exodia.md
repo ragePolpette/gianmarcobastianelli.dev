@@ -3,6 +3,7 @@ name: Exodia
 sephirah: malkuth
 role: primary
 tagline: Autonomous agent that takes a Jira ticket all the way to a pull request.
+summary: from Jira ticket to pull request
 problem: Most ticket-to-code demos collapse the job into one risky step. Exodia splits it into stages, audits every proposal before writing a line, and stops to ask instead of improvising.
 stack: [Node.js, MCP, Jira, Bitbucket, provider-agnostic LLM runtime]
 status: active

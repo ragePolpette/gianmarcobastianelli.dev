@@ -3,6 +3,7 @@ name: latent-refine-lab
 sephirah: chokhmah
 role: primary
 tagline: A hybrid architecture proof of concept, with diffusion at training and ingest time and autoregressive output.
+summary: hybrid diffusion + autoregressive
 problem: 'TODO: what question does this POC answer?'
 stack: ['TODO']
 status: research

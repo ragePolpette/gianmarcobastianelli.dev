@@ -3,6 +3,7 @@ name: Jobbby
 sephirah: netzach
 role: primary
 tagline: Motore a grafo di agenti, indipendente dal task. Primo caso d'uso, la ricerca di lavoro.
+summary: grafo di agenti guidato via Telegram
 problem: I workflow di agenti che durano a lungo hanno bisogno di concorrenza, di approvazione umana nei punti giusti e di un modo per guidarli da ovunque.
 stack: [C#, .NET, LLM, Telegram]
 status: active

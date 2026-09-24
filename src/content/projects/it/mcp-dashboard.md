@@ -3,6 +3,7 @@ name: mcp-dashboard
 sephirah: hod
 role: primary
 tagline: Un pannello di controllo locale per far girare e osservare uno stack MCP sulla workstation.
+summary: pannello di controllo dello stack MCP
 problem: Far girare più server MCP in locale significa destreggiarsi tra processi, log e segreti sparsi in una pila di terminali.
 stack: [Python, FastAPI, JavaScript]
 status: active

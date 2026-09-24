@@ -3,6 +3,7 @@ name: llm_context
 sephirah: chesed
 role: satellite
 tagline: Retrieval su codice e documentazione tecnica per agenti, via MCP, su PostgreSQL + pgvector.
+summary: retrieval sul codice con pgvector
 problem: Gli agenti hanno bisogno di contesto tecnico preciso senza caricare un intero repository nel prompt.
 stack: [Python, PostgreSQL, pgvector, embedding locali, MCP]
 status: active

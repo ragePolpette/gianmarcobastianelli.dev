@@ -3,6 +3,7 @@ name: memval-lab
 sephirah: binah
 role: primary
 tagline: Consolidare la memoria dentro il modello, con training LoRA reale, eval prima e dopo e un gate che promuove o fa rollback.
+summary: memoria consolidata nei pesi
 problem: Un modello piccolo può imparare dai propri episodi senza rompere in silenzio quello che sapeva già? E come ce ne accorgeremmo, se succedesse?
 stack: [Python, PyTorch, Transformers, PEFT/LoRA, Gemma 3 270M IT]
 status: research
