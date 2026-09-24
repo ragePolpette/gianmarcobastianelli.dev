@@ -48,7 +48,7 @@ Ho letto i README e la struttura dei repo pubblici. Alcune cose non tornano con 
 - **Display: Syne** (700–800, variabile) — **confermato**. È quello con più carattere dei tre. Space Grotesk è pulito ma ormai è il font di default di metà dei siti tech: non "resta impresso". Unbounded è molto largo: sul mobile un titolo come "Gianmarco Bastianelli" va a capo male. Syne solo per i titoli, mai per il testo.
 - **Mono: JetBrains Mono** per label, metadati e stato.
 - **Testo corrente**: stack di sistema (`system-ui`), zero byte. Assunzione: se preferisci Inter lo aggiungo.
-- **Lettere ebraiche**: **niente font ebraico**. Le 11 lettere diventano path SVG inline (`aria-hidden`): costo quasi nullo e resa identica ovunque.
+- ~~**Lettere ebraiche**~~: ✅ **tolte** dopo la validazione del prototipo. Sull'albero restano solo i nomi traslitterati.
 
 ---
 
@@ -138,7 +138,7 @@ Lo schema Zod fa fallire la build se due progetti primari occupano la stessa sep
 ### Accessibilità
 - Ogni nodo è un `<a>` dentro l'SVG, con testo visibile, `aria-label` completo e **focus ring evidente**. L'ordine di tabulazione segue il DOM (Keter → Malkuth). Le frecce per muoversi lungo i sentieri sono un extra, non un requisito.
 - **L'anteprima dell'hover compare anche al focus**: nessuna informazione è disponibile solo con l'hover.
-- Sentieri, particelle e lettere ebraiche sono `aria-hidden`, così lo screen reader non legge "alef" o fonemi a caso.
+- Sentieri e particelle sono `aria-hidden`.
 - Contrasto: gli accenti ciano, magenta e oro servono per tratti e glow, mentre **il testo resta quasi bianco** su `#07070B`. Il magenta non raggiunge l'AA come testo piccolo: verifico ogni coppia in fase di scaffold.
 - `prefers-reduced-motion`: albero statico già acceso, niente particelle, niente parallax, niente View Transitions.
 - La vista lista è una `<ul>` semantica con gli stessi contenuti. L'albero e la lista sono due viste dello stesso nav, non contenuti duplicati letti due volte.

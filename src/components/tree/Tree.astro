@@ -2,7 +2,6 @@
 import ProjectList from '../ProjectList.astro';
 import StatusBadge from '../StatusBadge.astro';
 import { t, type Locale } from '../../i18n';
-import { hebrewGlyphs } from '../../data/hebrew-glyphs';
 import { viewBox } from '../../data/tree';
 import { buildTree, estimateWidth, type NodeView } from '../../lib/tree';
 
@@ -17,7 +16,6 @@ const { nodes, paths } = await buildTree(locale);
 // Label metrics, in SVG user units.
 const OFFSET = 36;
 const SIZE = { seph: 13, name: 27, sum: 17, sat: 15 } as const;
-const GLYPH_HEIGHT = 22;
 
 function label(node: NodeView) {
   const right = node.side === 'right';
@@ -33,20 +31,6 @@ function label(node: NodeView) {
     anchor: right ? 'start' : 'end',
     chipX: right ? tx - 12 : tx - width + 12,
     width,
-  };
-}
-
-function glyph(node: NodeView) {
-  const g = hebrewGlyphs[node.sephirah];
-  const scale = GLYPH_HEIGHT / 59;
-  const w = g.width * scale;
-  // Above the label, aligned with its text, clear of the paths around the node.
-  const tx = label(node).tx;
-  const gx = node.side === 'right' ? tx : tx - w;
-  const gy = node.y - 52 - GLYPH_HEIGHT;
-  return {
-    d: g.d,
-    transform: `translate(${gx.toFixed(1)} ${gy}) scale(${scale.toFixed(3)})`,
   };
 }
 
@@ -112,14 +96,6 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
             <line class="rail" x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} pathLength="1" />
             <line class="flow" x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} pathLength="1" />
           </g>
-        ))}
-        {nodes.map((n) => (
-          <path
-            class="glyph"
-            data-pillar={n.pillar}
-            d={glyph(n).d}
-            transform={glyph(n).transform}
-          />
         ))}
         {exodiaCurves.map((d) => (
           <path class="exodia-link" d={d} pathLength="1" />
@@ -384,12 +360,6 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     }
   }
 
-  .glyph {
-    fill: var(--accent);
-    opacity: 0.28;
-    transition: opacity 0.3s;
-  }
-
   .exodia-link {
     fill: none;
     stroke: var(--balance);
@@ -526,9 +496,6 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   }
   .stage[data-state='off'] .path:not(.lit) .rail {
     stroke-dashoffset: 1;
-  }
-  .stage[data-state='off'] .glyph {
-    opacity: 0;
   }
   .node {
     transition: opacity 0.5s ease-out;
