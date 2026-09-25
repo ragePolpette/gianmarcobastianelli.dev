@@ -1,5 +1,5 @@
 ---
-import ProjectList from '../ProjectList.astro';
+import NodeList from '../NodeList.astro';
 import StatusBadge from '../StatusBadge.astro';
 import { t, type Locale } from '../../i18n';
 import { viewBox } from '../../data/tree';
@@ -22,7 +22,7 @@ function label(node: NodeView) {
   const tx = right ? node.x + OFFSET : node.x - OFFSET;
   const width =
     Math.max(
-      estimateWidth(node.sephirahName.toUpperCase(), SIZE.seph, 'mono'),
+      estimateWidth(node.eyebrow.toUpperCase(), SIZE.seph, 'mono'),
       estimateWidth(node.title ?? '', SIZE.name, 'display'),
       estimateWidth(node.summary ?? '', SIZE.sum, 'body'),
     ) + 24;
@@ -34,21 +34,31 @@ function label(node: NodeView) {
   };
 }
 
-const malkuth = nodes.find((n) => n.sephirah === 'malkuth');
+const baseNode = nodes.find((n) => n.nodeId === 'base');
 const exodiaTargets = nodes.flatMap((n) => [
   ...(n.exodiaPart ? [{ x: n.x, y: n.y }] : []),
-  ...n.satellites.filter((s) => s.exodiaPart).map((s) => ({ x: s.x, y: s.y })),
+  ...n.satellites.filter((s) => s.exodiaPart).map((s) => ({ x: s.x, y: s.y, sat: true })),
 ]);
-const exodiaCurves = malkuth
-  ? exodiaTargets.map(({ x, y }) => {
-      const bend = x >= malkuth.x ? 200 : -200;
-      const cx = (malkuth.x + x) / 2 + bend;
-      const cy = (malkuth.y + y) / 2 + 60;
-      return `M${malkuth.x} ${malkuth.y} Q${cx} ${cy} ${x} ${y}`;
+const exodiaCurves = baseNode
+  ? exodiaTargets.map(({ x, y, ...rest }) => {
+      const bend = x >= baseNode.x ? 200 : -200;
+      const cx = (baseNode.x + x) / 2 + bend;
+      const cy = (baseNode.y + y) / 2 + 60;
+      return { d: `M${baseNode.x} ${baseNode.y} Q${cx} ${cy} ${x} ${y}`, sat: 'sat' in rest };
     })
   : [];
 
-const pillars = ['mercy', 'severity', 'balance'] as const;
+const pillars = ['right', 'left', 'center'] as const;
+
+// Portrait framing for narrow screens: node columns plus room for a name under each node.
+const xs = nodes.map((n) => n.x);
+const ys = nodes.map((n) => n.y);
+const compactViewBox = [
+  Math.min(...xs) - 180,
+  Math.min(...ys) - 60,
+  Math.max(...xs) - Math.min(...xs) + 360,
+  Math.max(...ys) - Math.min(...ys) + 150,
+].join(' ');
 ---
 
 <section class="tree" data-tree aria-labelledby="tree-title">
@@ -66,9 +76,9 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     </div>
   </div>
 
-  <h2 class="visually-hidden" id="tree-title">
+  <p class="visually-hidden" id="tree-title">
     {ui.tree.label}
-  </h2>
+  </p>
 
   <div class="stage" data-stage data-panel="tree">
     <canvas class="particles" data-particles aria-hidden="true"></canvas>
@@ -76,6 +86,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     <svg
       class="tree-svg"
       viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
+      data-compact-viewbox={compactViewBox}
       role="group"
       aria-labelledby="tree-title"
       aria-describedby="tree-hint"
@@ -97,8 +108,8 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
             <line class="flow" x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} pathLength="1" />
           </g>
         ))}
-        {exodiaCurves.map((d) => (
-          <path class="exodia-link" d={d} pathLength="1" />
+        {exodiaCurves.map((c) => (
+          <path class="exodia-link" data-to-sat={c.sat ? '' : undefined} d={c.d} pathLength="1" />
         ))}
       </g>
 
@@ -114,7 +125,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
                 <g class="label">
                   <rect class="chip" x={l.chipX} y={n.y - 38} width={l.width} height="84" rx="10" />
                   <text class="seph" x={l.tx} y={n.y - 16} text-anchor={l.anchor}>
-                    {n.sephirahName.toUpperCase()}
+                    {n.eyebrow.toUpperCase()}
                   </text>
                   <text class="name" x={l.tx} y={n.y + 11} text-anchor={l.anchor}>
                     {n.title}
@@ -124,12 +135,27 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
                   </text>
                 </g>
               )}
+              {n.title && (
+                <g class="clabel">
+                  <rect
+                    class="chip"
+                    x={n.x - (estimateWidth(n.title, 30, 'display') + 24) / 2}
+                    y={n.y + 36}
+                    width={estimateWidth(n.title, 30, 'display') + 24}
+                    height="44"
+                    rx="10"
+                  />
+                  <text class="cname" x={n.x} y={n.y + 67} text-anchor="middle">
+                    {n.title}
+                  </text>
+                </g>
+              )}
             </>
           );
           return (
             <g
               class="node"
-              data-node={n.sephirah}
+              data-node={n.nodeId}
               data-pillar={n.pillar}
               data-dormant={n.href ? undefined : ''}
               data-exodia-part={n.exodiaPart ? '' : undefined}
@@ -137,8 +163,8 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
               {n.href ? (
                 <a
                   href={n.href}
-                  data-key={n.sephirah}
-                  aria-label={`${n.sephirahName}: ${n.title}. ${n.summary}`}
+                  data-key={n.nodeId}
+                  aria-label={`${n.title}, ${n.eyebrow}. ${n.summary}`}
                 >
                   {visuals}
                 </a>
@@ -151,12 +177,12 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
                 const w = estimateWidth(s.name, SIZE.sat, 'mono') + 20;
                 return (
                   <a
-                    class="sat"
+                    class:list={['sat', right ? 'sat-r' : 'sat-l']}
                     href={s.href}
                     data-key={`sat:${s.slug}`}
-                    data-parent={n.sephirah}
+                    data-parent={n.nodeId}
                     data-exodia-part={s.exodiaPart ? '' : undefined}
-                    aria-label={`${s.name}, ${n.sephirahName}. ${s.summary}`}
+                    aria-label={`${s.name}, ${s.eyebrow}. ${s.summary}`}
                   >
                     <line class="tether" x1={n.x} y1={n.y} x2={s.x} y2={s.y} />
                     <rect
@@ -180,6 +206,10 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
       </g>
     </svg>
 
+    <div class="m-caption" data-caption data-open={ui.tree.open} aria-live="polite">
+      <p class="mono cap-hint">{ui.tree.tapHint}</p>
+    </div>
+
     <aside class="preview" aria-hidden="true" data-preview-root>
       <div class="pv pv-default" data-preview="">
         <p class="mono pv-hint">{ui.tree.hint}</p>
@@ -187,29 +217,27 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
       {nodes
         .filter((n) => n.title)
         .map((n) => (
-          <div class="pv" data-preview={n.sephirah} data-pillar={n.pillar} hidden>
-            <p class="mono pv-seph">
-              {n.sephirahName} · {n.meaning}
-            </p>
+          <div class="pv" data-preview={n.nodeId} data-pillar={n.pillar} hidden>
+            <p class="mono pv-seph">{n.eyebrow}</p>
             <p class="pv-title">{n.title}</p>
-            <p class="pv-text">{n.project ? n.project.entry.data.tagline : n.summary}</p>
+            <p class="pv-text">{n.tagline}</p>
             {n.project && (
               <p class="pv-meta">
                 <StatusBadge status={n.project.entry.data.status} locale={locale} />
                 <span class="mono">{n.project.entry.data.stack.slice(0, 4).join(' · ')}</span>
               </p>
             )}
-            {n.sephirah === 'malkuth' && <p class="mono pv-exodia">{ui.tree.exodiaHint}</p>}
+            {n.nodeId === 'base' && <p class="mono pv-exodia">{ui.tree.exodiaHint}</p>}
           </div>
         ))}
       {nodes.flatMap((n) =>
         n.satellites.map((s) => (
           <div class="pv" data-preview={`sat:${s.slug}`} data-pillar={n.pillar} hidden>
             <p class="mono pv-seph">
-              {n.sephirahName} · {ui.project.orbits}
+              {s.eyebrow} · {ui.project.orbits}
             </p>
             <p class="pv-title">{s.name}</p>
-            <p class="pv-text">{s.summary}</p>
+            <p class="pv-text">{s.tagline}</p>
           </div>
         )),
       )}
@@ -222,7 +250,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
         <line x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} />
       ))}
       {nodes.map((n) => (
-        <circle cx={n.x} cy={n.y} r="34" data-mini={n.sephirah} data-pillar={n.pillar} />
+        <circle cx={n.x} cy={n.y} r="34" data-mini={n.nodeId} data-pillar={n.pillar} />
       ))}
     </svg>
     <p class="mini-label mono" data-mini-label>
@@ -231,7 +259,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   </div>
 
   <div class="list" data-panel="list">
-    <ProjectList locale={locale} />
+    <NodeList locale={locale} />
   </div>
 </section>
 
@@ -243,7 +271,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
 
 <style>
   .tree {
-    --active: var(--balance);
+    --active: var(--gold);
     position: relative;
   }
 
@@ -315,14 +343,14 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   }
 
   /* Pillar colours inside the SVG. */
-  .stop-mercy {
-    stop-color: var(--mercy);
+  .stop-right {
+    stop-color: var(--cyan);
   }
-  .stop-severity {
-    stop-color: var(--severity);
+  .stop-left {
+    stop-color: var(--magenta);
   }
-  .stop-balance {
-    stop-color: var(--balance);
+  .stop-center {
+    stop-color: var(--gold);
   }
 
   /* Paths */
@@ -354,6 +382,21 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   .path.on.rev .flow {
     animation-direction: reverse;
   }
+  /* Ambient energy on touch screens (see setupAmbient). */
+  .path.pulse .rail {
+    stroke-opacity: 0.45;
+  }
+  .path.pulse .flow {
+    stroke: var(--pulse, var(--active));
+    opacity: 1;
+    animation: flow 1.2s linear infinite;
+  }
+  .path.pulse.rev .flow {
+    animation-direction: reverse;
+  }
+  .node.pulse .halo {
+    opacity: 1;
+  }
   @keyframes flow {
     to {
       stroke-dashoffset: -0.12;
@@ -362,7 +405,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
 
   .exodia-link {
     fill: none;
-    stroke: var(--balance);
+    stroke: var(--gold);
     stroke-width: 1.5;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
@@ -442,19 +485,19 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     stroke-opacity: 0.6;
   }
 
-  /* Da'at: the hidden sephirah is veiled until approached. */
-  .node[data-node='daat'] .ring {
+  /* The contact node sits off the paths and stays veiled until approached. */
+  .node[data-node='upperMid'] .ring {
     stroke-dasharray: 3 5;
   }
-  .node[data-node='daat'] .core {
+  .node[data-node='upperMid'] .core {
     fill: none;
   }
-  .node[data-node='daat'] .label {
+  .node[data-node='upperMid'] .label {
     opacity: 0.45;
     transition: opacity 0.3s;
   }
-  .node[data-node='daat'].active .label,
-  .node[data-node='daat'] a:focus-visible .label {
+  .node[data-node='upperMid'].active .label,
+  .node[data-node='upperMid'] a:focus-visible .label {
     opacity: 1;
   }
 
@@ -548,7 +591,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     font-size: 0.75rem;
   }
   .pv-exodia {
-    color: var(--balance);
+    color: var(--gold);
     font-size: 0.75rem;
   }
 
@@ -556,11 +599,61 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   .mobile-bar {
     display: none;
   }
+  .m-caption,
+  .clabel {
+    display: none;
+  }
+  .cname {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 750;
+    fill: var(--fg);
+  }
+
+  /* Tablets and wide phones: the full labelled tree, with a tap caption instead of hover. */
   @media (max-width: 63.99rem) {
-    .stage,
     .switch,
-    .hint {
+    .hint,
+    .preview {
       display: none;
+    }
+    .tree .stage {
+      display: block !important;
+      margin: 0 auto 1rem;
+    }
+    .m-caption {
+      display: block;
+      min-height: 7.5rem;
+      margin-top: 0.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .m-caption :global(p) {
+      margin: 0 0 0.35rem;
+    }
+    .m-caption :global(.cap-hint) {
+      color: var(--fg-muted);
+    }
+    .m-caption :global(.cap-eyebrow) {
+      color: var(--accent, var(--gold));
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+    }
+    .m-caption :global(.cap-title) {
+      font-family: var(--font-display);
+      font-weight: 750;
+      font-size: 1.375rem;
+      line-height: 1.15;
+    }
+    .m-caption :global(.cap-text) {
+      color: var(--fg-muted);
+      font-size: 0.9375rem;
+    }
+    .m-caption :global(.cap-open) {
+      color: var(--fg);
     }
     .tree [data-panel='list'] {
       display: block !important;
@@ -603,6 +696,56 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     }
     .mini-label strong {
       color: var(--fg);
+    }
+  }
+
+  /* Narrow phones: portrait framing, a name under each node, bigger nodes. */
+  @media (max-width: 47.99rem) {
+    .label,
+    .sat .chip,
+    .sat-name,
+    .tether,
+    .exodia-link[data-to-sat] {
+      display: none;
+    }
+    .clabel {
+      display: inline;
+    }
+    .tree .stage {
+      max-width: 30rem;
+    }
+    .halo,
+    .ring,
+    .core,
+    .sat-core {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .halo {
+      transform: scale(1.6);
+    }
+    .node.active .halo {
+      transform: scale(2);
+    }
+    .ring,
+    .core {
+      transform: scale(1.6);
+    }
+    /* Satellites move up and out, clear of the name under their node. */
+    .sat-r .sat-core {
+      transform: translate(40px, -86px) scale(1.8);
+    }
+    .sat-l .sat-core {
+      transform: translate(-40px, -86px) scale(1.8);
+    }
+    .rail {
+      stroke-width: 3;
+    }
+    .flow {
+      stroke-width: 5;
+    }
+    .exodia-link {
+      stroke-width: 3;
     }
   }
 

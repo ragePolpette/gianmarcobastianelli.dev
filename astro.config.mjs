@@ -1,9 +1,15 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+// Production is the root of gianmarcobastianelli.dev. Preview builds (GitHub Pages)
+// override the origin and the sub-path through SITE_URL and BASE_PATH.
+const site = process.env.SITE_URL ?? 'https://gianmarcobastianelli.dev';
+const base = process.env.BASE_PATH ?? '/';
+
 export default defineConfig({
-  site: 'https://gianmarcobastianelli.dev',
+  site,
+  base,
   output: 'static',
   trailingSlash: 'always',
   i18n: {
@@ -20,9 +26,14 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'en', locales: { en: 'en', it: 'it' } },
-      filter: (page) => !page.includes('/lab/'),
     }),
   ],
+  env: {
+    schema: {
+      // true on preview deployments: every page gets noindex and robots.txt disallows all.
+      PREVIEW: envField.boolean({ context: 'server', access: 'public', default: false }),
+    },
+  },
   security: {
     csp: {
       directives: [

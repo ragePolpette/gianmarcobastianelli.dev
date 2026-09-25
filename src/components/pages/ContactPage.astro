@@ -1,0 +1,61 @@
+---
+import SectionPage from './SectionPage.astro';
+import Email from '../Email.astro';
+import { t, type Locale } from '../../i18n';
+import { site } from '../../data/site';
+import type { Page } from '../../lib/pages';
+
+interface Props {
+  locale: Locale;
+  page: Page;
+}
+
+const { locale, page } = Astro.props;
+const ui = t(locale);
+---
+
+<SectionPage locale={locale} page={page}>
+  <ul class="contacts">
+    <li>
+      <span class="mono label">{ui.contact.github}</span>
+      <a href={site.github} rel="me noopener">
+        github.com/ragePolpette
+      </a>
+    </li>
+    <li>
+      <span class="mono label">{ui.contact.linkedin}</span>
+      <a href={site.linkedin} rel="me noopener">
+        linkedin.com/in/gianmarco-bastianelli
+      </a>
+    </li>
+    <li>
+      <span class="mono label">{ui.contact.email}</span>
+      <Email fallback={ui.contact.emailFallback} />
+    </li>
+  </ul>
+</SectionPage>
+
+<style>
+  .contacts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    font-size: 1.25rem;
+  }
+  .contacts li {
+    display: grid;
+    gap: 0.15rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-raised);
+    overflow-wrap: anywhere;
+  }
+  .label {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+</style>

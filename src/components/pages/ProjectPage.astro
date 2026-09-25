@@ -1,10 +1,11 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Eyebrow from '../Eyebrow.astro';
 import StatusBadge from '../StatusBadge.astro';
 import Text from '../Text.astro';
 import { localizePath, t, type Locale } from '../../i18n';
-import { pillarOf } from '../../data/sephirot';
+import { pillarOf } from '../../data/nodes';
 import type { Project } from '../../lib/projects';
 
 interface Props {
@@ -16,7 +17,6 @@ const { locale, project } = Astro.props;
 const ui = t(locale);
 const data = project.entry.data;
 const { Content } = await render(project.entry);
-const sephirah = ui.sephirot[data.sephirah];
 ---
 
 <Base
@@ -24,16 +24,14 @@ const sephirah = ui.sephirot[data.sephirah];
   path={`/projects/${project.slug}/`}
   title={data.name}
   description={data.tagline}
+  ogImage={`/og/${locale}/projects/${project.slug}.png`}
 >
-  <article class="container project" data-pillar={pillarOf[data.sephirah]}>
+  <article class="container project" data-pillar={pillarOf[data.node]}>
     <p class="back mono">
-      <a href={localizePath('/#projects', locale)}>← {ui.project.back}</a>
+      <a href={localizePath('/#projects', locale)}>← {ui.nav.tree}</a>
     </p>
     <header>
-      <p class="sephirah mono">
-        <span class="dot" aria-hidden="true"></span>
-        {sephirah.name} <span class="meaning">· {sephirah.meaning}</span>
-      </p>
+      <Eyebrow text={ui.kinds[data.kind]} />
       <h1>{data.name}</h1>
       <p class="tagline">{data.tagline}</p>
       <div class="meta">
@@ -56,6 +54,10 @@ const sephirah = ui.sephirot[data.sephirah];
         </dd>
       </div>
       <div>
+        <dt class="mono">{ui.project.outcome}</dt>
+        <dd class="outcome">{data.outcome}</dd>
+      </div>
+      <div>
         <dt class="mono">{ui.project.stack}</dt>
         <dd>
           <ul class="stack mono">
@@ -69,7 +71,8 @@ const sephirah = ui.sephirot[data.sephirah];
       </div>
     </dl>
 
-    <div class="body">
+    <div class="prose">
+      <h2>{ui.project.how}</h2>
       <Content />
     </div>
 
@@ -112,26 +115,6 @@ const sephirah = ui.sephirot[data.sephirah];
   header {
     margin-block: 3rem 2.5rem;
   }
-  .sephirah {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .meaning {
-    color: var(--fg-muted);
-    text-transform: none;
-    letter-spacing: 0.02em;
-  }
-  .dot {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
   h1 {
     view-transition-name: project-title;
     font-size: clamp(2.25rem, 7vw, 4rem);
@@ -169,6 +152,10 @@ const sephirah = ui.sephirot[data.sephirah];
   dd {
     margin: 0;
   }
+  .outcome {
+    color: var(--fg);
+    font-weight: 500;
+  }
   .stack {
     display: flex;
     flex-wrap: wrap;
@@ -181,9 +168,6 @@ const sephirah = ui.sephirot[data.sephirah];
     padding: 0.15rem 0.6rem;
     border: 1px solid var(--line);
     border-radius: 6px;
-  }
-  .body :global(strong) {
-    color: var(--fg);
   }
   .cards {
     margin-top: 3rem;
@@ -208,7 +192,7 @@ const sephirah = ui.sephirot[data.sephirah];
   }
   .card-name {
     grid-row: span 2;
-    color: var(--balance);
+    color: var(--gold);
     align-self: center;
   }
   .card-label {

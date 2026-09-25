@@ -1,64 +1,64 @@
-import type { Sephirah } from './sephirot';
+import type { NodeId } from './nodes';
 
 /** SVG user units. Side margins leave room for labels on both outer pillars. */
 export const viewBox = { width: 1300, height: 1120 } as const;
 
-const X = { severity: 400, balance: 650, mercy: 900 } as const;
+const X = { left: 400, center: 650, right: 900 } as const;
 
-/** Node centres, classic layout: left pillar = severity, right pillar = mercy. */
-export const nodePosition: Record<Sephirah, { x: number; y: number }> = {
-  keter: { x: X.balance, y: 90 },
-  chokhmah: { x: X.mercy, y: 210 },
-  binah: { x: X.severity, y: 210 },
-  daat: { x: X.balance, y: 330 },
-  chesed: { x: X.mercy, y: 450 },
-  gevurah: { x: X.severity, y: 450 },
-  tiferet: { x: X.balance, y: 570 },
-  netzach: { x: X.mercy, y: 690 },
-  hod: { x: X.severity, y: 690 },
-  yesod: { x: X.balance, y: 810 },
-  malkuth: { x: X.balance, y: 1000 },
+/** Node centres: three columns, eleven nodes. */
+export const nodePosition: Record<NodeId, { x: number; y: number }> = {
+  top: { x: X.center, y: 90 },
+  upperRight: { x: X.right, y: 210 },
+  upperLeft: { x: X.left, y: 210 },
+  upperMid: { x: X.center, y: 330 },
+  midRight: { x: X.right, y: 450 },
+  midLeft: { x: X.left, y: 450 },
+  middle: { x: X.center, y: 570 },
+  lowerRight: { x: X.right, y: 690 },
+  lowerLeft: { x: X.left, y: 690 },
+  lowerMid: { x: X.center, y: 810 },
+  base: { x: X.center, y: 1000 },
 };
 
-/** The 22 traditional paths. Da'at sits on none of them: it is the hidden sephirah. */
-export const paths: readonly (readonly [Sephirah, Sephirah])[] = [
-  ['keter', 'chokhmah'],
-  ['keter', 'binah'],
-  ['keter', 'tiferet'],
-  ['chokhmah', 'binah'],
-  ['chokhmah', 'tiferet'],
-  ['chokhmah', 'chesed'],
-  ['binah', 'tiferet'],
-  ['binah', 'gevurah'],
-  ['chesed', 'gevurah'],
-  ['chesed', 'tiferet'],
-  ['chesed', 'netzach'],
-  ['gevurah', 'tiferet'],
-  ['gevurah', 'hod'],
-  ['tiferet', 'netzach'],
-  ['tiferet', 'yesod'],
-  ['tiferet', 'hod'],
-  ['netzach', 'hod'],
-  ['netzach', 'yesod'],
-  ['netzach', 'malkuth'],
-  ['hod', 'yesod'],
-  ['hod', 'malkuth'],
-  ['yesod', 'malkuth'],
+/** The 22 paths between nodes. upperMid (contact) sits on none of them. */
+export const paths: readonly (readonly [NodeId, NodeId])[] = [
+  ['top', 'upperRight'],
+  ['top', 'upperLeft'],
+  ['top', 'middle'],
+  ['upperRight', 'upperLeft'],
+  ['upperRight', 'middle'],
+  ['upperRight', 'midRight'],
+  ['upperLeft', 'middle'],
+  ['upperLeft', 'midLeft'],
+  ['midRight', 'midLeft'],
+  ['midRight', 'middle'],
+  ['midRight', 'lowerRight'],
+  ['midLeft', 'middle'],
+  ['midLeft', 'lowerLeft'],
+  ['middle', 'lowerRight'],
+  ['middle', 'lowerMid'],
+  ['middle', 'lowerLeft'],
+  ['lowerRight', 'lowerLeft'],
+  ['lowerRight', 'lowerMid'],
+  ['lowerRight', 'base'],
+  ['lowerLeft', 'lowerMid'],
+  ['lowerLeft', 'base'],
+  ['lowerMid', 'base'],
 ];
 
 /** Where a node's label sits relative to the node. */
 export type LabelSide = 'left' | 'right';
 
-export const labelSide: Record<Sephirah, LabelSide> = {
-  keter: 'right',
-  chokhmah: 'right',
-  binah: 'left',
-  daat: 'right',
-  chesed: 'right',
-  gevurah: 'left',
-  tiferet: 'right',
-  netzach: 'right',
-  hod: 'left',
-  yesod: 'right',
-  malkuth: 'right',
+export const labelSide: Record<NodeId, LabelSide> = {
+  top: 'right',
+  upperRight: 'right',
+  upperLeft: 'left',
+  upperMid: 'right',
+  midRight: 'right',
+  midLeft: 'left',
+  middle: 'right',
+  lowerRight: 'right',
+  lowerLeft: 'left',
+  lowerMid: 'right',
+  base: 'right',
 };

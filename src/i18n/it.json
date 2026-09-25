@@ -11,7 +11,10 @@
   },
   "nav": {
     "projects": "Progetti",
-    "contact": "Contatti"
+    "contact": "Contatti",
+    "tree": "L'albero",
+    "work": "Lavoro",
+    "about": "Chi sono"
   },
   "lang": {
     "en": "English",
@@ -24,9 +27,7 @@
   },
   "home": {
     "projectsTitle": "Progetti",
-    "projectsIntro": "Agenti, server MCP e ricerca sull'AI. Ognuno porta il nome di una sephirah dell'Albero della Vita.",
-    "namesTitle": "Perché questi nomi?",
-    "namesBody": "Chiamo i miei progetti con i nomi delle sephirot dell'Albero della Vita cabalistico. Qui l'albero è solo una mappa del lavoro: non serve sapere nulla di Kabbalah per leggerla."
+    "projectsIntro": "Agenti, server MCP e ricerca sull'AI, disposti su un albero. Ogni nodo è un progetto o una pagina."
   },
   "project": {
     "status": {
@@ -38,11 +39,12 @@
     "noRepo": "Nessun repository pubblico",
     "problem": "Problema",
     "stack": "Stack",
-    "back": "Tutti i progetti",
     "orbits": "In orbita",
     "cardsTitle": "Le cinque carte",
     "external": "esterno",
-    "todo": "Da completare"
+    "todo": "Da completare",
+    "outcome": "Risultato",
+    "how": "Come funziona"
   },
   "contact": {
     "title": "Contatti",
@@ -53,52 +55,6 @@
   },
   "footer": {
     "note": "Sito statico, niente cookie, niente tracciamento."
-  },
-  "sephirot": {
-    "keter": {
-      "name": "Keter",
-      "meaning": "la corona"
-    },
-    "chokhmah": {
-      "name": "Chokhmah",
-      "meaning": "il lampo dell'intuizione"
-    },
-    "binah": {
-      "name": "Binah",
-      "meaning": "la comprensione che dà forma"
-    },
-    "daat": {
-      "name": "Da'at",
-      "meaning": "la conoscenza nascosta"
-    },
-    "chesed": {
-      "name": "Chesed",
-      "meaning": "espansione, il dare"
-    },
-    "gevurah": {
-      "name": "Gevurah",
-      "meaning": "limite, rigore"
-    },
-    "tiferet": {
-      "name": "Tiferet",
-      "meaning": "equilibrio, il cuore"
-    },
-    "netzach": {
-      "name": "Netzach",
-      "meaning": "perseveranza"
-    },
-    "hod": {
-      "name": "Hod",
-      "meaning": "strumenti, comunicazione"
-    },
-    "yesod": {
-      "name": "Yesod",
-      "meaning": "il fondamento"
-    },
-    "malkuth": {
-      "name": "Malkuth",
-      "meaning": "il regno manifesto"
-    }
   },
   "notFound": {
     "title": "Pagina non trovata",
@@ -113,19 +69,16 @@
     "hint": "Passa sopra un nodo o selezionalo per l'anteprima. Ogni nodo è un link.",
     "mobileHint": "Scorri: l'albero ti segue.",
     "exodiaHint": "Le carte di Exodia si accendono sull'albero.",
-    "nodes": {
-      "keter": {
-        "title": "Chi sono",
-        "summary": "chi sono · manifesto"
-      },
-      "tiferet": {
-        "title": "Enterprise .NET",
-        "summary": "gestionale multi-tenant · fatturazione SDI"
-      },
-      "daat": {
-        "title": "Contatti",
-        "summary": "GitHub · LinkedIn · email"
-      }
-    }
+    "open": "Apri",
+    "tapHint": "Tocca un nodo per vedere cos'è, toccalo di nuovo per aprirlo."
+  },
+  "og": {
+    "alt": "Mappa ad albero dei progetti di Gianmarco Bastianelli"
+  },
+  "kinds": {
+    "agent": "Agente",
+    "mcp": "Server MCP",
+    "tooling": "Tooling",
+    "research": "Ricerca"
   }
 }

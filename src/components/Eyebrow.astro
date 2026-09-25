@@ -1,0 +1,32 @@
+---
+interface Props {
+  text: string;
+}
+
+// Small category label above a title. Takes its colour from the nearest data-pillar.
+const { text } = Astro.props;
+---
+
+<p class="eyebrow mono">
+  <span class="dot" aria-hidden="true"></span>
+  {text}
+</p>
+
+<style>
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.5rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+</style>

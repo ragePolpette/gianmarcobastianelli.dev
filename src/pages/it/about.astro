@@ -1,0 +1,8 @@
+---
+import SectionPage from '../../components/pages/SectionPage.astro';
+import { getPage } from '../../lib/pages';
+
+const page = await getPage('it', 'about');
+---
+
+<SectionPage locale="it" page={page} />

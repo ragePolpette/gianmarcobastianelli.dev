@@ -1,16 +1,16 @@
 ---
-name: Yesod
-sephirah: yesod
+name: 'Yesod'
+node: lowerMid
 role: primary
-tagline: Personal meta-orchestrator built on NousResearch Hermes Agent.
-summary: personal meta-orchestrator
-problem: I wanted an assistant shaped around the way I actually work, one that runs tasks on its own and corrects or expands the inputs I give it.
-stack: [Hermes Agent (NousResearch)]
+kind: agent
+tagline: 'Personal meta-orchestrator built on NousResearch Hermes Agent.'
+summary: 'personal meta-orchestrator'
+problem: 'A generic assistant does not know how I work, and an agent with a single job, like Exodia, cannot take on anything else.'
+outcome: 'Running as my personal assistant: it takes on tasks by itself, corrects or expands the inputs I give it, and accepts new direction while a task is still running.'
+stack: ['Hermes Agent (NousResearch)']
 status: active
 ---
 
-Yesod started as Exodia's successor: from an agent with one job (ticket to pull request) to a general assistant that takes on tasks by itself.
+Yesod is Exodia's successor. Where Exodia does one job end to end, Yesod takes on whatever I hand it and approaches it the way I would.
 
-It supports steering mid-execution: I can redirect a task while it is running instead of waiting for it to finish or killing it. I validated the approach with spike tests before building on it.
-
-There is no public repository.
+It runs on Hermes Agent by NousResearch. Steering works mid-execution: I can redirect a task while it runs instead of waiting for it to finish or killing it. I validated the approach with spike tests before building on it. There is no public repository.
