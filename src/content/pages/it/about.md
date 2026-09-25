@@ -1,28 +1,29 @@
 ---
 title: Chi sono
-sephirah: keter
+node: top
+eyebrow: Profilo
 summary: chi sono · manifesto
-lead: Sono Gianmarco, backend developer a Bologna. Scrivo .NET da più di sei anni e oggi mi occupo soprattutto di AI engineering.
+lead: Sono Gianmarco, backend developer a Bologna. Più di sei anni di .NET, e oggi soprattutto AI engineering.
 description: Backend developer .NET autodidatta, oggi concentrato sull'AI engineering, con un breve manifesto sull'interpretability.
 ---
 
 ## Autodidatta
 
-Non ho una laurea in informatica. Ho imparato lavorando e studiando da solo. Lo dico subito perché fa parte della mia storia, non è qualcosa da nascondere.
+Non ho una laurea in informatica: ho imparato lavorando e studiando da solo. Lo dico subito perché fa parte della mia storia, non è qualcosa da nascondere.
 
 ## Di cosa mi occupo
 
-Di mestiere lavoro su software gestionale e contabile enterprise, multi-tenant, costruito su .NET. È software che prima deve essere corretto e solo dopo elegante. [Qui racconto quel lavoro](../work/).
+Di mestiere lavoro su software gestionale e contabile multi-tenant in .NET, per il mercato italiano. [Cosa ha prodotto quel lavoro](../work/).
 
-Oggi la maggior parte della mia attenzione va all'**AI engineering**: agenti autonomi, server MCP, sistemi di memoria per i modelli linguistici e ricerca di interpretability. I [progetti](../#projects) sull'albero sono il posto dove vive questo lavoro.
+Oggi la maggior parte della mia attenzione va all'AI engineering: agenti autonomi, server MCP, sistemi di memoria per i modelli linguistici e ricerca di interpretability. I risultati sono sull'[albero](../#projects).
 
 ## Stack
 
-- **C# / .NET**: il mio linguaggio principale, quello in cui penso.
-- **TypeScript / JavaScript**: per il tooling, i server MCP e il web.
-- **Python**: in crescita, soprattutto per l'AI e il lavoro sui modelli.
+- **C# / .NET**: il mio linguaggio principale.
+- **TypeScript / JavaScript**: tooling, server MCP e web.
+- **Python**: in crescita, per l'AI e il lavoro sui modelli.
 - **PostgreSQL + pgvector**: storage e ricerca vettoriale.
-- **Rust**: lo sto imparando. È il mio prossimo investimento, non ancora una competenza.
+- **Rust**: lo sto imparando. Il prossimo investimento, non ancora una competenza.
 
 ## Manifesto
 

@@ -1,19 +1,17 @@
 ---
-name: llm-memory
-sephirah: chesed
+name: 'llm-memory'
+node: midRight
 role: primary
-tagline: Persistent memory for agents over MCP, with two tiers, three scopes and a full audit trail.
-summary: persistent memory for agents
-problem: Agents are good with short-term context and bad at remembering anything across sessions. llm-memory gives them durable, governed memory they can search, promote and invalidate.
-stack: [Python, SQLite, vector search, MCP]
+kind: mcp
+tagline: 'Persistent memory for agents over MCP: two tiers, three scopes, one audit trail.'
+summary: 'persistent memory for agents'
+problem: 'Agents handle short-term context well and forget everything between sessions.'
+outcome: 'In daily use in my own work, and the per-ticket memory behind Exodia.'
+stack: ['Python', 'SQLite', 'vector search', 'MCP']
 status: active
 repo: https://github.com/ragePolpette/llm-memory
 ---
 
-I use it every day in real work. It is not a demo.
+Memory lives in two tiers: strong memory for durable facts, decisions and conventions, and fast memory for episodic notes that can later be distilled and promoted. Retrieval composes three scopes: project, workspace and global.
 
-Memory lives in two tiers: **strong** memory for durable facts, decisions and conventions, and **fast** memory for episodic operational notes that can later be distilled and promoted. Retrieval composes three scopes: project, workspace and global.
-
-Every write goes through a persistence policy, importance scoring and privacy controls, and leaves an audit trail. Records can be promoted, invalidated and deduplicated, and exported to or imported from JSONL and Markdown.
-
-It runs locally, with no cloud service in the default setup. In Exodia it is the left leg: memory per ticket.
+Every write goes through a persistence policy, importance scoring and privacy controls, and leaves an audit trail. Records can be promoted, invalidated and deduplicated, and exported to or imported from JSONL and Markdown. It runs locally, with no cloud service needed.
