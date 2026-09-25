@@ -8,6 +8,10 @@ const IGNITE_STEP_MS = 110;
 
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isDesktop = () => matchMedia('(min-width: 64rem)').matches;
+const COMPACT_QUERY = '(max-width: 63.99rem)';
+const isCompact = () => matchMedia(COMPACT_QUERY).matches;
+const AMBIENT_EVERY_MS = 2200;
+const AMBIENT_HOLD_MS = 1600;
 
 function readView(): View {
   try {
@@ -53,6 +57,33 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
     stage.querySelectorAll<SVGGElement>(`.path[data-a="${nodeId}"], .path[data-b="${nodeId}"]`);
 
   let current: Element | null = null;
+  // Touch: the first tap selects a node (caption below the tree), the second opens it.
+  let selected: Element | null = null;
+  const caption = root.querySelector<HTMLElement>('[data-caption]');
+
+  const showCaption = (link: Element) => {
+    if (!caption) return;
+    const key = (link as SVGElement).dataset['key'] ?? '';
+    const panel = panels.get(key);
+    const line = (tag: string, cls: string, text: string) => {
+      const el = document.createElement(tag);
+      el.className = cls;
+      el.textContent = text;
+      return el;
+    };
+    const open = document.createElement('a');
+    open.className = 'cap-open mono';
+    open.href = link.getAttribute('href') ?? '#';
+    open.textContent = `${caption.dataset['open'] ?? 'Open'} →`;
+    caption.replaceChildren(
+      line('p', 'cap-eyebrow mono', panel?.querySelector('.pv-seph')?.textContent?.trim() ?? ''),
+      line('p', 'cap-title', panel?.querySelector('.pv-title')?.textContent?.trim() ?? ''),
+      line('p', 'cap-text', panel?.querySelector('.pv-text')?.textContent?.trim() ?? ''),
+      open,
+    );
+    const pillar = link.closest<SVGGElement>('.node')?.dataset['pillar'];
+    if (pillar) caption.dataset['pillar'] = pillar;
+  };
 
   const clear = () => {
     for (const el of stage.querySelectorAll('.active, .on, .rev')) {
@@ -101,12 +132,22 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
     });
     link.addEventListener('click', (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (isCompact() && selected !== link) {
+        event.preventDefault();
+        selected = link;
+        activate(link);
+        showCaption(link);
+        return;
+      }
       // The clicked title morphs into the project page heading (cross-document view transition).
       const title = link.querySelector<SVGTextElement>('.name, .sat-name');
       if (title) title.style.setProperty('view-transition-name', 'project-title');
     });
   }
-  stage.addEventListener('pointerleave', clear);
+  // Touch pointers "leave" as soon as the finger lifts: only a mouse leaving clears.
+  stage.addEventListener('pointerleave', (event) => {
+    if (event.pointerType === 'mouse') clear();
+  });
   // Back/forward cache: drop the transition name so the restored page is clean.
   addEventListener('pageshow', () => {
     for (const el of stage.querySelectorAll<SVGTextElement>('.name, .sat-name')) {
@@ -163,6 +204,52 @@ function setupIgnition(stage: HTMLElement): void {
     { threshold: 0.2 },
   );
   observer.observe(stage);
+}
+
+// On touch screens there is no hover: every few seconds a random node sends energy
+// along its paths, so the tree stays alive. Paused off-screen, in hidden tabs and
+// while a node is selected.
+function setupAmbient(stage: HTMLElement): void {
+  if (reducedMotion() || matchMedia('(pointer: fine)').matches) return;
+  const nodes = [...stage.querySelectorAll<SVGGElement>('.node:not([data-dormant])')];
+  if (nodes.length === 0) return;
+  let visible = false;
+  new IntersectionObserver((entries) => {
+    visible = entries.some((e) => e.isIntersecting);
+  }).observe(stage);
+
+  setInterval(() => {
+    if (!visible || document.hidden || stage.querySelector('.node.active')) return;
+    const node = nodes[Math.floor(Math.random() * nodes.length)];
+    if (!node) return;
+    const id = node.dataset['node'] ?? '';
+    const accent = getComputedStyle(node).getPropertyValue('--accent').trim();
+    const paths = [
+      ...stage.querySelectorAll<SVGGElement>(`.path[data-a="${id}"], .path[data-b="${id}"]`),
+    ];
+    node.classList.add('pulse');
+    for (const p of paths) {
+      p.style.setProperty('--pulse', accent);
+      p.classList.add('pulse');
+      if (p.dataset['b'] === id) p.classList.add('rev');
+    }
+    setTimeout(() => {
+      node.classList.remove('pulse');
+      for (const p of paths) p.classList.remove('pulse', 'rev');
+    }, AMBIENT_HOLD_MS);
+  }, AMBIENT_EVERY_MS);
+}
+
+// Small screens get a tighter, portrait framing of the same SVG (no side labels).
+function setupViewBox(stage: HTMLElement): void {
+  const svg = stage.querySelector<SVGSVGElement>('svg.tree-svg');
+  const compact = svg?.dataset['compactViewbox'];
+  const full = svg?.getAttribute('viewBox');
+  if (!svg || !compact || !full) return;
+  const mq = matchMedia(COMPACT_QUERY);
+  const apply = () => svg.setAttribute('viewBox', mq.matches ? compact : full);
+  mq.addEventListener('change', apply);
+  apply();
 }
 
 function setupParallax(stage: HTMLElement): void {
@@ -234,12 +321,14 @@ export function initTree(root: HTMLElement): void {
   const stage = root.querySelector<HTMLElement>('[data-stage]');
   if (!stage) return;
 
+  setupViewBox(stage);
   setupViewSwitch(root);
   setupPreview(root, stage);
   setupGuidedScroll(root);
+  setupIgnition(stage);
+  setupAmbient(stage);
 
   if (isDesktop()) {
-    setupIgnition(stage);
     setupParallax(stage);
     setupParticles(stage);
   }

@@ -68,7 +68,9 @@
     "viewList": "List",
     "hint": "Hover or focus a node to preview it. Every node is a link.",
     "mobileHint": "Scroll: the tree follows you.",
-    "exodiaHint": "Exodia's cards light up across the tree."
+    "exodiaHint": "Exodia's cards light up across the tree.",
+    "open": "Open",
+    "tapHint": "Tap a node to see what it is, tap it again to open it."
   },
   "og": {
     "alt": "Tree-shaped map of Gianmarco Bastianelli's projects"

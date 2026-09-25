@@ -49,6 +49,16 @@ const exodiaCurves = baseNode
   : [];
 
 const pillars = ['right', 'left', 'center'] as const;
+
+// Portrait framing for small screens: just the node columns, no room for side labels.
+const xs = nodes.map((n) => n.x);
+const ys = nodes.map((n) => n.y);
+const compactViewBox = [
+  Math.min(...xs) - 100,
+  Math.min(...ys) - 60,
+  Math.max(...xs) - Math.min(...xs) + 200,
+  Math.max(...ys) - Math.min(...ys) + 130,
+].join(' ');
 ---
 
 <section class="tree" data-tree aria-labelledby="tree-title">
@@ -76,6 +86,7 @@ const pillars = ['right', 'left', 'center'] as const;
     <svg
       class="tree-svg"
       viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
+      data-compact-viewbox={compactViewBox}
       role="group"
       aria-labelledby="tree-title"
       aria-describedby="tree-hint"
@@ -179,6 +190,10 @@ const pillars = ['right', 'left', 'center'] as const;
         })}
       </g>
     </svg>
+
+    <div class="m-caption" data-caption data-open={ui.tree.open} aria-live="polite">
+      <p class="mono cap-hint">{ui.tree.tapHint}</p>
+    </div>
 
     <aside class="preview" aria-hidden="true" data-preview-root>
       <div class="pv pv-default" data-preview="">
@@ -351,6 +366,21 @@ const pillars = ['right', 'left', 'center'] as const;
   }
   .path.on.rev .flow {
     animation-direction: reverse;
+  }
+  /* Ambient energy on touch screens (see setupAmbient). */
+  .path.pulse .rail {
+    stroke-opacity: 0.45;
+  }
+  .path.pulse .flow {
+    stroke: var(--pulse, var(--active));
+    opacity: 1;
+    animation: flow 1.2s linear infinite;
+  }
+  .path.pulse.rev .flow {
+    animation-direction: reverse;
+  }
+  .node.pulse .halo {
+    opacity: 1;
   }
   @keyframes flow {
     to {
@@ -554,11 +584,87 @@ const pillars = ['right', 'left', 'center'] as const;
   .mobile-bar {
     display: none;
   }
+  .m-caption {
+    display: none;
+  }
+
   @media (max-width: 63.99rem) {
-    .stage,
     .switch,
-    .hint {
+    .hint,
+    .preview,
+    .label,
+    .sat .chip,
+    .sat-name {
       display: none;
+    }
+    /* The tree stays, framed in portrait with bigger nodes and thicker paths. */
+    .tree .stage {
+      display: block !important;
+      max-width: 30rem;
+      margin: 0 auto 1rem;
+    }
+    .halo,
+    .ring,
+    .core,
+    .sat-core {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .halo {
+      transform: scale(1.6);
+    }
+    .node.active .halo {
+      transform: scale(2);
+    }
+    .ring,
+    .core {
+      transform: scale(1.6);
+    }
+    .sat-core {
+      transform: scale(1.8);
+    }
+    .rail {
+      stroke-width: 3;
+    }
+    .flow {
+      stroke-width: 5;
+    }
+    .exodia-link {
+      stroke-width: 3;
+    }
+    .m-caption {
+      display: block;
+      min-height: 7.5rem;
+      margin-top: 0.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .m-caption :global(p) {
+      margin: 0 0 0.35rem;
+    }
+    .m-caption :global(.cap-hint) {
+      color: var(--fg-muted);
+    }
+    .m-caption :global(.cap-eyebrow) {
+      color: var(--accent, var(--gold));
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+    }
+    .m-caption :global(.cap-title) {
+      font-family: var(--font-display);
+      font-weight: 750;
+      font-size: 1.375rem;
+      line-height: 1.15;
+    }
+    .m-caption :global(.cap-text) {
+      color: var(--fg-muted);
+      font-size: 0.9375rem;
+    }
+    .m-caption :global(.cap-open) {
+      color: var(--fg);
     }
     .tree [data-panel='list'] {
       display: block !important;

@@ -68,7 +68,9 @@
     "viewList": "Lista",
     "hint": "Passa sopra un nodo o selezionalo per l'anteprima. Ogni nodo è un link.",
     "mobileHint": "Scorri: l'albero ti segue.",
-    "exodiaHint": "Le carte di Exodia si accendono sull'albero."
+    "exodiaHint": "Le carte di Exodia si accendono sull'albero.",
+    "open": "Apri",
+    "tapHint": "Tocca un nodo per vedere cos'è, toccalo di nuovo per aprirlo."
   },
   "og": {
     "alt": "Mappa ad albero dei progetti di Gianmarco Bastianelli"
