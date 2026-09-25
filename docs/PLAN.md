@@ -1,6 +1,8 @@
 # Piano — gianmarcobastianelli.dev
 
 > Stato: **approvato** (24/09/2026). Le decisioni prese sono segnate con ✅.
+>
+> ✅ **Aggiornamento 25/09/2026:** tolto dal sito ogni riferimento alla Kabbalah (nomi delle sephirot, significati, "Albero della Vita", nota sui nomi). Resta solo l'estetica dell'albero: ogni nodo mostra la categoria (Agent, MCP server, Tooling, Research; Profile, Day job, Links per le pagine). Anche gli id interni sono neutri (`top`, `upperLeft`, …, `base`). I testi sono stati uniformati e ogni progetto ha un campo **Risultato**. Il mapping qui sotto resta come traccia storica delle posizioni.
 > Legenda: ⚠️ = problema reale trovato durante la verifica · ❓ = decisione tua · `TODO` = informazione mancante, non la invento.
 
 ---
