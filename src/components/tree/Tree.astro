@@ -37,27 +37,27 @@ function label(node: NodeView) {
 const baseNode = nodes.find((n) => n.nodeId === 'base');
 const exodiaTargets = nodes.flatMap((n) => [
   ...(n.exodiaPart ? [{ x: n.x, y: n.y }] : []),
-  ...n.satellites.filter((s) => s.exodiaPart).map((s) => ({ x: s.x, y: s.y })),
+  ...n.satellites.filter((s) => s.exodiaPart).map((s) => ({ x: s.x, y: s.y, sat: true })),
 ]);
 const exodiaCurves = baseNode
-  ? exodiaTargets.map(({ x, y }) => {
+  ? exodiaTargets.map(({ x, y, ...rest }) => {
       const bend = x >= baseNode.x ? 200 : -200;
       const cx = (baseNode.x + x) / 2 + bend;
       const cy = (baseNode.y + y) / 2 + 60;
-      return `M${baseNode.x} ${baseNode.y} Q${cx} ${cy} ${x} ${y}`;
+      return { d: `M${baseNode.x} ${baseNode.y} Q${cx} ${cy} ${x} ${y}`, sat: 'sat' in rest };
     })
   : [];
 
 const pillars = ['right', 'left', 'center'] as const;
 
-// Portrait framing for small screens: just the node columns, no room for side labels.
+// Portrait framing for narrow screens: node columns plus room for a name under each node.
 const xs = nodes.map((n) => n.x);
 const ys = nodes.map((n) => n.y);
 const compactViewBox = [
-  Math.min(...xs) - 100,
+  Math.min(...xs) - 180,
   Math.min(...ys) - 60,
-  Math.max(...xs) - Math.min(...xs) + 200,
-  Math.max(...ys) - Math.min(...ys) + 130,
+  Math.max(...xs) - Math.min(...xs) + 360,
+  Math.max(...ys) - Math.min(...ys) + 150,
 ].join(' ');
 ---
 
@@ -108,8 +108,8 @@ const compactViewBox = [
             <line class="flow" x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} pathLength="1" />
           </g>
         ))}
-        {exodiaCurves.map((d) => (
-          <path class="exodia-link" d={d} pathLength="1" />
+        {exodiaCurves.map((c) => (
+          <path class="exodia-link" data-to-sat={c.sat ? '' : undefined} d={c.d} pathLength="1" />
         ))}
       </g>
 
@@ -132,6 +132,21 @@ const compactViewBox = [
                   </text>
                   <text class="sum" x={l.tx} y={n.y + 34} text-anchor={l.anchor}>
                     {n.summary}
+                  </text>
+                </g>
+              )}
+              {n.title && (
+                <g class="clabel">
+                  <rect
+                    class="chip"
+                    x={n.x - (estimateWidth(n.title, 30, 'display') + 24) / 2}
+                    y={n.y + 36}
+                    width={estimateWidth(n.title, 30, 'display') + 24}
+                    height="44"
+                    rx="10"
+                  />
+                  <text class="cname" x={n.x} y={n.y + 67} text-anchor="middle">
+                    {n.title}
                   </text>
                 </g>
               )}
@@ -162,7 +177,7 @@ const compactViewBox = [
                 const w = estimateWidth(s.name, SIZE.sat, 'mono') + 20;
                 return (
                   <a
-                    class="sat"
+                    class:list={['sat', right ? 'sat-r' : 'sat-l']}
                     href={s.href}
                     data-key={`sat:${s.slug}`}
                     data-parent={n.nodeId}
@@ -584,53 +599,27 @@ const compactViewBox = [
   .mobile-bar {
     display: none;
   }
-  .m-caption {
+  .m-caption,
+  .clabel {
     display: none;
   }
+  .cname {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 750;
+    fill: var(--fg);
+  }
 
+  /* Tablets and wide phones: the full labelled tree, with a tap caption instead of hover. */
   @media (max-width: 63.99rem) {
     .switch,
     .hint,
-    .preview,
-    .label,
-    .sat .chip,
-    .sat-name {
+    .preview {
       display: none;
     }
-    /* The tree stays, framed in portrait with bigger nodes and thicker paths. */
     .tree .stage {
       display: block !important;
-      max-width: 30rem;
       margin: 0 auto 1rem;
-    }
-    .halo,
-    .ring,
-    .core,
-    .sat-core {
-      transform-box: fill-box;
-      transform-origin: center;
-    }
-    .halo {
-      transform: scale(1.6);
-    }
-    .node.active .halo {
-      transform: scale(2);
-    }
-    .ring,
-    .core {
-      transform: scale(1.6);
-    }
-    .sat-core {
-      transform: scale(1.8);
-    }
-    .rail {
-      stroke-width: 3;
-    }
-    .flow {
-      stroke-width: 5;
-    }
-    .exodia-link {
-      stroke-width: 3;
     }
     .m-caption {
       display: block;
@@ -707,6 +696,56 @@ const compactViewBox = [
     }
     .mini-label strong {
       color: var(--fg);
+    }
+  }
+
+  /* Narrow phones: portrait framing, a name under each node, bigger nodes. */
+  @media (max-width: 47.99rem) {
+    .label,
+    .sat .chip,
+    .sat-name,
+    .tether,
+    .exodia-link[data-to-sat] {
+      display: none;
+    }
+    .clabel {
+      display: inline;
+    }
+    .tree .stage {
+      max-width: 30rem;
+    }
+    .halo,
+    .ring,
+    .core,
+    .sat-core {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .halo {
+      transform: scale(1.6);
+    }
+    .node.active .halo {
+      transform: scale(2);
+    }
+    .ring,
+    .core {
+      transform: scale(1.6);
+    }
+    /* Satellites move up and out, clear of the name under their node. */
+    .sat-r .sat-core {
+      transform: translate(40px, -86px) scale(1.8);
+    }
+    .sat-l .sat-core {
+      transform: translate(-40px, -86px) scale(1.8);
+    }
+    .rail {
+      stroke-width: 3;
+    }
+    .flow {
+      stroke-width: 5;
+    }
+    .exodia-link {
+      stroke-width: 3;
     }
   }
 

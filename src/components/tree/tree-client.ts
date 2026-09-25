@@ -8,8 +8,11 @@ const IGNITE_STEP_MS = 110;
 
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isDesktop = () => matchMedia('(min-width: 64rem)').matches;
-const COMPACT_QUERY = '(max-width: 63.99rem)';
-const isCompact = () => matchMedia(COMPACT_QUERY).matches;
+// Portrait framing (compact viewBox) below this width.
+const COMPACT_QUERY = '(max-width: 47.99rem)';
+// No hover (touch) or no preview panel: the first tap selects, the second opens.
+const tapToSelect = () =>
+  matchMedia('(hover: none)').matches || matchMedia('(max-width: 63.99rem)').matches;
 const AMBIENT_EVERY_MS = 2200;
 const AMBIENT_HOLD_MS = 1600;
 
@@ -132,7 +135,7 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
     });
     link.addEventListener('click', (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      if (isCompact() && selected !== link) {
+      if (tapToSelect() && selected !== link) {
         event.preventDefault();
         selected = link;
         activate(link);
