@@ -10,10 +10,10 @@
   --fg: #ededf2;
   --fg-muted: #a6a6ba;
 
-  /* Pillars: right = mercy (cyan), left = severity (magenta), middle = balance (gold). */
-  --mercy: #4fe3ff;
-  --severity: #ff5ca8;
-  --balance: #f2c46d;
+  /* Pillars: right = right (cyan), left = left (magenta), middle = center (gold). */
+  --cyan: #4fe3ff;
+  --magenta: #ff5ca8;
+  --gold: #f2c46d;
 
   --font-display: 'Syne Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
@@ -81,7 +81,7 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--balance);
+  outline: 2px solid var(--gold);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -131,14 +131,14 @@ code {
   top: 0.5rem;
 }
 
-[data-pillar='mercy'] {
-  --accent: var(--mercy);
+[data-pillar='right'] {
+  --accent: var(--cyan);
 }
-[data-pillar='severity'] {
-  --accent: var(--severity);
+[data-pillar='left'] {
+  --accent: var(--magenta);
 }
-[data-pillar='balance'] {
-  --accent: var(--balance);
+[data-pillar='center'] {
+  --accent: var(--gold);
 }
 
 mark.todo {

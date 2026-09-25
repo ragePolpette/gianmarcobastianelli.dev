@@ -17,7 +17,7 @@ export function startParticles(canvas: HTMLCanvasElement, stage: HTMLElement): v
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  const colors = ['--mercy', '--severity', '--balance', '--fg'].map((v) =>
+  const colors = ['--cyan', '--magenta', '--gold', '--fg'].map((v) =>
     getComputedStyle(stage).getPropertyValue(v).trim(),
   );
   let width = 0;

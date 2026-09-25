@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { pillarOf, type Pillar, type Sephirah } from '../data/sephirot';
+import { pillarOf, type Pillar, type NodeId } from '../data/nodes';
 import { nodePosition, paths, viewBox } from '../data/tree';
 
 const WIDTH = 1200;
@@ -15,10 +15,7 @@ const color = {
   fg: '#ededf2',
   muted: '#a6a6ba',
   line: '#24243a',
-  pillar: { mercy: '#4fe3ff', severity: '#ff5ca8', balance: '#f2c46d' } satisfies Record<
-    Pillar,
-    string
-  >,
+  pillar: { right: '#4fe3ff', left: '#ff5ca8', center: '#f2c46d' } satisfies Record<Pillar, string>,
 };
 
 function font(pkg: string, file: string): Buffer {
@@ -48,7 +45,7 @@ function h(type: string, props: Record<string, unknown>, ...children: Child[]): 
   return { type, props: { ...props, children: children.length === 1 ? children[0] : children } };
 }
 
-function treeSvg(highlight: Sephirah | undefined, scale: number): SatoriNode {
+function treeSvg(highlight: NodeId | undefined, scale: number): SatoriNode {
   const lines = paths.map(([a, b]) => {
     const on = highlight !== undefined && (a === highlight || b === highlight);
     return h('line', {
@@ -61,7 +58,7 @@ function treeSvg(highlight: Sephirah | undefined, scale: number): SatoriNode {
       'stroke-width': on ? 6 : 3,
     });
   });
-  const nodes = (Object.keys(nodePosition) as Sephirah[]).flatMap((s) => {
+  const nodes = (Object.keys(nodePosition) as NodeId[]).flatMap((s) => {
     const { x, y } = nodePosition[s];
     const c = color.pillar[pillarOf[s]];
     const active = s === highlight;
@@ -100,11 +97,11 @@ export interface OgCard {
   eyebrow: string;
   title: string;
   subtitle: string;
-  highlight?: Sephirah;
+  highlight?: NodeId;
 }
 
 export async function renderOg(card: OgCard): Promise<Uint8Array> {
-  const accent = card.highlight ? color.pillar[pillarOf[card.highlight]] : color.pillar.balance;
+  const accent = card.highlight ? color.pillar[pillarOf[card.highlight]] : color.pillar.center;
   const textWidth = 600;
   // Size on the longest word so single tokens like "llm-bitbucket-mcp" never break mid-word.
   const longestWord = Math.max(...card.title.split(/\s+/).map((w) => w.length));

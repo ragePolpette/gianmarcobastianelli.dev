@@ -1,4 +1,4 @@
-// Progressive enhancement for the Tree of Life. Without this script the tree is
+// Progressive enhancement for the project tree. Without this script the tree is
 // a static SVG of plain links and the list view is shown below it.
 
 type View = 'tree' | 'list';
@@ -49,8 +49,8 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
   for (const el of root.querySelectorAll<HTMLElement>('[data-preview]')) {
     panels.set(el.dataset['preview'] ?? '', el);
   }
-  const pathsOf = (sephirah: string) =>
-    stage.querySelectorAll<SVGGElement>(`.path[data-a="${sephirah}"], .path[data-b="${sephirah}"]`);
+  const pathsOf = (nodeId: string) =>
+    stage.querySelectorAll<SVGGElement>(`.path[data-a="${nodeId}"], .path[data-b="${nodeId}"]`);
 
   let current: Element | null = null;
 
@@ -70,18 +70,18 @@ function setupPreview(root: HTMLElement, stage: HTMLElement): void {
     const key = (link as HTMLElement | SVGElement).dataset['key'] ?? '';
     const isSat = key.startsWith('sat:');
     const node = link.closest<SVGGElement>('.node');
-    const sephirah = node?.dataset['node'] ?? '';
+    const nodeId = node?.dataset['node'] ?? '';
 
     if (isSat) {
       link.classList.add('active');
     } else {
       node?.classList.add('active');
-      for (const p of pathsOf(sephirah)) {
+      for (const p of pathsOf(nodeId)) {
         p.classList.add('on');
         // Energy flows away from the node being looked at.
-        if (p.dataset['b'] === sephirah) p.classList.add('rev');
+        if (p.dataset['b'] === nodeId) p.classList.add('rev');
       }
-      if (sephirah === 'malkuth') stage.classList.add('assembled');
+      if (nodeId === 'base') stage.classList.add('assembled');
     }
 
     const accent = getComputedStyle(node ?? stage)
@@ -210,19 +210,19 @@ function setupGuidedScroll(root: HTMLElement): void {
   for (const c of root.querySelectorAll<SVGCircleElement>('[data-mini]')) {
     minis.set(c.dataset['mini'] ?? '', c);
   }
-  const items = root.querySelectorAll<HTMLElement>('[data-panel="list"] [data-sephirah]');
+  const items = root.querySelectorAll<HTMLElement>('[data-panel="list"] [data-node-id]');
 
   const observer = new IntersectionObserver(
     (entries) => {
       const hit = entries.find((e) => e.isIntersecting);
       if (!hit) return;
       const item = hit.target as HTMLElement;
-      const sephirah = item.dataset['sephirah'] ?? '';
-      for (const [key, c] of minis) c.classList.toggle('on', key === sephirah);
+      const nodeId = item.dataset['nodeId'] ?? '';
+      for (const [key, c] of minis) c.classList.toggle('on', key === nodeId);
       if (label) {
         const strong = document.createElement('strong');
         strong.textContent = item.dataset['project'] ?? '';
-        label.replaceChildren(`${item.dataset['sephName'] ?? ''} · `, strong);
+        label.replaceChildren(`${item.dataset['eyebrow'] ?? ''} · `, strong);
       }
     },
     { rootMargin: '-40% 0px -55% 0px' },

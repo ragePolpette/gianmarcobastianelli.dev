@@ -1,9 +1,9 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import SephirahLabel from '../SephirahLabel.astro';
+import Eyebrow from '../Eyebrow.astro';
 import { localizePath, t, type Locale } from '../../i18n';
-import { pillarOf } from '../../data/sephirot';
+import { pillarOf } from '../../data/nodes';
 import type { Page } from '../../lib/pages';
 
 interface Props {
@@ -24,12 +24,12 @@ const { Content } = await render(page.entry);
   description={data.description}
   ogImage={`/og/${locale}/${page.slug}.png`}
 >
-  <article class="container section" data-pillar={pillarOf[data.sephirah]}>
+  <article class="container section" data-pillar={pillarOf[data.node]}>
     <p class="back mono">
       <a href={localizePath('/#projects', locale)}>← {ui.nav.tree}</a>
     </p>
     <header>
-      <SephirahLabel sephirah={data.sephirah} locale={locale} />
+      <Eyebrow text={data.eyebrow} />
       <h1>{data.title}</h1>
       <p class="lead">{data.lead}</p>
     </header>

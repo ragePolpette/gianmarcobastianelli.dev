@@ -22,7 +22,7 @@ function label(node: NodeView) {
   const tx = right ? node.x + OFFSET : node.x - OFFSET;
   const width =
     Math.max(
-      estimateWidth(node.sephirahName.toUpperCase(), SIZE.seph, 'mono'),
+      estimateWidth(node.eyebrow.toUpperCase(), SIZE.seph, 'mono'),
       estimateWidth(node.title ?? '', SIZE.name, 'display'),
       estimateWidth(node.summary ?? '', SIZE.sum, 'body'),
     ) + 24;
@@ -34,21 +34,21 @@ function label(node: NodeView) {
   };
 }
 
-const malkuth = nodes.find((n) => n.sephirah === 'malkuth');
+const baseNode = nodes.find((n) => n.nodeId === 'base');
 const exodiaTargets = nodes.flatMap((n) => [
   ...(n.exodiaPart ? [{ x: n.x, y: n.y }] : []),
   ...n.satellites.filter((s) => s.exodiaPart).map((s) => ({ x: s.x, y: s.y })),
 ]);
-const exodiaCurves = malkuth
+const exodiaCurves = baseNode
   ? exodiaTargets.map(({ x, y }) => {
-      const bend = x >= malkuth.x ? 200 : -200;
-      const cx = (malkuth.x + x) / 2 + bend;
-      const cy = (malkuth.y + y) / 2 + 60;
-      return `M${malkuth.x} ${malkuth.y} Q${cx} ${cy} ${x} ${y}`;
+      const bend = x >= baseNode.x ? 200 : -200;
+      const cx = (baseNode.x + x) / 2 + bend;
+      const cy = (baseNode.y + y) / 2 + 60;
+      return `M${baseNode.x} ${baseNode.y} Q${cx} ${cy} ${x} ${y}`;
     })
   : [];
 
-const pillars = ['mercy', 'severity', 'balance'] as const;
+const pillars = ['right', 'left', 'center'] as const;
 ---
 
 <section class="tree" data-tree aria-labelledby="tree-title">
@@ -66,9 +66,9 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     </div>
   </div>
 
-  <h2 class="visually-hidden" id="tree-title">
+  <p class="visually-hidden" id="tree-title">
     {ui.tree.label}
-  </h2>
+  </p>
 
   <div class="stage" data-stage data-panel="tree">
     <canvas class="particles" data-particles aria-hidden="true"></canvas>
@@ -114,7 +114,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
                 <g class="label">
                   <rect class="chip" x={l.chipX} y={n.y - 38} width={l.width} height="84" rx="10" />
                   <text class="seph" x={l.tx} y={n.y - 16} text-anchor={l.anchor}>
-                    {n.sephirahName.toUpperCase()}
+                    {n.eyebrow.toUpperCase()}
                   </text>
                   <text class="name" x={l.tx} y={n.y + 11} text-anchor={l.anchor}>
                     {n.title}
@@ -129,7 +129,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
           return (
             <g
               class="node"
-              data-node={n.sephirah}
+              data-node={n.nodeId}
               data-pillar={n.pillar}
               data-dormant={n.href ? undefined : ''}
               data-exodia-part={n.exodiaPart ? '' : undefined}
@@ -137,8 +137,8 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
               {n.href ? (
                 <a
                   href={n.href}
-                  data-key={n.sephirah}
-                  aria-label={`${n.sephirahName}: ${n.title}. ${n.summary}`}
+                  data-key={n.nodeId}
+                  aria-label={`${n.title}, ${n.eyebrow}. ${n.summary}`}
                 >
                   {visuals}
                 </a>
@@ -154,9 +154,9 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
                     class="sat"
                     href={s.href}
                     data-key={`sat:${s.slug}`}
-                    data-parent={n.sephirah}
+                    data-parent={n.nodeId}
                     data-exodia-part={s.exodiaPart ? '' : undefined}
-                    aria-label={`${s.name}, ${n.sephirahName}. ${s.summary}`}
+                    aria-label={`${s.name}, ${s.eyebrow}. ${s.summary}`}
                   >
                     <line class="tether" x1={n.x} y1={n.y} x2={s.x} y2={s.y} />
                     <rect
@@ -187,10 +187,8 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
       {nodes
         .filter((n) => n.title)
         .map((n) => (
-          <div class="pv" data-preview={n.sephirah} data-pillar={n.pillar} hidden>
-            <p class="mono pv-seph">
-              {n.sephirahName} · {n.meaning}
-            </p>
+          <div class="pv" data-preview={n.nodeId} data-pillar={n.pillar} hidden>
+            <p class="mono pv-seph">{n.eyebrow}</p>
             <p class="pv-title">{n.title}</p>
             <p class="pv-text">{n.tagline}</p>
             {n.project && (
@@ -199,14 +197,14 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
                 <span class="mono">{n.project.entry.data.stack.slice(0, 4).join(' · ')}</span>
               </p>
             )}
-            {n.sephirah === 'malkuth' && <p class="mono pv-exodia">{ui.tree.exodiaHint}</p>}
+            {n.nodeId === 'base' && <p class="mono pv-exodia">{ui.tree.exodiaHint}</p>}
           </div>
         ))}
       {nodes.flatMap((n) =>
         n.satellites.map((s) => (
           <div class="pv" data-preview={`sat:${s.slug}`} data-pillar={n.pillar} hidden>
             <p class="mono pv-seph">
-              {n.sephirahName} · {ui.project.orbits}
+              {s.eyebrow} · {ui.project.orbits}
             </p>
             <p class="pv-title">{s.name}</p>
             <p class="pv-text">{s.tagline}</p>
@@ -222,7 +220,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
         <line x1={p.x1} y1={p.y1} x2={p.x2} y2={p.y2} />
       ))}
       {nodes.map((n) => (
-        <circle cx={n.x} cy={n.y} r="34" data-mini={n.sephirah} data-pillar={n.pillar} />
+        <circle cx={n.x} cy={n.y} r="34" data-mini={n.nodeId} data-pillar={n.pillar} />
       ))}
     </svg>
     <p class="mini-label mono" data-mini-label>
@@ -243,7 +241,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
 
 <style>
   .tree {
-    --active: var(--balance);
+    --active: var(--gold);
     position: relative;
   }
 
@@ -315,14 +313,14 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
   }
 
   /* Pillar colours inside the SVG. */
-  .stop-mercy {
-    stop-color: var(--mercy);
+  .stop-right {
+    stop-color: var(--cyan);
   }
-  .stop-severity {
-    stop-color: var(--severity);
+  .stop-left {
+    stop-color: var(--magenta);
   }
-  .stop-balance {
-    stop-color: var(--balance);
+  .stop-center {
+    stop-color: var(--gold);
   }
 
   /* Paths */
@@ -362,7 +360,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
 
   .exodia-link {
     fill: none;
-    stroke: var(--balance);
+    stroke: var(--gold);
     stroke-width: 1.5;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
@@ -442,19 +440,19 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     stroke-opacity: 0.6;
   }
 
-  /* Da'at: the hidden sephirah is veiled until approached. */
-  .node[data-node='daat'] .ring {
+  /* The contact node sits off the paths and stays veiled until approached. */
+  .node[data-node='upperMid'] .ring {
     stroke-dasharray: 3 5;
   }
-  .node[data-node='daat'] .core {
+  .node[data-node='upperMid'] .core {
     fill: none;
   }
-  .node[data-node='daat'] .label {
+  .node[data-node='upperMid'] .label {
     opacity: 0.45;
     transition: opacity 0.3s;
   }
-  .node[data-node='daat'].active .label,
-  .node[data-node='daat'] a:focus-visible .label {
+  .node[data-node='upperMid'].active .label,
+  .node[data-node='upperMid'] a:focus-visible .label {
     opacity: 1;
   }
 
@@ -548,7 +546,7 @@ const pillars = ['mercy', 'severity', 'balance'] as const;
     font-size: 0.75rem;
   }
   .pv-exodia {
-    color: var(--balance);
+    color: var(--gold);
     font-size: 0.75rem;
   }
 

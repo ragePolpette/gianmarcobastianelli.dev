@@ -1,11 +1,11 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import SephirahLabel from '../SephirahLabel.astro';
+import Eyebrow from '../Eyebrow.astro';
 import StatusBadge from '../StatusBadge.astro';
 import Text from '../Text.astro';
 import { localizePath, t, type Locale } from '../../i18n';
-import { pillarOf } from '../../data/sephirot';
+import { pillarOf } from '../../data/nodes';
 import type { Project } from '../../lib/projects';
 
 interface Props {
@@ -26,12 +26,12 @@ const { Content } = await render(project.entry);
   description={data.tagline}
   ogImage={`/og/${locale}/projects/${project.slug}.png`}
 >
-  <article class="container project" data-pillar={pillarOf[data.sephirah]}>
+  <article class="container project" data-pillar={pillarOf[data.node]}>
     <p class="back mono">
       <a href={localizePath('/#projects', locale)}>← {ui.nav.tree}</a>
     </p>
     <header>
-      <SephirahLabel sephirah={data.sephirah} locale={locale} />
+      <Eyebrow text={ui.kinds[data.kind]} />
       <h1>{data.name}</h1>
       <p class="tagline">{data.tagline}</p>
       <div class="meta">
@@ -54,6 +54,10 @@ const { Content } = await render(project.entry);
         </dd>
       </div>
       <div>
+        <dt class="mono">{ui.project.outcome}</dt>
+        <dd class="outcome">{data.outcome}</dd>
+      </div>
+      <div>
         <dt class="mono">{ui.project.stack}</dt>
         <dd>
           <ul class="stack mono">
@@ -68,6 +72,7 @@ const { Content } = await render(project.entry);
     </dl>
 
     <div class="prose">
+      <h2>{ui.project.how}</h2>
       <Content />
     </div>
 
@@ -147,6 +152,10 @@ const { Content } = await render(project.entry);
   dd {
     margin: 0;
   }
+  .outcome {
+    color: var(--fg);
+    font-weight: 500;
+  }
   .stack {
     display: flex;
     flex-wrap: wrap;
@@ -183,7 +192,7 @@ const { Content } = await render(project.entry);
   }
   .card-name {
     grid-row: span 2;
-    color: var(--balance);
+    color: var(--gold);
     align-self: center;
   }
   .card-label {

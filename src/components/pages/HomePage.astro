@@ -38,10 +38,6 @@ const ui = t(locale);
     <h2 id="projects-title">{ui.home.projectsTitle}</h2>
     <p class="intro">{ui.home.projectsIntro}</p>
     <Tree locale={locale} />
-    <aside class="names">
-      <h3>{ui.home.namesTitle}</h3>
-      <p>{ui.home.namesBody}</p>
-    </aside>
   </section>
 </Base>
 
@@ -50,7 +46,7 @@ const ui = t(locale);
     padding-block: clamp(4rem, 14vh, 9rem) clamp(3rem, 8vh, 5rem);
   }
   .role {
-    color: var(--balance);
+    color: var(--gold);
     margin-bottom: 1rem;
   }
   h1 {
@@ -86,19 +82,5 @@ const ui = t(locale);
   .intro {
     color: var(--fg-muted);
     margin-bottom: 2rem;
-  }
-  .names {
-    margin-top: 3rem;
-    padding: 1.25rem;
-    border-left: 2px solid var(--balance);
-    background: var(--bg-raised);
-    border-radius: 0 var(--radius) var(--radius) 0;
-  }
-  .names h3 {
-    font-size: 1.0625rem;
-  }
-  .names p {
-    margin: 0;
-    color: var(--fg-muted);
   }
 </style>

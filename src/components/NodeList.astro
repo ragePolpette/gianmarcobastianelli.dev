@@ -1,4 +1,5 @@
 ---
+import Eyebrow from './Eyebrow.astro';
 import StatusBadge from './StatusBadge.astro';
 import Text from './Text.astro';
 import { t, type Locale } from '../i18n';
@@ -8,7 +9,7 @@ interface Props {
   locale: Locale;
 }
 
-// The list view of the tree: every lit node in tree order (Keter → Malkuth),
+// The list view of the tree: every lit node in tree order (top → base),
 // projects and site sections alike. It is also the mobile guided scroll.
 const { locale } = Astro.props;
 const ui = t(locale);
@@ -21,15 +22,11 @@ const lit = nodes.filter((n) => n.href && n.title);
     <li
       class="node"
       data-pillar={n.pillar}
-      data-sephirah={n.sephirah}
-      data-seph-name={n.sephirahName}
+      data-node-id={n.nodeId}
+      data-eyebrow={n.eyebrow}
       data-project={n.title}
     >
-      <p class="sephirah mono">
-        <span class="dot" aria-hidden="true" />
-        {n.sephirahName}
-        <span class="meaning">· {n.meaning}</span>
-      </p>
+      <Eyebrow text={n.eyebrow} />
       <article class:list={['card', { section: !n.project }]}>
         <h3>
           <a href={n.href}>{n.title}</a>
@@ -78,27 +75,6 @@ const lit = nodes.filter((n) => n.href && n.title);
   .node {
     display: flex;
     flex-direction: column;
-  }
-  .sephirah {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 0 0.5rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .meaning {
-    color: var(--fg-muted);
-    text-transform: none;
-    letter-spacing: 0.02em;
-  }
-  .dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
   }
   .card {
     flex: 1;

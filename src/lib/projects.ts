@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { locales, type Locale } from '../i18n';
-import { treeIndex, type Sephirah } from '../data/sephirot';
+import { treeIndex, type NodeId } from '../data/nodes';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 
@@ -11,7 +11,7 @@ export interface Project {
 }
 
 export interface TreeNode {
-  sephirah: Sephirah;
+  nodeId: NodeId;
   primary: Project;
   satellites: Project[];
 }
@@ -35,19 +35,19 @@ function validate(all: Project[]): void {
     const own = all.filter((p) => p.locale === locale);
     const slugs = new Set(own.map((p) => p.slug));
 
-    const primaries = new Map<Sephirah, string>();
+    const primaries = new Map<NodeId, string>();
     for (const p of own) {
       if (p.entry.data.role !== 'primary') continue;
-      const taken = primaries.get(p.entry.data.sephirah);
+      const taken = primaries.get(p.entry.data.node);
       if (taken) {
-        errors.push(`[${locale}] ${p.entry.data.sephirah} has two primaries: ${taken}, ${p.slug}`);
+        errors.push(`[${locale}] ${p.entry.data.node} has two primaries: ${taken}, ${p.slug}`);
       }
-      primaries.set(p.entry.data.sephirah, p.slug);
+      primaries.set(p.entry.data.node, p.slug);
     }
 
     for (const p of own) {
-      if (p.entry.data.role === 'satellite' && !primaries.has(p.entry.data.sephirah)) {
-        errors.push(`[${locale}] satellite ${p.slug} has no primary in ${p.entry.data.sephirah}`);
+      if (p.entry.data.role === 'satellite' && !primaries.has(p.entry.data.node)) {
+        errors.push(`[${locale}] satellite ${p.slug} has no primary in ${p.entry.data.node}`);
       }
       for (const c of p.entry.data.components ?? []) {
         if (c.project && !slugs.has(c.project)) {
@@ -85,16 +85,16 @@ export async function getProject(locale: Locale, slug: string): Promise<Project 
   return (await getProjects(locale)).find((p) => p.slug === slug);
 }
 
-/** Projects grouped by sephirah, in tree order (Keter → Malkuth). */
+/** Projects grouped by tree node, in tree order (top → base). */
 export async function getTree(locale: Locale): Promise<TreeNode[]> {
   const projects = await getProjects(locale);
   const nodes: TreeNode[] = [];
   for (const primary of projects.filter((p) => p.entry.data.role === 'primary')) {
-    const sephirah = primary.entry.data.sephirah;
+    const nodeId = primary.entry.data.node;
     const satellites = projects
-      .filter((p) => p.entry.data.role === 'satellite' && p.entry.data.sephirah === sephirah)
+      .filter((p) => p.entry.data.role === 'satellite' && p.entry.data.node === nodeId)
       .sort((a, b) => a.entry.data.order - b.entry.data.order);
-    nodes.push({ sephirah, primary, satellites });
+    nodes.push({ nodeId, primary, satellites });
   }
-  return nodes.sort((a, b) => treeIndex(a.sephirah) - treeIndex(b.sephirah));
+  return nodes.sort((a, b) => treeIndex(a.nodeId) - treeIndex(b.nodeId));
 }

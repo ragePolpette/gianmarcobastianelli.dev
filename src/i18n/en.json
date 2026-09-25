@@ -27,9 +27,7 @@
   },
   "home": {
     "projectsTitle": "Projects",
-    "projectsIntro": "Agents, MCP servers and AI research. Each one is named after a sephirah of the Tree of Life.",
-    "namesTitle": "Why these names?",
-    "namesBody": "I name my projects after the sephirot of the Kabbalistic Tree of Life. On this site the tree is just a map of the work: you don't need to know any Kabbalah to read it."
+    "projectsIntro": "Agents, MCP servers and AI research, laid out as a tree. Every node is a project or a page."
   },
   "project": {
     "status": {
@@ -44,7 +42,9 @@
     "orbits": "Orbits",
     "cardsTitle": "The five cards",
     "external": "external",
-    "todo": "To be completed"
+    "todo": "To be completed",
+    "outcome": "Result",
+    "how": "How it works"
   },
   "contact": {
     "title": "Contact",
@@ -55,52 +55,6 @@
   },
   "footer": {
     "note": "Static site, no cookies, no tracking."
-  },
-  "sephirot": {
-    "keter": {
-      "name": "Keter",
-      "meaning": "the crown"
-    },
-    "chokhmah": {
-      "name": "Chokhmah",
-      "meaning": "the flash of insight"
-    },
-    "binah": {
-      "name": "Binah",
-      "meaning": "understanding that gives form"
-    },
-    "daat": {
-      "name": "Da'at",
-      "meaning": "the hidden knowledge"
-    },
-    "chesed": {
-      "name": "Chesed",
-      "meaning": "expansion, giving"
-    },
-    "gevurah": {
-      "name": "Gevurah",
-      "meaning": "limits, rigour"
-    },
-    "tiferet": {
-      "name": "Tiferet",
-      "meaning": "balance, the heart"
-    },
-    "netzach": {
-      "name": "Netzach",
-      "meaning": "endurance"
-    },
-    "hod": {
-      "name": "Hod",
-      "meaning": "instruments, communication"
-    },
-    "yesod": {
-      "name": "Yesod",
-      "meaning": "the foundation"
-    },
-    "malkuth": {
-      "name": "Malkuth",
-      "meaning": "the manifest kingdom"
-    }
   },
   "notFound": {
     "title": "Page not found",
@@ -117,6 +71,12 @@
     "exodiaHint": "Exodia's cards light up across the tree."
   },
   "og": {
-    "alt": "The Tree of Life map of Gianmarco Bastianelli's projects"
+    "alt": "Tree-shaped map of Gianmarco Bastianelli's projects"
+  },
+  "kinds": {
+    "agent": "Agent",
+    "mcp": "MCP server",
+    "tooling": "Tooling",
+    "research": "Research"
   }
 }

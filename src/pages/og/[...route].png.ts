@@ -21,10 +21,10 @@ export const getStaticPaths = (async () => {
         params: { route: `${locale}/${page.slug}` },
         props: {
           card: {
-            eyebrow: `${ui.sephirot[d.sephirah].name} · ${site.name}`,
+            eyebrow: `${d.eyebrow} · ${site.name}`,
             title: d.title,
             subtitle: d.summary,
-            highlight: d.sephirah,
+            highlight: d.node,
           },
         },
       });
@@ -35,10 +35,10 @@ export const getStaticPaths = (async () => {
         params: { route: `${locale}/projects/${project.slug}` },
         props: {
           card: {
-            eyebrow: `${ui.sephirot[d.sephirah].name} · ${site.name}`,
+            eyebrow: `${ui.kinds[d.kind]} · ${site.name}`,
             title: d.name,
             subtitle: d.tagline,
-            highlight: d.sephirah,
+            highlight: d.node,
           },
         },
       });

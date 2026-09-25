@@ -19,9 +19,9 @@ function validate(all: Page[]): void {
     const own = all.filter((p) => p.locale === locale);
     const seen = new Map<string, string>();
     for (const p of own) {
-      const taken = seen.get(p.entry.data.sephirah);
-      if (taken) errors.push(`[${locale}] ${p.entry.data.sephirah} used by ${taken} and ${p.slug}`);
-      seen.set(p.entry.data.sephirah, p.slug);
+      const taken = seen.get(p.entry.data.node);
+      if (taken) errors.push(`[${locale}] ${p.entry.data.node} used by ${taken} and ${p.slug}`);
+      seen.set(p.entry.data.node, p.slug);
     }
     for (const other of locales) {
       if (other === locale) continue;

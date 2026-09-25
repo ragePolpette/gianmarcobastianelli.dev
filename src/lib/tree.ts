@@ -1,5 +1,5 @@
 import { localizePath, t, type Locale } from '../i18n';
-import { pillarOf, sephirot, type Pillar, type Sephirah } from '../data/sephirot';
+import { pillarOf, nodeIds, type Pillar, type NodeId } from '../data/nodes';
 import { labelSide, nodePosition, paths, type LabelSide } from '../data/tree';
 import { getTree, type Project } from './projects';
 import { getPages } from './pages';
@@ -7,6 +7,7 @@ import { getPages } from './pages';
 export interface SatelliteView {
   slug: string;
   name: string;
+  eyebrow: string;
   summary: string;
   tagline: string;
   href: string;
@@ -16,9 +17,9 @@ export interface SatelliteView {
 }
 
 export interface NodeView {
-  sephirah: Sephirah;
-  sephirahName: string;
-  meaning: string;
+  nodeId: NodeId;
+  /** Category shown above the title: project kind or page label. Empty on dormant nodes. */
+  eyebrow: string;
   pillar: Pillar;
   x: number;
   y: number;
@@ -35,8 +36,8 @@ export interface NodeView {
 }
 
 export interface PathView {
-  a: Sephirah;
-  b: Sephirah;
+  a: NodeId;
+  b: NodeId;
   x1: number;
   y1: number;
   x2: number;
@@ -57,26 +58,25 @@ export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; pa
     (exodia?.entry.data.components ?? []).flatMap((c) => (c.project ? [c.project] : [])),
   );
 
-  const nodes = sephirot.map((sephirah): NodeView => {
-    const { x, y } = nodePosition[sephirah];
-    const side = labelSide[sephirah];
+  const nodes = nodeIds.map((nodeId): NodeView => {
+    const { x, y } = nodePosition[nodeId];
+    const side = labelSide[nodeId];
     const base = {
-      sephirah,
-      sephirahName: ui.sephirot[sephirah].name,
-      meaning: ui.sephirot[sephirah].meaning,
-      pillar: pillarOf[sephirah],
+      nodeId,
+      pillar: pillarOf[nodeId],
       x,
       y,
       side,
     };
 
-    const projectNode = projectNodes.find((n) => n.sephirah === sephirah);
+    const projectNode = projectNodes.find((n) => n.nodeId === nodeId);
     if (projectNode) {
       const { primary, satellites } = projectNode;
       const dir = side === 'right' ? 1 : -1;
       return {
         ...base,
         href: localizePath(`/projects/${primary.slug}/`, locale),
+        eyebrow: ui.kinds[primary.entry.data.kind],
         title: primary.entry.data.name,
         summary: primary.entry.data.summary,
         tagline: primary.entry.data.tagline,
@@ -85,6 +85,7 @@ export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; pa
         satellites: satellites.map((s, i) => ({
           slug: s.slug,
           name: s.entry.data.name,
+          eyebrow: ui.kinds[s.entry.data.kind],
           summary: s.entry.data.summary,
           tagline: s.entry.data.tagline,
           href: localizePath(`/projects/${s.slug}/`, locale),
@@ -96,11 +97,12 @@ export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; pa
     }
 
     // Non-project nodes are sections of the site (about, work, contact).
-    const page = pages.find((p) => p.entry.data.sephirah === sephirah);
+    const page = pages.find((p) => p.entry.data.node === nodeId);
     if (page) {
       return {
         ...base,
         href: page.href,
+        eyebrow: page.entry.data.eyebrow,
         title: page.entry.data.title,
         summary: page.entry.data.summary,
         tagline: page.entry.data.lead,
@@ -109,7 +111,7 @@ export async function buildTree(locale: Locale): Promise<{ nodes: NodeView[]; pa
       };
     }
 
-    return { ...base, satellites: [], exodiaPart: false };
+    return { ...base, eyebrow: '', satellites: [], exodiaPart: false };
   });
 
   const pathViews = paths.map(([a, b]) => ({
