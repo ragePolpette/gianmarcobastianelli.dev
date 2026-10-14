@@ -1,7 +1,6 @@
 ---
 import Eyebrow from './Eyebrow.astro';
 import StatusBadge from './StatusBadge.astro';
-import Text from './Text.astro';
 import { t, type Locale } from '../i18n';
 import { buildTree } from '../lib/tree';
 
@@ -35,14 +34,7 @@ const lit = nodes.filter((n) => n.href && n.title);
         {n.project && (
           <div class="meta">
             <StatusBadge status={n.project.entry.data.status} locale={locale} />
-            <span class="mono stack">
-              {n.project.entry.data.stack.map((s, i) => (
-                <>
-                  {i > 0 && ' · '}
-                  <Text value={s} locale={locale} />
-                </>
-              ))}
-            </span>
+            <span class="mono stack">{n.project.entry.data.stack.join(' · ')}</span>
           </div>
         )}
         {n.satellites.length > 0 && (

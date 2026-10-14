@@ -3,10 +3,10 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Eyebrow from '../Eyebrow.astro';
 import StatusBadge from '../StatusBadge.astro';
-import Text from '../Text.astro';
 import { localizePath, t, type Locale } from '../../i18n';
 import { pillarOf } from '../../data/nodes';
 import type { Project } from '../../lib/projects';
+import { personJsonLd, site } from '../../data/site';
 
 interface Props {
   locale: Locale;
@@ -17,14 +17,27 @@ const { locale, project } = Astro.props;
 const ui = t(locale);
 const data = project.entry.data;
 const { Content } = await render(project.entry);
+const path = `/projects/${project.slug}/`;
+const jsonLd = data.repo
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareSourceCode',
+      name: data.name,
+      description: data.tagline,
+      codeRepository: data.repo,
+      url: new URL(localizePath(path, locale), Astro.site ?? site.url).href,
+      author: personJsonLd(ui.meta.jobTitle),
+    }
+  : undefined;
 ---
 
 <Base
   locale={locale}
-  path={`/projects/${project.slug}/`}
+  path={path}
   title={data.name}
   description={data.tagline}
   ogImage={`/og/${locale}/projects/${project.slug}.png`}
+  jsonLd={jsonLd}
 >
   <article class="container project" data-pillar={pillarOf[data.node]}>
     <p class="back mono">
@@ -49,9 +62,7 @@ const { Content } = await render(project.entry);
     <dl class="facts">
       <div>
         <dt class="mono">{ui.project.problem}</dt>
-        <dd>
-          <Text value={data.problem} locale={locale} />
-        </dd>
+        <dd>{data.problem}</dd>
       </div>
       <div>
         <dt class="mono">{ui.project.outcome}</dt>
@@ -62,9 +73,7 @@ const { Content } = await render(project.entry);
         <dd>
           <ul class="stack mono">
             {data.stack.map((s) => (
-              <li>
-                <Text value={s} locale={locale} />
-              </li>
+              <li>{s}</li>
             ))}
           </ul>
         </dd>

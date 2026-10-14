@@ -14,6 +14,8 @@ description: Risultati in .NET enterprise su software gestionale e contabile mul
 - **Integrazioni di fatturazione** costruite per clienti specifici e attive sopra la piattaforma.
 - **[Exodia](../projects/exodia/)**, un agente che trasforma i ticket di questo codebase in pull request pronte per la review: in produzione, e presentato a una QBR aziendale.
 
+Gestisco anche lo stack MCP locale attraverso cui lavorano i miei agenti: [accesso SQL dietro policy](../projects/llm-sql-db-mcp/), [Bitbucket](../projects/llm-bitbucket-mcp/), [memoria](../projects/llm-memory/).
+
 ## Come
 
 Lavoro con molta autonomia tecnica e contribuisco alle decisioni architetturali. Ogni modifica va su una piattaforma multi-tenant, quindi deve essere sicura per tutti i clienti contemporaneamente.

@@ -12,6 +12,8 @@ status: research
 repo: https://github.com/ragePolpette/intra-model-memval-lab
 ---
 
-A verifier gate filters candidate lessons, and a replay buffer mixes new examples with anchors. The base model is evaluated, a LoRA adapter is trained, the model is evaluated again and the gate decides. Evaluations cover target, related and unrelated cases, so the gate catches both "didn't learn" and "learned it, but broke something else".
+A verifier gate filters candidate lessons, and a replay buffer mixes new examples with anchors. The base model is evaluated, a LoRA adapter is trained, the model is evaluated again and the gate decides whether to promote the adapter or roll it back. Evaluations cover target, related and unrelated cases, so the gate catches both "didn't learn" and "learned it, but broke something else".
 
-**Next:** measuring feature drift inside the model with sparse autoencoders (Gemma Scope 2) and with probes along directions in activation space, such as the refusal direction. This is the next step, not a feature yet.
+Answers are scored with a rubric: groups of required terms with alternatives, plus forbidden terms, so a paraphrase can still pass. It is keyword evidence, not semantic judgement. Every run writes an experiment manifest with package versions, git commit, model revision, configuration, seed and the pre and post metrics, so a result can be traced back to exactly what produced it.
+
+**Next:** measuring feature drift inside the model with sparse autoencoders (Gemma Scope 2) as part of the gate. So far there is only a throwaway spike to load them on this model: the drift check itself is not implemented yet.

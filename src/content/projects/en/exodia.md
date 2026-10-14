@@ -6,7 +6,7 @@ kind: agent
 tagline: 'Autonomous agent that takes a Jira ticket all the way to a pull request.'
 summary: 'from Jira ticket to pull request'
 problem: 'Most ticket-to-code demos collapse the job into one risky step: read a ticket, edit files, open a pull request.'
-outcome: 'In production on a real enterprise codebase: tickets come out as reviewable pull requests, and doubts go back to Jira as questions instead of into the code as guesses. I presented it at a company quarterly business review.'
+outcome: 'In production on an enterprise codebase: tickets come out as reviewable pull requests, and doubts go back to Jira as questions instead of into the code as guesses. I presented it at a company quarterly business review.'
 stack: ['Node.js', 'MCP', 'Jira', 'Bitbucket', 'provider-agnostic LLM runtime']
 status: active
 repo: https://github.com/ragePolpette/Exodia
@@ -32,6 +32,10 @@ components:
     project: llm-memory
 ---
 
-Exodia splits the job into stages. It reads the ticket, maps it to the right repository, loads context and memory, proposes a change and audits it before anything is written. Then it implements the change in a controlled worktree, verifies the evidence and opens the pull request only if policy allows it.
+Exodia splits the job into stages. It reads the ticket, maps it to the right repository, loads context and memory, proposes a change and audits it before anything is written. Then it implements the change, verifies the evidence and opens the pull request only if policy allows it.
 
-It is assembled from five parts, named after the five cards of Exodia the Forbidden One: the harness is the head, four MCP servers are the limbs. When confidence is too low, it leaves a question on the ticket and parks the run; a later run picks up the answer and carries on. The check happens between runs, never as a blocking prompt.
+Every run starts from a clean worktree: Exodia fetches the base branch, stops if it finds uncommitted changes and creates the ticket branch from there. If the ticket is blocked or fails, that worktree is reset. The model works in a read-only sandbox in every phase except the implementation itself. Before the commit, a diff gate caps the number of changed files and lines, and only the paths allowed for that repository are staged.
+
+When confidence is too low, Exodia leaves a question on the ticket and parks the run; a later run picks up the answer and carries on. Answers and approvals count only when they come from the configured list of authorized responders. Everyone else is ignored.
+
+It is assembled from five parts, named after the five cards of Exodia the Forbidden One: the harness is the head, four MCP servers are the limbs.

@@ -15,12 +15,13 @@ time from Markdown content files and two UI string catalogs. There is no backend
 ## Architecture
 
 - `src/content/projects/<locale>/<slug>.md`: project entries, one file per locale.
-- `src/content.config.ts`: content collection schema and build-time validation.
+- `src/content/pages/<locale>/<slug>.md`: site sections (about, work, contact).
+- `src/content.config.ts`: content collection schema.
+- `src/lib/projects.ts`, `src/lib/pages.ts`: cross-entry validation that fails the build.
 - `src/i18n/`: UI strings (`en.json`, `it.json`).
 - `src/data/`, `src/lib/`: site data and tree/project helpers.
 - `src/pages/`, `src/components/`, `src/layouts/`: routes and presentation.
 - `public/_headers`: HTTP security headers served by Cloudflare Pages.
-- `docs/`: design notes.
 
 ## Quick start
 
@@ -41,15 +42,51 @@ There are no runtime environment variables. Deployment settings (Cloudflare Page
 
 ## Content
 
-- **Projects**: the frontmatter schema lives in `src/content.config.ts`. The build
-  fails if a translation is missing, if two primary projects share a sephirah, or if
-  a repo is not a public `github.com/ragePolpette/*` URL.
-- **UI strings**: `src/i18n/en.json` and `src/i18n/it.json` must have the same keys;
-  a missing key is a type error.
-- Placeholders written as `TODO: ...` render as a visible marker.
+The home page shows a tree of eleven nodes (`src/data/nodes.ts`, positions in
+`src/data/tree.ts`). Each node holds one of:
 
-To add a project, create `en/<slug>.md` and `it/<slug>.md` with a `sephirah` and a
-`role` (`primary` or `satellite`). No component changes are needed.
+- a **primary project**, optionally with **satellites** drawn around it;
+- a **page** (`about` on `top`, `contact` on `upperMid`, `work` on `middle`);
+- nothing: a **dormant** node is drawn dimmed, without label or link.
+
+Current layout:
+
+| Node         | Content                                    |
+| ------------ | ------------------------------------------ |
+| `top`        | About (page)                               |
+| `upperLeft`  | memval-lab                                 |
+| `upperRight` | dormant                                    |
+| `upperMid`   | Contact (page)                             |
+| `midLeft`    | llm-sql-db-mcp                             |
+| `midRight`   | llm-memory, satellite llm_context          |
+| `middle`     | Work (page)                                |
+| `lowerLeft`  | mcp-dashboard, satellite llm-bitbucket-mcp |
+| `lowerRight` | Jobbby                                     |
+| `lowerMid`   | Persona                                    |
+| `base`       | Exodia                                     |
+
+The frontmatter schema lives in `src/content.config.ts`, including length limits
+(`summary` up to 40 characters for projects and 44 for pages, page `description` up
+to 200). The build fails if:
+
+- a project or page exists in one locale but not in the other;
+- two primary projects, or two pages, share a node;
+- a satellite has no primary on its node, or a component references an unknown project;
+- a `repo` is not a `https://github.com/ragePolpette/*` URL;
+- any frontmatter field or Markdown body contains `TODO`.
+
+UI strings live in `src/i18n/en.json` and `src/i18n/it.json` and must have the same
+keys; a missing key is a type error.
+
+To add a project:
+
+1. Create `src/content/projects/en/<slug>.md` and `src/content/projects/it/<slug>.md`
+   with the same frontmatter shape (see an existing entry).
+2. Set `node` to a free node and `role: primary`, or to an occupied node and
+   `role: satellite` (use `order` to sort satellites).
+3. Run `npm run verify`. The tree, the list view, the project page, its Open Graph
+   image and its structured data are generated from the content; no component
+   changes are needed.
 
 ## Security
 

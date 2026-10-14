@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { locales, type Locale } from '../i18n';
 import { treeIndex, type NodeId } from '../data/nodes';
+import { findPlaceholders } from './placeholders';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 
@@ -29,7 +30,9 @@ let validated = false;
 /** Cross-entry rules the per-file schema cannot express. Fails the build on violation. */
 function validate(all: Project[]): void {
   if (validated) return;
-  const errors: string[] = [];
+  const errors: string[] = all.flatMap((p) =>
+    findPlaceholders(`projects/${p.entry.id}`, p.entry.data, p.entry.body),
+  );
 
   for (const locale of locales) {
     const own = all.filter((p) => p.locale === locale);

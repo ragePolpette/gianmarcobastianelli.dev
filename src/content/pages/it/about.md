@@ -4,16 +4,12 @@ node: top
 eyebrow: Profilo
 summary: chi sono · manifesto
 lead: Sono Gianmarco, backend developer a Bologna. Più di sei anni di .NET, e oggi soprattutto AI engineering.
-description: Backend developer .NET autodidatta, oggi concentrato sull'AI engineering, con un breve manifesto sull'interpretability.
+description: "Backend developer .NET a Bologna, oggi concentrato sull'AI engineering: agenti, server MCP, memoria per LLM, e perché l'interpretability conta per me."
 ---
-
-## Autodidatta
-
-Non ho una laurea in informatica: ho imparato lavorando e studiando da solo. Lo dico subito perché fa parte della mia storia, non è qualcosa da nascondere.
 
 ## Di cosa mi occupo
 
-Di mestiere lavoro su software gestionale e contabile multi-tenant in .NET, per il mercato italiano. [Cosa ha prodotto quel lavoro](../work/).
+Di mestiere lavoro su software gestionale e contabile multi-tenant in .NET, per il mercato italiano. [Cosa ha prodotto quel lavoro](../work/). Non ho una laurea in informatica: ho imparato lavorando e studiando da solo.
 
 Oggi la maggior parte della mia attenzione va all'AI engineering: agenti autonomi, server MCP, sistemi di memoria per i modelli linguistici e ricerca di interpretability. I risultati sono sull'[albero](../#projects).
 
@@ -25,7 +21,7 @@ Oggi la maggior parte della mia attenzione va all'AI engineering: agenti autonom
 - **PostgreSQL + pgvector**: storage e ricerca vettoriale.
 - **Rust**: lo sto imparando. Il prossimo investimento, non ancora una competenza.
 
-## Manifesto
+## Perché l'interpretability
 
 L'interpretability mi interessa prima di tutto come problema di ingegneria. Se un sistema prende decisioni, voglio poter guardare dentro e capire perché. Un modello che possiamo valutare solo dall'esterno è un modello di cui ci fidiamo per abitudine.
 
@@ -37,6 +33,6 @@ Non ho grandi previsioni da fare. Preferisco misurare.
 
 ## Altrove
 
-Pubblico i server MCP in una serie "build in public" su LinkedIn. <mark class="todo">TODO: link alla serie</mark>
+Scrivo di questi progetti su [LinkedIn](https://www.linkedin.com/in/gianmarco-bastianelli/).
 
 Lontano dallo schermo vado in moto, una CFMoto 450SR.

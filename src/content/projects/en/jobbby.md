@@ -3,15 +3,17 @@ name: 'Jobbby'
 node: lowerRight
 role: primary
 kind: agent
-tagline: 'Task-agnostic agent-graph engine, steered from Telegram.'
-summary: 'agent graph, steered via Telegram'
-problem: 'Long-running agent workflows need concurrency, human approval at the right points and a way to steer them from anywhere.'
-outcome: 'Running end to end on its first use case, job search: postings are collected, normalized by an LLM and scored against a CV, and new sources go live only after human approval.'
-stack: ['C#', '.NET', 'LLM', 'Telegram']
+tagline: 'Collects job postings, normalizes them with an LLM and judges their fit against a CV.'
+summary: 'job postings judged against a CV'
+problem: 'A job search returns hundreds of postings, and reading each one against your own profile by hand does not scale.'
+outcome: 'Runs end to end on real postings: each run fetches from Adzuna, judges the fit and records the outcome in a ledger, and postings already seen cost no further LLM calls.'
+stack: ['C#', '.NET 8', 'ASP.NET', 'LLM', 'Adzuna API']
 status: active
 repo: https://github.com/ragePolpette/Jobbby
 ---
 
-Jobbby is a graph engine for agents: nodes do the work, and the graph does not care what the task is. Several runs can go at the same time.
+Jobbby builds its searches from the settings and, optionally, from roles the LLM derives from the CV. It fetches postings from Adzuna and normalizes each one with the LLM. Matching has two stages: a first filter, including a minimum salary when it is known, then an LLM judgment of the fit against the CV that assigns an outcome. Outcomes go into a ledger, so no posting is evaluated twice, and every run writes its own report.
 
-Discovery can propose new sources, but none is used until a human approves it. Steering is two-way over Telegram: the engine asks when it needs input, and it can be redirected from a phone.
+It has a CLI and a local web UI over the same data, and pending postings are approved or rejected by hand.
+
+Postings are untrusted input: every prompt marks them as data to analyse, not instructions to follow, and the LLM output is validated before it is used. LLM calls are capped at a configurable concurrency and retried with backoff. Adzuna credentials are masked in error messages and kept out of the request logs.

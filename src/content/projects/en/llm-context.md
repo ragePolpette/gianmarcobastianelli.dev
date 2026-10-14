@@ -12,6 +12,6 @@ status: active
 repo: https://github.com/ragePolpette/llm_context
 ---
 
-llm_context indexes source code and technical documents into a local vector store and exposes them through MCP tools for context retrieval, semantic search and symbol search.
+llm_context indexes source code and technical documents into PostgreSQL with pgvector, using local embeddings, and exposes them through MCP tools for context retrieval, semantic search and symbol search.
 
-Every operation is scoped to an explicit project, so context never leaks across repositories. Ingest is incremental, reprocessing only the files that changed, and stays outside the always-on MCP surface.
+Every operation is scoped to an explicit project, so context never leaks across repositories. Ingest is incremental and stays outside the always-on MCP surface. Each document is replaced in a single transaction, so queries keep seeing the previous version until the new one is committed. The embedding model is a server setting: a client cannot ask for a different one.

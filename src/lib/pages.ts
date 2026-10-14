@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { locales, localizePath, type Locale } from '../i18n';
+import { findPlaceholders } from './placeholders';
 
 export type PageEntry = CollectionEntry<'pages'>;
 
@@ -14,7 +15,9 @@ let validated = false;
 
 function validate(all: Page[]): void {
   if (validated) return;
-  const errors: string[] = [];
+  const errors: string[] = all.flatMap((p) =>
+    findPlaceholders(`pages/${p.entry.id}`, p.entry.data, p.entry.body),
+  );
   for (const locale of locales) {
     const own = all.filter((p) => p.locale === locale);
     const seen = new Map<string, string>();

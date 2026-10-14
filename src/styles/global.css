@@ -141,13 +141,6 @@ code {
   --accent: var(--gold);
 }
 
-mark.todo {
-  background: #3a2a00;
-  color: #ffd66b;
-  outline: 1px dashed #ffd66b;
-  padding: 0 0.25em;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

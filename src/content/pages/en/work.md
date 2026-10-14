@@ -14,6 +14,8 @@ description: Enterprise .NET results on multi-tenant management and accounting s
 - **Billing integrations** built for specific customers and running on top of the platform.
 - **[Exodia](../projects/exodia/)**, an agent that turns tickets on this codebase into reviewable pull requests: in production, and presented at a company quarterly business review.
 
+I also run the local MCP stack my agents work through: [SQL access behind policies](../projects/llm-sql-db-mcp/), [Bitbucket](../projects/llm-bitbucket-mcp/), [memory](../projects/llm-memory/).
+
 ## How
 
 I work with a lot of technical autonomy and contribute to architectural decisions. Every change ships to a multi-tenant platform, so it has to be safe for every customer at once.

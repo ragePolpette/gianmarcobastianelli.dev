@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "Gianmarco Bastianelli — Backend developer .NET e AI engineer",
-    "description": "Backend developer .NET con più di 6 anni su software enterprise multi-tenant, oggi concentrato sull'AI engineering: agenti autonomi, server MCP, memoria per LLM e ricerca di interpretability."
+    "title": "Gianmarco Bastianelli · Backend developer .NET e AI engineer",
+    "description": "Backend developer .NET con più di 6 anni su software enterprise multi-tenant, oggi concentrato sull'AI engineering: agenti autonomi, server MCP, memoria per LLM e ricerca di interpretability.",
+    "jobTitle": "Backend developer .NET e AI engineer"
   },
   "a11y": {
     "skip": "Vai al contenuto",
     "primaryNav": "Principale",
-    "langNav": "Lingua",
-    "externalLink": "si apre in una nuova scheda"
+    "langNav": "Lingua"
   },
   "nav": {
     "projects": "Progetti",
@@ -22,12 +22,12 @@
   },
   "hero": {
     "role": "Backend developer .NET · AI engineer",
-    "tagline": "Sistemi .NET enterprise per mestiere. Agenti autonomi, server MCP e memoria per LLM per scelta.",
+    "tagline": ".NET enterprise per mestiere. Agenti, server MCP e memoria per LLM, costruiti per essere ispezionati.",
     "glance": ["6+ anni in .NET", "Bologna", "Autodidatta"]
   },
   "home": {
     "projectsTitle": "Progetti",
-    "projectsIntro": "Agenti, server MCP e ricerca sull'AI, disposti su un albero. Ogni nodo è un progetto o una pagina."
+    "projectsIntro": "Agenti, server MCP e ricerca sull'AI, disposti su un albero. Ogni nodo acceso è un progetto o una pagina."
   },
   "project": {
     "status": {
@@ -42,7 +42,6 @@
     "orbits": "In orbita",
     "cardsTitle": "Le cinque carte",
     "external": "esterno",
-    "todo": "Da completare",
     "outcome": "Risultato",
     "how": "Come funziona"
   },
@@ -66,7 +65,7 @@
     "viewLabel": "Vista",
     "viewTree": "Albero",
     "viewList": "Lista",
-    "hint": "Passa sopra un nodo o selezionalo per l'anteprima. Ogni nodo è un link.",
+    "hint": "Passa sopra un nodo o selezionalo per l'anteprima. Ogni nodo acceso è un link.",
     "mobileHint": "Scorri: l'albero ti segue.",
     "exodiaHint": "Le carte di Exodia si accendono sull'albero.",
     "open": "Apri",

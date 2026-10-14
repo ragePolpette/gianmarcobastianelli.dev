@@ -4,16 +4,12 @@ node: top
 eyebrow: Profile
 summary: who I am · manifesto
 lead: I'm Gianmarco, a backend developer in Bologna. More than six years of .NET, and today mostly AI engineering.
-description: Self-taught backend .NET developer, now focused on AI engineering, with a short manifesto on interpretability.
+description: 'Backend .NET developer in Bologna, now focused on AI engineering: agents, MCP servers, memory for LLMs, and why interpretability matters to me.'
 ---
-
-## Self-taught
-
-I don't have a computer science degree: I learned on the job and on my own. I say it upfront because it is part of the story, not something to hide.
 
 ## What I work on
 
-My day job is multi-tenant management and accounting software on .NET, for the Italian market. [What that work delivered](../work/).
+My day job is multi-tenant management and accounting software on .NET, for the Italian market. [What that work delivered](../work/). I don't have a computer science degree: I learned on the job and on my own.
 
 Today most of my attention goes to AI engineering: autonomous agents, MCP servers, memory systems for language models and interpretability research. The results are on the [tree](../#projects).
 
@@ -25,7 +21,7 @@ Today most of my attention goes to AI engineering: autonomous agents, MCP server
 - **PostgreSQL + pgvector**: storage and vector search.
 - **Rust**: learning. The next investment, not a skill yet.
 
-## Manifesto
+## Why interpretability
 
 I care about interpretability first as an engineering problem. If a system makes decisions, I want to be able to look inside and see why. A model we can only evaluate from the outside is a model we trust out of habit.
 
@@ -37,6 +33,6 @@ I don't have grand predictions. I would rather measure things.
 
 ## Elsewhere
 
-I publish the MCP servers in a build-in-public series on LinkedIn. <mark class="todo">TODO: link to the series</mark>
+I write about these projects on [LinkedIn](https://www.linkedin.com/in/gianmarco-bastianelli/).
 
 Away from the screen I ride a motorbike, a CFMoto 450SR.

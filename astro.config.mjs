@@ -38,6 +38,7 @@ export default defineConfig({
     csp: {
       directives: [
         "default-src 'self'",
+        // data: is needed by the inline SVG noise texture on <body> (global.css).
         "img-src 'self' data:",
         "font-src 'self'",
         "connect-src 'self'",

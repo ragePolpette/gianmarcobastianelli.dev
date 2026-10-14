@@ -14,4 +14,6 @@ repo: https://github.com/ragePolpette/llm-memory
 
 La memoria ha due livelli: una memoria strong per fatti, decisioni e convenzioni durature, e una memoria fast per le note episodiche, che in seguito si possono distillare e promuovere. Il retrieval combina tre scope: progetto, workspace e globale.
 
-Ogni scrittura passa da una policy di persistenza, da uno scoring di importanza e da controlli sulla privacy, e lascia un audit trail. I record si possono promuovere, invalidare e deduplicare, ed esportare o importare in JSONL e Markdown. Gira in locale, senza servizi cloud.
+Ogni scrittura passa da una policy di persistenza, da uno scoring di importanza e da controlli sulla privacy, e lascia un audit trail. I record si possono promuovere, invalidare e deduplicare, ed esportare o importare in JSONL e Markdown; un export contiene solo ciò che chi lo chiede può leggere.
+
+Gira in locale, senza servizi cloud e con la rete in uscita bloccata per impostazione predefinita. Via HTTP, un bearer token è facoltativo su loopback e obbligatorio su qualsiasi altro indirizzo; gli endpoint di amministrazione restano disattivati finché non ne viene impostato uno.
