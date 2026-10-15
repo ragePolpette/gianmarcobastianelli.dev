@@ -6,7 +6,7 @@ kind: mcp
 tagline: 'Persistent memory for agents over MCP: two tiers, three scopes, one audit trail.'
 summary: 'persistent memory for agents'
 problem: 'Agents handle short-term context well and forget everything between sessions.'
-outcome: 'In daily use in my own work, and the per-ticket memory behind Exodia.'
+outcome: 'The per-ticket memory behind Exodia. I used it daily until the built-in memory of coding agents caught up; the plan is to bring it back as the shared layer between them.'
 stack: ['Python', 'SQLite', 'vector search', 'MCP']
 status: active
 repo: https://github.com/ragePolpette/llm-memory

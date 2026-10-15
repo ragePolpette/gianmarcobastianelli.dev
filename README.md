@@ -54,14 +54,14 @@ Current layout:
 | Node         | Content                                    |
 | ------------ | ------------------------------------------ |
 | `top`        | About (page)                               |
-| `upperLeft`  | memval-lab                                 |
-| `upperRight` | dormant                                    |
+| `upperLeft`  | dormant                                    |
+| `upperRight` | memval-lab                                 |
 | `upperMid`   | Contact (page)                             |
 | `midLeft`    | llm-sql-db-mcp                             |
 | `midRight`   | llm-memory, satellite llm_context          |
 | `middle`     | Work (page)                                |
 | `lowerLeft`  | mcp-dashboard, satellite llm-bitbucket-mcp |
-| `lowerRight` | Jobbby                                     |
+| `lowerRight` | dormant                                    |
 | `lowerMid`   | Persona                                    |
 | `base`       | Exodia                                     |
 

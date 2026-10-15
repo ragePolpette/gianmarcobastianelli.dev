@@ -1,6 +1,6 @@
 ---
 name: 'memval-lab'
-node: upperLeft
+node: upperRight
 role: primary
 kind: research
 tagline: 'Consolidating memory inside the model: real LoRA training, before-and-after evals, a promote-or-rollback gate.'

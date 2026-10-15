@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Gianmarco Bastianelli · Backend developer .NET e AI engineer",
-    "description": "Backend developer .NET con più di 6 anni su software enterprise multi-tenant, oggi concentrato sull'AI engineering: agenti autonomi, server MCP, memoria per LLM e ricerca di interpretability.",
+    "description": "Backend developer .NET con più di 7 anni su software enterprise multi-tenant, oggi concentrato sull'AI engineering: agenti autonomi, server MCP, memoria per LLM e ricerca di interpretability.",
     "jobTitle": "Backend developer .NET e AI engineer"
   },
   "a11y": {
@@ -22,8 +22,8 @@
   },
   "hero": {
     "role": "Backend developer .NET · AI engineer",
-    "tagline": ".NET enterprise per mestiere. Agenti, server MCP e memoria per LLM, costruiti per essere ispezionati.",
-    "glance": ["6+ anni in .NET", "Bologna", "Autodidatta"]
+    "tagline": ".NET enterprise per mestiere. Agenti e server MCP per LLM, costruiti per essere ispezionati.",
+    "glance": ["7+ anni in .NET", "Bologna"]
   },
   "home": {
     "projectsTitle": "Progetti",

@@ -6,7 +6,7 @@ kind: agent
 tagline: 'Agente autonomo che porta un ticket Jira fino alla pull request.'
 summary: 'dal ticket Jira alla pull request'
 problem: 'Quasi tutte le demo ticket-to-code riducono il lavoro a un unico passo rischioso: leggere il ticket, modificare i file, aprire la pull request.'
-outcome: "In produzione su un codebase enterprise: dai ticket escono pull request pronte per la review, e i dubbi tornano su Jira come domande invece di finire nel codice come supposizioni. L'ho presentato a una QBR aziendale."
+outcome: 'Testato e usato in produzione: dai ticket escono pull request pronte per la review, e i dubbi tornano su Jira come domande invece di finire nel codice come supposizioni.'
 stack: ['Node.js', 'MCP', 'Jira', 'Bitbucket', 'runtime LLM indipendente dal provider']
 status: active
 repo: https://github.com/ragePolpette/Exodia

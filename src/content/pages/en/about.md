@@ -3,13 +3,13 @@ title: About
 node: top
 eyebrow: Profile
 summary: who I am · manifesto
-lead: I'm Gianmarco, a backend developer in Bologna. More than six years of .NET, and today mostly AI engineering.
+lead: I'm Gianmarco, a backend developer in Bologna. More than seven years of .NET, and today mostly AI engineering.
 description: 'Backend .NET developer in Bologna, now focused on AI engineering: agents, MCP servers, memory for LLMs, and why interpretability matters to me.'
 ---
 
 ## What I work on
 
-My day job is multi-tenant management and accounting software on .NET, for the Italian market. [What that work delivered](../work/). I don't have a computer science degree: I learned on the job and on my own.
+My day job is multi-tenant management and accounting software on .NET, for the Italian market. [What that work delivered](../work/).
 
 Today most of my attention goes to AI engineering: autonomous agents, MCP servers, memory systems for language models and interpretability research. The results are on the [tree](../#projects).
 
@@ -34,5 +34,3 @@ I don't have grand predictions. I would rather measure things.
 ## Elsewhere
 
 I write about these projects on [LinkedIn](https://www.linkedin.com/in/gianmarco-bastianelli/).
-
-Away from the screen I ride a motorbike, a CFMoto 450SR.

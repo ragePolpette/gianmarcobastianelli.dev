@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Gianmarco Bastianelli · Backend .NET developer & AI engineer",
-    "description": "Backend .NET developer with 6+ years on enterprise multi-tenant software, now focused on AI engineering: autonomous agents, MCP servers, LLM memory and interpretability research.",
+    "description": "Backend .NET developer with 7+ years on enterprise multi-tenant software, now focused on AI engineering: autonomous agents, MCP servers, LLM memory and interpretability research.",
     "jobTitle": "Backend .NET developer and AI engineer"
   },
   "a11y": {
@@ -22,8 +22,8 @@
   },
   "hero": {
     "role": "Backend .NET developer · AI engineer",
-    "tagline": "Enterprise .NET by trade. Agents, MCP servers and memory for LLMs, built to be inspected.",
-    "glance": ["6+ years in .NET", "Bologna, Italy", "Self-taught"]
+    "tagline": "Enterprise .NET by trade. Agents and MCP servers for LLMs, built to be inspected.",
+    "glance": ["7+ years in .NET", "Bologna, Italy"]
   },
   "home": {
     "projectsTitle": "Projects",

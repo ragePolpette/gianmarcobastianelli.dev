@@ -6,7 +6,7 @@ kind: mcp
 tagline: 'Memoria persistente per agenti via MCP: due livelli, tre scope, un audit trail.'
 summary: 'memoria persistente per agenti'
 problem: "Gli agenti gestiscono bene il contesto a breve termine e dimenticano tutto tra una sessione e l'altra."
-outcome: 'In uso ogni giorno nel mio lavoro, ed è la memoria per ticket di Exodia.'
+outcome: "La memoria per ticket di Exodia. L'ho usata ogni giorno finché la memoria integrata degli agenti di coding non l'ha raggiunta; il piano è riportarla come livello condiviso tra di loro."
 stack: ['Python', 'SQLite', 'ricerca vettoriale', 'MCP']
 status: active
 repo: https://github.com/ragePolpette/llm-memory

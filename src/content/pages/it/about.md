@@ -3,13 +3,13 @@ title: Chi sono
 node: top
 eyebrow: Profilo
 summary: chi sono · manifesto
-lead: Sono Gianmarco, backend developer a Bologna. Più di sei anni di .NET, e oggi soprattutto AI engineering.
+lead: Sono Gianmarco, backend developer a Bologna. Più di sette anni di .NET, e oggi soprattutto AI engineering.
 description: "Backend developer .NET a Bologna, oggi concentrato sull'AI engineering: agenti, server MCP, memoria per LLM, e perché l'interpretability conta per me."
 ---
 
 ## Di cosa mi occupo
 
-Di mestiere lavoro su software gestionale e contabile multi-tenant in .NET, per il mercato italiano. [Cosa ha prodotto quel lavoro](../work/). Non ho una laurea in informatica: ho imparato lavorando e studiando da solo.
+Di mestiere lavoro su software gestionale e contabile multi-tenant in .NET, per il mercato italiano. [Cosa ha prodotto quel lavoro](../work/).
 
 Oggi la maggior parte della mia attenzione va all'AI engineering: agenti autonomi, server MCP, sistemi di memoria per i modelli linguistici e ricerca di interpretability. I risultati sono sull'[albero](../#projects).
 
@@ -34,5 +34,3 @@ Non ho grandi previsioni da fare. Preferisco misurare.
 ## Altrove
 
 Scrivo di questi progetti su [LinkedIn](https://www.linkedin.com/in/gianmarco-bastianelli/).
-
-Lontano dallo schermo vado in moto, una CFMoto 450SR.

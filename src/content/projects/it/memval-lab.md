@@ -1,6 +1,6 @@
 ---
 name: 'memval-lab'
-node: upperLeft
+node: upperRight
 role: primary
 kind: research
 tagline: 'Consolidare la memoria dentro il modello: training LoRA reale, eval prima e dopo, un gate che promuove o fa rollback.'
