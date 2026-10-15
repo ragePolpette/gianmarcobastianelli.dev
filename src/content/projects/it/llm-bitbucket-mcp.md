@@ -1,19 +1,19 @@
 ---
-name: llm-bitbucket-mcp
-sephirah: hod
+name: 'llm-bitbucket-mcp'
+node: lowerLeft
 role: satellite
-tagline: Una superficie MCP ristretta per pull request e pipeline su Bitbucket Cloud.
-summary: PR e pipeline per agenti
-problem: Gli agenti devono poter aprire, esaminare e commentare pull request e capire perché una pipeline è fallita, senza ricevere una workstation git generica e senza limiti.
-stack: [Node.js, MCP (HTTP), Bitbucket Cloud API]
+kind: mcp
+tagline: 'Una superficie MCP ristretta per pull request e pipeline su Bitbucket Cloud, su più repository.'
+summary: 'PR e pipeline per agenti'
+problem: 'Gli agenti devono poter aprire e commentare pull request, capire perché una pipeline è fallita e rilanciarla, senza ricevere una workstation git senza limiti.'
+outcome: 'È il modo in cui Exodia apre le pull request e legge le pipeline fallite. Il merge passa solo da un flusso confermato in due passi, e solo sui repository che lo consentono.'
+stack: ['Node.js', 'MCP (HTTP)', 'Bitbucket Cloud API']
 status: active
 repo: https://github.com/ragePolpette/llm-bitbucket-mcp
 ---
 
-Il server espone un set di tool mirato: cercare ed esaminare pull request, leggere diff, commenti, commit, task e stati, consultare le esecuzioni delle pipeline ed estrarre l'output dello step fallito, creare pull request e commentarle.
+Il server lavora su un elenco di repository approvati, scelti a ogni chiamata. Può cercare ed esaminare pull request; leggere diff, commenti, commit, task e stati; leggere i log degli step di una pipeline, falliti e non; attendere la fine di una pipeline con un timeout limitato; avviare una pipeline su un branch; creare pull request e commentarle.
 
-Altrettanto importante è quello che non fa, per scelta: niente checkout locale, niente commit, nessuna automazione di merge o approvazioni. Le azioni remote su Bitbucket stanno qui, il workflow git locale sta altrove.
+Merge e decline sono disattivati finché un repository non li abilita con un proprio flag. Anche allora, la prima chiamata restituisce solo un riepilogo e un token monouso: l'agente deve mostrare il riepilogo, aspettare un sì esplicito dall'utente e richiamare il tool con il token, che è legato alla sessione, al repository e ai parametri del merge.
 
-Tra le protezioni ci sono una allowlist dei tool di scrittura, sessioni limitate per durata e numero, e un token API che viene rifiutato se lo si carica da un file `.env`.
-
-In Exodia è il braccio sinistro: pull request e pipeline.
+Non fa nulla in locale: niente checkout, niente commit. I tool di review, come le approvazioni, vanno attivati esplicitamente, e il token API viene rifiutato se arriva da un file `.env`.

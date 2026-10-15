@@ -9,3 +9,14 @@ export const site = {
    */
   emailEncoded: 'bW9jLmxpYW1nQGlsbGVuYWl0c2FiLm9jcmFtbmFpZw==',
 } as const;
+
+/** schema.org Person for structured data. */
+export function personJsonLd(jobTitle: string) {
+  return {
+    '@type': 'Person',
+    name: site.name,
+    url: site.url,
+    jobTitle,
+    sameAs: [site.github, site.linkedin],
+  };
+}

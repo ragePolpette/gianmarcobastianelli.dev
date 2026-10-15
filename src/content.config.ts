@@ -1,22 +1,25 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { sephirot } from './data/sephirot';
+import { nodeIds } from './data/nodes';
 
 const projects = defineCollection({
   // One file per project per locale: src/content/projects/<locale>/<slug>.md
   loader: glob({ base: './src/content/projects', pattern: '*/*.md' }),
   schema: z.object({
     name: z.string().min(1),
-    sephirah: z.enum(sephirot),
-    /** One primary project per sephirah; satellites orbit around it. */
+    node: z.enum(nodeIds),
+    /** One primary project per tree node; satellites orbit around it. */
     role: z.enum(['primary', 'satellite']),
-    /** Sort order among satellites of the same sephirah. */
+    kind: z.enum(['agent', 'mcp', 'tooling', 'research']),
+    /** Sort order among satellites of the same node. */
     order: z.number().int().default(0),
     tagline: z.string().min(1),
     /** Short line shown under the node on the tree. */
     summary: z.string().min(1).max(40),
     problem: z.string().min(1),
+    /** What the project actually delivers today: a result, not a description. */
+    outcome: z.string().min(1),
     stack: z.array(z.string().min(1)),
     status: z.enum(['active', 'research', 'paused']),
     repo: z
@@ -40,4 +43,19 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const pages = defineCollection({
+  // Site sections that live on the tree without being projects: src/content/pages/<locale>/<slug>.md
+  loader: glob({ base: './src/content/pages', pattern: '*/*.md' }),
+  schema: z.object({
+    title: z.string().min(1),
+    node: z.enum(nodeIds),
+    /** Small label above the title, on the tree and on the page. */
+    eyebrow: z.string().min(1),
+    /** Short line shown under the node on the tree. */
+    summary: z.string().min(1).max(44),
+    lead: z.string().min(1),
+    description: z.string().min(1).max(200),
+  }),
+});
+
+export const collections = { projects, pages };
