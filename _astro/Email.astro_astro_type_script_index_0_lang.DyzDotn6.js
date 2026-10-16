@@ -1,0 +1,1 @@
+for(let e of document.querySelectorAll(`a[data-e]`)){let t=e.dataset.e;if(!t)continue;let n=[...atob(t)].reverse().join(``);e.href=`mailto:${n}`,e.textContent=n,e.removeAttribute(`data-e`)}
